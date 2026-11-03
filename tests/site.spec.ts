@@ -3,12 +3,14 @@ test('navigation and interactive tools',async({page})=>{
  await page.goto('./');
  await expect(page.getByText('ДВА МИРА ТВОРЧЕСТВА')).toBeVisible();
  await page.getByRole('button',{name:/ТВОРИ/}).click();
+ await page.locator('.world.art .world-enter').click();
  await expect(page.getByRole('heading',{name:/Маленькие идеи/})).toBeVisible();
  await page.getByRole('button',{name:/Открыть рисовалку/}).click();
  await expect(page.locator('canvas')).toBeVisible();
- await page.getByRole('button',{name:/Мастерская «Рыбка»/}).first().click();
+ await page.getByRole('button',{name:/Закрыть рисовалку/}).click();
  await page.locator('button.logo').click();
  await page.getByRole('button',{name:/ЗВУЧИ/}).click();
+ await page.locator('.world.music .world-enter').click();
  await expect(page.getByRole('heading',{name:/Не слушай мечту/})).toBeVisible();
  await page.getByRole('button',{name:/Создать свой бит/}).click();
  await expect(page.getByRole('button',{name:/Скачать MP3/})).toBeVisible();
