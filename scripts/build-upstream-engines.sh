@@ -12,6 +12,10 @@ git clone --depth 1 https://github.com/jeana-hines/coloring-app.git /tmp/to-colo
 )
 (
  cd /tmp/to-coloring-app
+ sed -i 's|/colorapp2/|/TO_startup/engines/art/|g' src/App.jsx
+ mkdir -p public/images/coloring public/images/UI
+ cp -R "$GITHUB_WORKSPACE/public/coloring-pages/." public/images/coloring/
+ find public/images/coloring -maxdepth 1 -type f -name '*.svg' -printf '%f\\n' | sort > public/image_list.txt
  npm install --no-audit --no-fund
  npm run build -- --base=/TO_startup/engines/art/
  cp -R dist "$GITHUB_WORKSPACE/dist/engines/art"
