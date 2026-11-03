@@ -1,11 +1,12 @@
 import {test,expect} from '@playwright/test';
 test('full creative applications load and close',async({page})=>{
- await page.goto('./art');
- await page.getByRole('button',{name:/Открыть рисовалку/}).click();
- await expect(page.locator('iframe[title*="Digital Coloring Book"]')).toBeVisible();
- await expect(page.frameLocator('iframe[title*="Digital Coloring Book"]').locator('body')).toBeVisible();
- await page.getByRole('button',{name:/Закрыть рисовалку/}).click();
- await expect(page.locator('iframe')).toHaveCount(0);
+ await page.goto('./art/draw');
+ await expect(page.getByRole('heading',{name:/Выбери свою/})).toBeVisible();
+ await expect(page.locator('.magic-card').first()).toBeVisible();
+ await page.locator('.magic-card').first().click();
+ await expect(page.locator('.magic-canvas-stack canvas')).toHaveCount(2);
+ await page.getByRole('button',{name:/Назад/}).click();
+ await expect(page.locator('.magic-card').first()).toBeVisible();
  await page.goto('./music');
  await page.getByRole('button',{name:/Создать свой бит/}).click();
  await expect(page.locator('iframe[title*="NeonDAW"]')).toBeVisible();
