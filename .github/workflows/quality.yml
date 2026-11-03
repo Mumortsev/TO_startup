@@ -1,0 +1,20 @@
+name: Build verification
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npm run build
+      - name: Verify published assets
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          test -f dist/favicon.svg
