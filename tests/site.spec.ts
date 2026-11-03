@@ -14,6 +14,9 @@ test('navigation and interactive tools',async({page})=>{
  await expect(page.getByRole('heading',{name:/Не слушай мечту/})).toBeVisible();
  await page.getByRole('button',{name:/Создать свой бит/}).click();
  await expect(page.getByRole('button',{name:/Скачать MP3/})).toBeVisible();
+ await expect(page.locator('.track')).toHaveCount(8);
+ await page.getByRole('button',{name:/Отключить Бочка/}).click();
+ await page.getByRole('button',{name:/Соло Малый барабан/}).click();
 });
 test('gallery opens, advances and closes',async({page})=>{
  await page.goto('./art');
