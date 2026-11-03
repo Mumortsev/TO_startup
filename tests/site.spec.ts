@@ -1,22 +1,19 @@
 import {test,expect} from '@playwright/test';
-test('navigation and interactive tools',async({page})=>{
+test('navigate to full upstream creative applications',async({page})=>{
  await page.goto('./');
  await expect(page.getByText('ДВА МИРА ТВОРЧЕСТВА')).toBeVisible();
  await page.getByRole('button',{name:/ТВОРИ/}).click();
  await page.locator('.world.art .world-enter').click();
- await expect(page.getByRole('heading',{name:/Маленькие идеи/})).toBeVisible();
  await page.getByRole('button',{name:/Открыть рисовалку/}).click();
- await expect(page.locator('canvas')).toBeVisible();
+ await expect(page.locator('iframe[title*="Digital Coloring Book"]')).toBeVisible();
+ await expect(page.frameLocator('iframe[title*="Digital Coloring Book"]').locator('body')).toBeVisible();
  await page.getByRole('button',{name:/Закрыть рисовалку/}).click();
  await page.locator('button.logo').click();
  await page.getByRole('button',{name:/ЗВУЧИ/}).click();
  await page.locator('.world.music .world-enter').click();
- await expect(page.getByRole('heading',{name:/Не слушай мечту/})).toBeVisible();
  await page.getByRole('button',{name:/Создать свой бит/}).click();
- await expect(page.getByRole('button',{name:/Скачать MP3/})).toBeVisible();
- await expect(page.locator('.track')).toHaveCount(8);
- await page.getByRole('button',{name:/Отключить Бочка/}).click();
- await page.getByRole('button',{name:/Соло Малый барабан/}).click();
+ await expect(page.locator('iframe[title*="NeonDAW"]')).toBeVisible();
+ await expect(page.frameLocator('iframe[title*="NeonDAW"]').locator('body')).toBeVisible();
 });
 test('gallery opens, advances and closes',async({page})=>{
  await page.goto('./art');
