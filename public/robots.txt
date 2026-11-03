@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mumortsev.github.io/TO_startup/sitemap.xml
