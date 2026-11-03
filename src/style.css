@@ -73,3 +73,6 @@ img{background:#8c81752a}
 @media(prefers-reduced-motion:reduce){.world img,.world:hover img{transform:none!important}}
 .beat-error{color:#ffc1b1;font-weight:700}
 .beat-controls button:disabled{opacity:.5;cursor:wait}
+
+/* Explicit two-step world selection */
+.home-enter{position:fixed;z-index:20;left:50%;bottom:72px;transform:translateX(-50%);background:#f4e8ce;color:#171717;border:1px solid #fff5d9;border-radius:100px;padding:16px 26px;font-weight:800;letter-spacing:.09em;box-shadow:0 10px 45px #0008;cursor:pointer;max-width:calc(100vw - 30px);white-space:normal;text-align:center;animation:enter-pop .35s ease-out}.home-enter:hover{background:#fff;color:#000}@keyframes enter-pop{from{opacity:0;transform:translate(-50%,18px)}to{opacity:1;transform:translate(-50%,0)}}.worlds.art .world.art,.worlds.music .world.music{outline:3px solid #f4e8ce;outline-offset:-5px}.world{touch-action:pan-y}@media(max-width:700px){.home-enter{bottom:62px;font-size:12px;padding:13px 20px}.swatches{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:7px}.swatches button{min-width:0}}
