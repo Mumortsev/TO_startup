@@ -14,6 +14,8 @@ jobs:
       - run: npm install
       - run: npm test
       - run: npm run build
+      - name: Build full upstream creative applications
+        run: bash scripts/build-upstream-engines.sh
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - name: Verify published assets
