@@ -68,3 +68,8 @@ img{background:#8c81752a}
 }
 @media(max-width:359px){.world-text strong{font-size:42px}.home-title{font-size:18px}.studio nav{gap:8px}.studio nav button,.studio nav a{font-size:10px}.gallery{grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){.world img{will-change:auto}}
+
+@media(hover:hover) and (pointer:fine){.world img{transform:translate3d(var(--px,0px),var(--py,0px),0) scale(1.045)}.world:hover img,.world:focus img{transform:translate3d(var(--px,0px),var(--py,0px),0) scale(1.105)}}
+@media(prefers-reduced-motion:reduce){.world img,.world:hover img{transform:none!important}}
+.beat-error{color:#ffc1b1;font-weight:700}
+.beat-controls button:disabled{opacity:.5;cursor:wait}
