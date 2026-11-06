@@ -234,21 +234,75 @@ function Home() {
   const root = useRef<HTMLElement>(null);
   const entering = useRef(false);
   const animation = useRef<gsap.core.Timeline | null>(null);
-  useEffect(() => () => { animation.current?.kill(); }, []);
+  const overlay = useRef<HTMLDivElement | null>(null);
+  const frame = useRef(0);
+  useEffect(() => () => {
+    cancelAnimationFrame(frame.current);
+    animation.current?.kill();
+    overlay.current?.remove();
+  }, []);
   function choose(event: React.MouseEvent<HTMLElement>) {
     const card = (event.target as Element).closest<HTMLAnchorElement>('a.world');
     if (!card || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     if (entering.current) { event.preventDefault(); event.stopPropagation(); return; }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!root.current) return;
     event.preventDefault(); event.stopPropagation(); entering.current = true;
-    root.current?.setAttribute('aria-busy', 'true');
+
+    // Read geometry once. The original card stays in its grid cell throughout.
     const rect = card.getBoundingClientRect();
+    const style = getComputedStyle(card);
+    const background = style.backgroundColor;
+    const radius = parseFloat(style.borderTopLeftRadius) || 26;
+    const width = window.innerWidth, height = window.innerHeight;
+    const overscanX = radius * width / Math.max(1, rect.width - radius * 2) + 2;
+    const overscanY = radius * height / Math.max(1, rect.height - radius * 2) + 2;
     const path = new URL(card.href).pathname.slice(base.length);
-    const others = root.current?.querySelectorAll('.world, .home-signature, .home-social');
-    animation.current = gsap.timeline({ onComplete: () => navigate(path) });
-    if (others) animation.current.to(Array.from(others).filter(node => node !== card), { opacity: 0, duration: 0.18 }, 0);
-    gsap.set(card, { position: 'fixed', left: rect.left, top: rect.top, width: rect.width, height: rect.height, margin: 0, zIndex: 50 });
-    animation.current.to(card, { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight, borderRadius: 0, duration: 0.55, ease: 'power3.inOut' }, 0);
+    const artwork = Array.from(card.querySelectorAll<HTMLElement>('.home-fish, .record'));
+    const transforms = artwork.map(node => getComputedStyle(node).transform);
+    const others = Array.from(root.current.querySelectorAll('.world, .home-signature, .home-social')).filter(node => node !== card);
+
+    const layer = document.createElement('div');
+    layer.className = 'home-transition';
+    layer.setAttribute('aria-hidden', 'true');
+    layer.inert = true;
+    const surface = document.createElement('div');
+    surface.className = 'home-transition-surface';
+    const content = card.cloneNode(true) as HTMLAnchorElement;
+    content.classList.add('home-transition-card');
+    content.removeAttribute('href');
+    content.tabIndex = -1;
+    content.querySelectorAll<HTMLElement>('.home-fish, .record').forEach((node, index) => {
+      node.style.transform = transforms[index];
+    });
+    layer.append(surface, content);
+    root.current.append(layer);
+    overlay.current = layer;
+    root.current.setAttribute('aria-busy', 'true');
+    gsap.set([surface, content], { left: rect.left, top: rect.top, width: rect.width, height: rect.height, force3D: true });
+    gsap.set(surface, { backgroundColor: background, borderRadius: radius, transformOrigin: '0 0' });
+    gsap.set(content, { transformOrigin: '50% 50%' });
+    card.style.visibility = 'hidden';
+
+    // Give the browser a frame to prepare the two temporary compositor layers.
+    frame.current = requestAnimationFrame(() => {
+      frame.current = requestAnimationFrame(() => {
+        animation.current = gsap.timeline({ defaults: { duration: 0.62, ease: 'power2.inOut' }, onComplete: () => navigate(path) });
+        animation.current.to(others, { opacity: 0, duration: 0.22 }, 0);
+        // Overscan hides the rounded edges at the end without repainting radii.
+        animation.current.to(surface, {
+          x: -rect.left - overscanX,
+          y: -rect.top - overscanY,
+          scaleX: (width + overscanX * 2) / rect.width,
+          scaleY: (height + overscanY * 2) / rect.height,
+        }, 0);
+        animation.current.to(content, {
+          x: width / 2 - rect.left - rect.width / 2,
+          y: height / 2 - rect.top - rect.height / 2,
+          scale: Math.min(width / rect.width, height / rect.height) * 1.02,
+        }, 0);
+      });
+    });
   }
   return (
     <main className="site-home" id="main" ref={root} onClickCapture={choose}>
