@@ -60,6 +60,6 @@ localizeMusic(directory);
 
 // Replace presentation only after upstream integration patches; audio and stores stay intact.
 prepareRock(directory);
-for (const file of ["App.tsx", "rhythm.css", "rockProject.ts", "RockStudio.tsx"]) {
+for (const file of ["App.tsx", "rhythm.css", "sequencerProject.ts"]) {
   copyFileSync(new URL("./music/" + file, import.meta.url), join(directory, "src", file));
 }

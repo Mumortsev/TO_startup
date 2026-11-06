@@ -65,4 +65,29 @@ export function prepareRock(directory) {
         } else if (ch.kind === 'drum' && ch.drumType) {`);
   edit('audio/offlineRender.ts', 'if (midis.length) pendingReady.push(sample.prepare(midis));', "if (midis.length) pendingReady.push(sample.prepare(midis).then(() => { if (ch.sampleInstrument?.startsWith('rock-') && midis.some(m => !sample.isLoaded(m))) throw new Error('Записи инструмента не загрузились'); }));");
   edit('audio/offlineRender.ts', '          if (v.drum) {\n            v.drum.trigger', "          if (ch.kind === 'drum' && v.sample) {\n            v.sample.trigger(60, 12, time, vel01(sd.velocity));\n          } else if (v.drum) {\n            v.drum.trigger");
+  edit('types/project.ts', 'bars: 1 | 2 | 4 | 8;', 'bars: number;');
+  edit('audio/offlineRender.ts', 'const MAX_RENDER_SECONDS = 300;', 'const MAX_RENDER_SECONDS = 600;');
+  edit('audio/offlineRender.ts', '  const duration = Math.min(MAX_RENDER_SECONDS, totalSteps * secPerStep + TAIL_SECONDS);', "  if (totalSteps * secPerStep + TAIL_SECONDS > MAX_RENDER_SECONDS) throw new Error('Трек длиннее 10 минут. Выберите меньший участок для экспорта.');\n  const duration = totalSteps * secPerStep + TAIL_SECONDS;");
+  edit('audio/engine.ts', 'export class AudioEngine {', `export class AudioEngine {
+  private playbackRange: { startBar: number; endBar: number } | null = null;
+  private rangeStartStep = 0;
+  setPlaybackRange(range: { startBar: number; endBar: number } | null): void {
+    this.playbackRange = range;
+    this.applyLoop(true);
+  }`);
+  edit('audio/engine.ts', "    transport.start('+0.05');", "    this.step = Math.max(this.rangeStartStep, this.step);\n    transport.ticks = this.step * transport.PPQ / 4;\n    transport.start('+0.05');");
+  edit('audio/engine.ts', 'const clamped = Math.max(0, Math.min(region - 1, Math.floor(step)));', 'const clamped = Math.max(this.rangeStartStep, Math.min(region - 1, Math.floor(step)));');
+  edit('audio/engine.ts', 'this.step = next >= total ? 0 : next;', 'this.step = next >= total ? this.rangeStartStep : next;');
+  edit('audio/engine.ts', '    const regionSteps = regionBars * 16;', `    const range = ui.playMode === 'pattern' ? this.playbackRange : null;
+    const startBar = range ? Math.max(0, Math.min(patBars - 1, range.startBar)) : 0;
+    const endBar = range ? Math.max(startBar + 1, Math.min(patBars, range.endBar)) : regionBars;
+    this.rangeStartStep = startBar * 16;
+    const regionSteps = endBar * 16;`);
+  edit('audio/engine.ts', 'const sig = `${ui.loopOn}|${ui.playMode}|${regionBars}|${proj.currentPatternId}`;', 'const sig = `${ui.loopOn}|${ui.playMode}|${startBar}|${endBar}|${proj.currentPatternId}`;');
+  edit('audio/engine.ts', '      transport.loopStart = 0;\n      transport.loopEnd = `${regionBars}m`;', '      transport.loopStart = `${startBar}m`;\n      transport.loopEnd = `${endBar}m`;');
+
+  edit('audio/engine.ts', '      if (n.startStep === patternStep) {', `      if (n.startStep === patternStep || (this.playbackRange && patternStep === this.rangeStartStep && n.startStep < patternStep && n.startStep + n.lengthSteps > patternStep)) {`);
+  edit('audio/engine.ts', '        this.triggerSynthNote(n.channelId, n.pitch, n.velocity, time, n.lengthSteps);', `        const length = this.playbackRange ? Math.min(n.startStep + n.lengthSteps, this.loopCtx.steps) - patternStep : n.lengthSteps;
+        this.triggerSynthNote(n.channelId, n.pitch, n.velocity, time, length);`);
+
 }

@@ -71,7 +71,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
           ← <span>К студии</span>
         </button>
         <strong>
-          stARTup <span> / Рок-студия</span>
+          stARTup <span> / Ритм</span>
         </strong>
         <div className="engine-links">
           {document.fullscreenEnabled && (
@@ -98,7 +98,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
           <iframe
             key={attempt}
             ref={frame}
-            title="Рок-студия и ритм-секвенсор stARTup"
+            title="Ритм-секвенсор stARTup"
             src={source}
             allow="autoplay; microphone"
             allowFullScreen

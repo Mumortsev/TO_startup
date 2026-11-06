@@ -1979,3 +1979,12 @@ button:active,
 .enrollment-form p { font-size: 12px; line-height: 1.6; }
 .enrollment-form .button { justify-self: start; }
 .direction-copy > a { position: static; display: inline-flex; width: auto; font-size: 12px; text-decoration: underline; margin-top: 12px; }
+
+/* Rounded equal entrance cards leave a frame within the fixed viewport. */
+.site-home .worlds { padding: max(36px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(36px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left)); gap: 16px; }
+.site-home .world { border-radius: 26px; }
+.site-home[aria-busy="true"] { pointer-events: none; }
+@media (orientation: landscape) and (max-height: 500px) {
+  .site-home .worlds { padding-block: 30px; gap: 12px; }
+  .site-home .world { border-radius: 20px; }
+}

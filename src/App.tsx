@@ -231,8 +231,27 @@ function Footer() {
   );
 }
 function Home() {
+  const root = useRef<HTMLElement>(null);
+  const entering = useRef(false);
+  const animation = useRef<gsap.core.Timeline | null>(null);
+  useEffect(() => () => { animation.current?.kill(); }, []);
+  function choose(event: React.MouseEvent<HTMLElement>) {
+    const card = (event.target as Element).closest<HTMLAnchorElement>('a.world');
+    if (!card || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (entering.current) { event.preventDefault(); event.stopPropagation(); return; }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    event.preventDefault(); event.stopPropagation(); entering.current = true;
+    root.current?.setAttribute('aria-busy', 'true');
+    const rect = card.getBoundingClientRect();
+    const path = new URL(card.href).pathname.slice(base.length);
+    const others = root.current?.querySelectorAll('.world, .home-signature, .home-social');
+    animation.current = gsap.timeline({ onComplete: () => navigate(path) });
+    if (others) animation.current.to(Array.from(others).filter(node => node !== card), { opacity: 0, duration: 0.18 }, 0);
+    gsap.set(card, { position: 'fixed', left: rect.left, top: rect.top, width: rect.width, height: rect.height, margin: 0, zIndex: 50 });
+    animation.current.to(card, { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight, borderRadius: 0, duration: 0.55, ease: 'power3.inOut' }, 0);
+  }
   return (
-    <main className="site-home" id="main">
+    <main className="site-home" id="main" ref={root} onClickCapture={choose}>
       <h1 className="visually-hidden">Два мира творчества — Music & Art</h1>
       <div className="home-signature">music & art · Лазаревское</div>
       <section className="worlds" aria-label="Выберите творческую студию">
@@ -537,10 +556,10 @@ function Studio({ kind }: { kind: "art" | "music" }) {
             <p>
               {isArt
                 ? "Выбирай настоящую иллюстрацию и раскрашивай одним касанием. Продолжай в удобное время и сохраняй готовый рисунок."
-                : "Создай рок-основу с настоящими барабанами, гитарой и басом. Измени мелодию и скачай свой инструментал в WAV."}
+                : "Настрой барабаны, гитару и бас в одной сетке. Создай трек длиной до 128 тактов и скачай его в WAV."}
             </p>
             <Link to={isArt ? "/art/draw" : "/music/studio"} className="button">
-              {isArt ? "Открыть раскраски" : "Создать инструментал"}
+              {isArt ? "Открыть раскраски" : "Открыть секвенсор"}
             </Link>
             <span className="experience-hint">
               Без регистрации. Просто попробуй.
@@ -719,7 +738,7 @@ export default function App() {
       "/art/draw":
         "69 настоящих иллюстраций: раскрашивание касанием, сохранение прогресса и экспорт PNG.",
       "/music/studio":
-        "Рок-инструментал с гитарой, басом и барабанами: редактор нот, микшер и скачивание WAV.",
+        "Ритм-секвенсор до 128 тактов: настоящие барабаны, гитара, бас и скачивание WAV.",
     };
     const description = descriptions[path] || descriptions["/"];
     document
