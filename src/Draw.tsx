@@ -1,24 +1,619 @@
-import {useEffect,useRef,useState} from 'react';
-import {coloringPages,type ColoringPage} from './coloringPages';
-import './MagicColoring.css';
-const BASE='/TO_startup/coloring/';
-const COLORS=['#ffb86b','#ff806f','#ed6d9d','#a38de5','#68c5ee','#61c4ae','#a5d86a','#f9e16c','#ffffff','#5a79b4','#a77754','#343f59'];
-const SIZE=850;
-type Saved=Record<string,string>;
-function getSaved():Saved{try{return JSON.parse(localStorage.getItem('rybka-coloring-v2')||'{}')}catch{return {}}}
-export default function Draw({onBack}:{onBack:()=>void}){
- const [category,setCategory]=useState('all'),[query,setQuery]=useState(''),[page,setPage]=useState<ColoringPage|null>(null),[color,setColor]=useState(COLORS[0]),[saved,setSaved]=useState<Saved>(getSaved),[undoStack,setUndoStack]=useState<ImageData[]>([]),[message,setMessage]=useState(''),[loading,setLoading]=useState(false);
- const paint=useRef<HTMLCanvasElement>(null),outline=useRef<HTMLCanvasElement>(null),paintImage=useRef<ImageData|null>(null),mask=useRef<Uint8Array|null>(null),busy=useRef(false);
- const list=coloringPages.filter(p=>(category==='all'||p.category===category)&&p.name.toLocaleLowerCase('ru').includes(query.toLocaleLowerCase('ru')));
- const src=(id:string)=>BASE+id+'.svg';
- useEffect(()=>{if(!page)return;let cancelled=false;setLoading(true);setUndoStack([]);setMessage('');const image=new Image();image.onload=()=>{if(cancelled)return;const oc=outline.current,pc=paint.current;if(!oc||!pc)return;const ctx=oc.getContext('2d',{willReadFrequently:true}),pctx=pc.getContext('2d',{willReadFrequently:true});if(!ctx||!pctx)return;ctx.clearRect(0,0,SIZE,SIZE);pctx.fillStyle='#fff';pctx.fillRect(0,0,SIZE,SIZE);const scale=Math.min((SIZE-42)/image.width,(SIZE-42)/image.height);const w=image.width*scale,h=image.height*scale;ctx.drawImage(image,(SIZE-w)/2,(SIZE-h)/2,w,h);const data=ctx.getImageData(0,0,SIZE,SIZE).data;const m=new Uint8Array(SIZE*SIZE);for(let i=0;i<m.length;i++){const j=i*4;m[i]=data[j+3]>35&&((data[j]+data[j+1]+data[j+2])/3)<205?1:0}mask.current=m;const prev=saved[page.id];if(prev){const restored=new Image();restored.onload=()=>{if(cancelled)return;pctx.drawImage(restored,0,0,SIZE,SIZE);paintImage.current=pctx.getImageData(0,0,SIZE,SIZE);setLoading(false)};restored.onerror=()=>{paintImage.current=pctx.getImageData(0,0,SIZE,SIZE);setLoading(false)};restored.src=prev}else{paintImage.current=pctx.getImageData(0,0,SIZE,SIZE);setLoading(false)}};image.onerror=()=>{if(!cancelled){setLoading(false);setMessage('Не удалось загрузить рисунок. Выбери другой.')}};image.src=src(page.id);return()=>{cancelled=true}},[page]);
- function remember(){if(!page||!paint.current)return;try{const data=paint.current.toDataURL('image/png');setSaved(s=>{const next={...s,[page.id]:data};try{localStorage.setItem('rybka-coloring-v2',JSON.stringify(next))}catch{setMessage('Память устройства заполнена. Скачай рисунок, чтобы не потерять его.')}return next})}catch{}}
- function fill(e:React.PointerEvent<HTMLCanvasElement>){if(!page||loading||busy.current||!mask.current||!paint.current)return;e.preventDefault();const rect=e.currentTarget.getBoundingClientRect(),x=Math.min(SIZE-1,Math.max(0,Math.floor((e.clientX-rect.left)*SIZE/rect.width))),y=Math.min(SIZE-1,Math.max(0,Math.floor((e.clientY-rect.top)*SIZE/rect.height)));const start=y*SIZE+x;if(mask.current[start])return;const ctx=paint.current.getContext('2d',{willReadFrequently:true});if(!ctx)return;busy.current=true;try{const im=ctx.getImageData(0,0,SIZE,SIZE),d=im.data,old=start*4,original=[d[old],d[old+1],d[old+2]];const target=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16));if(original.every((v,i)=>Math.abs(v-target[i])<6))return;const prev=new ImageData(new Uint8ClampedArray(d),SIZE,SIZE);const seen=new Uint8Array(SIZE*SIZE),queue=new Int32Array(SIZE*SIZE);let head=0,tail=1;queue[0]=start;seen[start]=1;const bound=mask.current;let changed=0;while(head<tail){const n=queue[head++],o=n*4;if(bound[n]||Math.abs(d[o]-original[0])>25||Math.abs(d[o+1]-original[1])>25||Math.abs(d[o+2]-original[2])>25)continue;d[o]=target[0];d[o+1]=target[1];d[o+2]=target[2];d[o+3]=255;changed++;const xx=n%SIZE,yy=(n/SIZE)|0;const next=[xx>0?n-1:-1,xx<SIZE-1?n+1:-1,yy>0?n-SIZE:-1,yy<SIZE-1?n+SIZE:-1];for(const z of next){if(z>=0&&!seen[z]){seen[z]=1;queue[tail++]=z}}}if(changed){setUndoStack(s=>[...s.slice(-11),prev]);ctx.putImageData(im,0,0);paintImage.current=im;remember()}}finally{busy.current=false}}
- function undo(){if(!paint.current||!undoStack.length)return;const last=undoStack[undoStack.length-1];paint.current.getContext('2d')?.putImageData(last,0,0);setUndoStack(s=>s.slice(0,-1));remember()}
- function reset(){if(!paint.current||!confirm('Очистить раскраску и начать заново?'))return;const ctx=paint.current.getContext('2d',{willReadFrequently:true});if(!ctx)return;setUndoStack(s=>[...s.slice(-11),ctx.getImageData(0,0,SIZE,SIZE)]);ctx.fillStyle='#fff';ctx.fillRect(0,0,SIZE,SIZE);remember()}
- function download(){if(!paint.current||!outline.current||!page)return;const c=document.createElement('canvas');c.width=SIZE;c.height=SIZE;const ctx=c.getContext('2d');if(!ctx)return;ctx.drawImage(paint.current,0,0);ctx.drawImage(outline.current,0,0);c.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Рыбка-'+page.name+'.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)},'image/png')}
- return <main className="magic-app"><header className="magic-header"><button className="magic-back" aria-label="Назад" onClick={()=>page?setPage(null):onBack()}>← <span>Назад</span></button><div className="magic-brand"><small>ТВОРЧЕСКАЯ МАСТЕРСКАЯ</small><strong>Волшебная <i>Рыбка</i></strong></div><button className="magic-help" onClick={()=>setMessage('Выбери цвет и нажми на любую белую область рисунка. Картинку можно сохранить кнопкой «Скачать».')} aria-label="Помощь">?</button></header>
- {!page?<section className="magic-start"><span className="magic-eyebrow">ГАЛЕРЕЯ РАСКРАСОК</span><h1>Выбери свою <em>картинку!</em></h1><p>Настоящие рисунки для маленьких художников. Нажми на любой, чтобы начать!</p><div className="magic-filters">{[['all','Все'],['sea','Море'],['animals','Животные'],['fantasy','Сказки'],['nature','Природа'],['patterns','Узоры']].map(([id,label])=><button key={id} className={category===id?'active':''} onClick={()=>setCategory(id)}>{label}</button>)}</div><input className="magic-search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Найти раскраску…" aria-label="Поиск раскраски"/><p className="magic-count">Найдено: {list.length}</p><div className="magic-gallery">{list.map(p=><button key={p.id} className="magic-card" onClick={()=>setPage(p)}><div className="magic-preview"><img loading="lazy" src={src(p.id)} alt={p.name}/></div><span>{p.name}</span><small>{saved[p.id]?'Продолжить →':'Раскрасить →'}</small></button>)}</div><p className="magic-credit">Иллюстрации: Pavel Kukov и авторы коллекции Coloring Pages · <a href="https://github.com/pavelkukov/coloring-pages" target="_blank" rel="noopener noreferrer">Источник и лицензия CC BY-SA 4.0</a></p></section>:
- <section className="magic-work"><div className="magic-worktop"><div><small>РАСКРАСКА</small><h1>{page.name}</h1></div><div className="magic-actions"><button onClick={undo} disabled={!undoStack.length}>↶ <span>Отмена</span></button><button onClick={reset}>↻ <span>Заново</span></button><button className="magic-save" onClick={download}>↓ <span>Скачать</span></button></div></div><div className="magic-stage magic-real-stage"><div className="magic-canvas-stack"><canvas ref={paint} width={SIZE} height={SIZE} onPointerDown={fill} aria-label={'Раскрасить '+page.name}/><canvas ref={outline} width={SIZE} height={SIZE} aria-hidden="true"/></div>{loading&&<div className="magic-loading">Загружаем рисунок…</div>}</div><div className="magic-bottom"><p>Выбери цвет и нажми на область рисунка ✦</p><div className="magic-colors" role="group" aria-label="Палитра">{COLORS.map((c,i)=><button key={c} onClick={()=>setColor(c)} aria-label={'Цвет '+(i+1)} aria-pressed={color===c} className={color===c?'chosen':''} style={{'--swatch':c} as React.CSSProperties}><span/></button>)}<label className="magic-custom">＋<input type="color" aria-label="Свой цвет" value={color} onChange={e=>setColor(e.target.value)}/></label></div></div><p className="magic-credit">Рисунок из коллекции <a href="https://github.com/pavelkukov/coloring-pages" target="_blank" rel="noopener noreferrer">Coloring Pages (CC BY-SA 4.0)</a></p></section>}
- {message&&<div className="magic-overlay" onClick={()=>setMessage('')}><div className="magic-modal" role="dialog" aria-modal="true" onClick={e=>e.stopPropagation()}><button className="magic-close" onClick={()=>setMessage('')}>×</button><h2>Подсказка 🐠</h2><p>{message}</p><button className="magic-ok" onClick={()=>setMessage('')}>Понятно!</button></div></div>}</main>
+import { useEffect, useRef, useState } from "react";
+import {
+  coloringPages,
+  COLORING_REVISION,
+  type ColoringPage,
+} from "./coloringPages";
+import {
+  makeRegions,
+  findRegion,
+  paintRegions,
+  transparentInk,
+  type RegionMap,
+} from "./coloringEngine";
+import { listProgress, readProgress, writeProgress } from "./coloringStorage";
+import "./MagicColoring.css";
+const BASE = "/TO_startup/coloring/";
+const COLORS = [
+  "#ffb86b",
+  "#ff806f",
+  "#ed6d9d",
+  "#a38de5",
+  "#68c5ee",
+  "#61c4ae",
+  "#a5d86a",
+  "#f9e16c",
+  "#ffffff",
+  "#5a79b4",
+  "#a77754",
+  "#343f59",
+];
+const COLOR_NAMES = [
+  "Абрикосовый",
+  "Коралловый",
+  "Розовый",
+  "Сиреневый",
+  "Голубой",
+  "Бирюзовый",
+  "Зелёный",
+  "Жёлтый",
+  "Белый",
+  "Синий",
+  "Коричневый",
+  "Графитовый",
+];
+const SIZE = 850;
+const source = (id: string) => BASE + id + ".svg";
+export default function Draw({ onBack }: { onBack: () => void }) {
+  const [category, setCategory] = useState("all"),
+    [query, setQuery] = useState(""),
+    [page, setPage] = useState<ColoringPage | null>(null),
+    [color, setColor] = useState(COLORS[0]);
+  const [saved, setSaved] = useState<string[]>([]),
+    [history, setHistory] = useState<string[][]>([]),
+    [loading, setLoading] = useState(false),
+    [error, setError] = useState(""),
+    [status, setStatus] = useState(""),
+    [dialog, setDialog] = useState<"help" | "reset" | null>(null),
+    [zoom, setZoom] = useState(1),
+    [keyboardRegion, setKeyboardRegion] = useState(-1);
+  const paint = useRef<HTMLCanvasElement>(null),
+    outline = useRef<HTMLCanvasElement>(null),
+    geometry = useRef<RegionMap | null>(null),
+    colors = useRef<string[]>([]),
+    modal = useRef<HTMLDivElement>(null),
+    returnFocus = useRef<HTMLElement | null>(null),
+    saveSequence = useRef(0),
+    pageRef = useRef(page),
+    pointerStart = useRef<{ x: number; y: number } | null>(null);
+  pageRef.current = page;
+  const list = coloringPages.filter(
+    (p) =>
+      (category === "all" || p.category === category) &&
+      p.name
+        .toLocaleLowerCase("ru")
+        .includes(query.trim().toLocaleLowerCase("ru")),
+  );
+  useEffect(() => {
+    listProgress()
+      .then((keys) => setSaved(keys.map(String)))
+      .catch(() =>
+        setStatus(
+          "Автосохранение недоступно. Скачайте рисунок перед закрытием.",
+        ),
+      );
+  }, []);
+  useEffect(() => {
+    if (!dialog) return;
+    returnFocus.current = document.activeElement as HTMLElement;
+    modal.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    return () => returnFocus.current?.focus();
+  }, [dialog]);
+  function render() {
+    const ctx = paint.current?.getContext("2d");
+    if (!ctx || !geometry.current) return;
+    const pixels = ctx.createImageData(SIZE, SIZE);
+    paintRegions(pixels.data, geometry.current, colors.current);
+    ctx.putImageData(pixels, 0, 0);
+  }
+  useEffect(() => {
+    geometry.current = null;
+    colors.current = [];
+    setHistory([]);
+    setZoom(1);
+    setKeyboardRegion(-1);
+    setError("");
+    setStatus("");
+    if (!page) return;
+    let cancelled = false;
+    setLoading(true);
+    const image = new Image();
+    image.onload = async () => {
+      if (cancelled) return;
+      const oc = outline.current;
+      if (!oc) return;
+      const ctx = oc.getContext("2d", { willReadFrequently: true });
+      if (!ctx) return;
+      ctx.clearRect(0, 0, SIZE, SIZE);
+      const scale = Math.min(
+          (SIZE - 36) / image.naturalWidth,
+          (SIZE - 36) / image.naturalHeight,
+        ),
+        w = image.naturalWidth * scale,
+        h = image.naturalHeight * scale;
+      ctx.drawImage(image, (SIZE - w) / 2, (SIZE - h) / 2, w, h);
+      const raster = ctx.getImageData(0, 0, SIZE, SIZE);
+      const map = makeRegions(raster.data, SIZE, SIZE);
+      transparentInk(raster.data);
+      ctx.putImageData(raster, 0, 0);
+      let progress;
+      try {
+        progress = await readProgress(page.id);
+      } catch {
+        if (!cancelled)
+          setStatus(
+            "Автосохранение недоступно. Скачайте рисунок перед закрытием.",
+          );
+      }
+      if (cancelled) return;
+      geometry.current = map;
+      colors.current =
+        progress?.revision === COLORING_REVISION &&
+        progress.colors.length === map.sizes.length
+          ? progress.colors
+          : Array(map.sizes.length).fill("#ffffff");
+      render();
+      setLoading(false);
+    };
+    image.onerror = () => {
+      if (!cancelled) {
+        setLoading(false);
+        setError(
+          "Не удалось загрузить рисунок. Вернитесь в галерею и попробуйте снова.",
+        );
+      }
+    };
+    image.src = source(page.id);
+    return () => {
+      cancelled = true;
+      geometry.current = null;
+      colors.current = [];
+    };
+  }, [page]);
+  function remember() {
+    if (!page) return;
+    const id = page.id,
+      sequence = ++saveSequence.current;
+    setStatus("Сохраняем…");
+    writeProgress({
+      id,
+      colors: [...colors.current],
+      revision: COLORING_REVISION,
+      updated: Date.now(),
+    })
+      .then(() => {
+        setSaved((s) => (s.includes(id) ? s : [...s, id]));
+        if (pageRef.current?.id === id && sequence === saveSequence.current)
+          setStatus("Сохранено на этом устройстве");
+      })
+      .catch(() => {
+        if (pageRef.current?.id === id)
+          setStatus("Не удалось сохранить. Скачайте рисунок перед закрытием.");
+      });
+  }
+  function fillRegion(id: number) {
+    if (
+      loading ||
+      error ||
+      id < 0 ||
+      !geometry.current ||
+      colors.current[id] === color
+    )
+      return;
+    const previous = [...colors.current];
+    setHistory((s) => [...s.slice(-29), previous]);
+    colors.current[id] = color;
+    render();
+    remember();
+  }
+  function fill(e: React.PointerEvent<HTMLCanvasElement>) {
+    if (!geometry.current || e.button !== 0) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    fillRegion(
+      findRegion(
+        geometry.current,
+        ((e.clientX - rect.left) * SIZE) / rect.width,
+        ((e.clientY - rect.top) * SIZE) / rect.height,
+        4,
+      ),
+    );
+  }
+  function undo() {
+    const last = history[history.length - 1];
+    if (!last) return;
+    colors.current = [...last];
+    setHistory((s) => s.slice(0, -1));
+    render();
+    remember();
+  }
+  function reset() {
+    const previous = [...colors.current];
+    setHistory((s) => [...s.slice(-29), previous]);
+    colors.current.fill("#ffffff");
+    render();
+    remember();
+    setDialog(null);
+  }
+  function keyboard(e: React.KeyboardEvent<HTMLCanvasElement>) {
+    if (!geometry.current) return;
+    const map = geometry.current,
+      available = map.sizes
+        .map((size, id) => ({ size, id }))
+        .filter((x) => x.size >= 20)
+        .map((x) => x.id);
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      const current = available.indexOf(keyboardRegion),
+        step = e.key === "ArrowRight" ? 1 : -1;
+      const id =
+        available[(current + step + available.length) % available.length];
+      setKeyboardRegion(id);
+      setStatus(
+        "Область " +
+          (available.indexOf(id) + 1) +
+          " из " +
+          available.length +
+          ". Enter — закрасить.",
+      );
+    }
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      fillRegion(keyboardRegion >= 0 ? keyboardRegion : available[0]);
+    }
+  }
+  function download() {
+    if (!paint.current || !outline.current || !page || loading || error) return;
+    const c = document.createElement("canvas");
+    c.width = SIZE;
+    c.height = SIZE + 54;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(paint.current, 0, 0);
+    ctx.drawImage(outline.current, 0, 0);
+    ctx.fillStyle = "#343f59";
+    ctx.font = "12px sans-serif";
+    ctx.fillText(page.name + " · " + page.author, 18, SIZE + 21, SIZE - 36);
+    ctx.fillText(
+      "Coloring Pages / Pavel Kukov · CC BY-SA 4.0 · github.com/pavelkukov/coloring-pages",
+      18,
+      SIZE + 40,
+      SIZE - 36,
+    );
+    c.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob),
+        a = document.createElement("a");
+      a.href = url;
+      a.download = "Рыбка-" + page.name + ".png";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }, "image/png");
+  }
+  const keyboardSeed =
+    keyboardRegion >= 0 && geometry.current
+      ? geometry.current.seeds[keyboardRegion]
+      : null;
+  return (
+    <main className="magic-app">
+      <header className="magic-header">
+        <button
+          className="magic-back"
+          aria-label={page ? "Назад в галерею" : "Назад в мастерскую"}
+          onClick={() => (page ? setPage(null) : onBack())}
+        >
+          ← <span>Назад</span>
+        </button>
+        <div className="magic-brand">
+          <small>Творческая мастерская</small>
+          <strong>
+            Волшебная <i>Рыбка</i>
+          </strong>
+        </div>
+        <button
+          className="magic-help"
+          onClick={() => setDialog("help")}
+          aria-label="Как раскрашивать"
+        >
+          ?
+        </button>
+      </header>
+      {!page ? (
+        <section className="magic-start">
+          <span className="magic-eyebrow">Галерея раскрасок</span>
+          <h1>
+            Выбери свою <em>картинку!</em>
+          </h1>
+          <p>
+            Выберите рисунок и раскрашивайте одним касанием. Прогресс
+            сохраняется на этом устройстве.
+          </p>
+          <div className="magic-filters" aria-label="Категории">
+            {[
+              ["all", "Все"],
+              ["sea", "Море"],
+              ["animals", "Животные"],
+              ["fantasy", "Сказки"],
+              ["nature", "Природа"],
+              ["things", "Предметы"],
+              ["patterns", "Узоры"],
+            ].map(([id, label]) => (
+              <button
+                key={id}
+                aria-pressed={category === id}
+                className={category === id ? "active" : ""}
+                onClick={() => setCategory(id)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <input
+            type="search"
+            className="magic-search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Найти раскраску…"
+            aria-label="Поиск раскраски"
+          />
+          <p className="magic-count" role="status">
+            Найдено: {list.length}
+          </p>
+          {list.length === 0 && (
+            <div className="magic-empty">
+              <p>
+                Такой картинки пока нет. Попробуйте другое название или
+                категорию.
+              </p>
+              <button
+                onClick={() => {
+                  setQuery("");
+                  setCategory("all");
+                }}
+              >
+                Показать все рисунки
+              </button>
+            </div>
+          )}
+          <div className="magic-gallery">
+            {list.map((p) => (
+              <button
+                key={p.id}
+                className="magic-card"
+                onClick={() => setPage(p)}
+              >
+                <div className="magic-preview">
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    width="220"
+                    height="275"
+                    src={source(p.id)}
+                    alt=""
+                  />
+                </div>
+                <span>{p.name}</span>
+                <small>
+                  {saved.includes(p.id) ? "Продолжить →" : "Раскрасить →"}
+                </small>
+              </button>
+            ))}
+          </div>
+          <p className="magic-credit">
+            Pavel Kukov и авторы коллекции ·{" "}
+            <a href={BASE + "ACKNOWLEDGMENTS.md"}>Авторство</a> ·{" "}
+            <a href={BASE + "LICENSE.txt"}>CC BY-SA 4.0</a> ·{" "}
+            <a
+              href="https://github.com/pavelkukov/coloring-pages"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Исходные иллюстрации
+            </a>
+          </p>
+        </section>
+      ) : (
+        <section className="magic-work">
+          <div className="magic-worktop">
+            <div>
+              <small>Раскраска</small>
+              <h1>{page.name}</h1>
+            </div>
+            <div className="magic-actions">
+              <button onClick={undo} disabled={!history.length || loading}>
+                ↶ <span>Отмена</span>
+              </button>
+              <button
+                onClick={() => setDialog("reset")}
+                disabled={loading || !!error}
+              >
+                ↻ <span>Очистить</span>
+              </button>
+              <button
+                className="magic-save"
+                onClick={download}
+                disabled={loading || !!error}
+              >
+                ↓ <span>Скачать PNG</span>
+              </button>
+            </div>
+          </div>
+          <div className="magic-zoom" role="group" aria-label="Масштаб рисунка">
+            <button
+              aria-label="Уменьшить рисунок"
+              disabled={zoom === 1}
+              onClick={() => setZoom((z) => Math.max(1, z - 0.5))}
+            >
+              −
+            </button>
+            <span>{Math.round(zoom * 100)}%</span>
+            <button
+              aria-label="Увеличить рисунок"
+              disabled={zoom === 3}
+              onClick={() => setZoom((z) => Math.min(3, z + 0.5))}
+            >
+              +
+            </button>
+            <span className="magic-zoom-hint">Увеличьте мелкие детали</span>
+          </div>
+          <div className="magic-stage magic-real-stage" aria-busy={loading}>
+            <div className="magic-canvas-scroll">
+              <div
+                className="magic-canvas-stack"
+                style={{ width: zoom * 100 + "%", maxWidth: "none" }}
+              >
+                <canvas
+                  ref={paint}
+                  width={SIZE}
+                  height={SIZE}
+                  onPointerDown={(e) => {
+                    pointerStart.current = { x: e.clientX, y: e.clientY };
+                  }}
+                  onPointerCancel={() => {
+                    pointerStart.current = null;
+                  }}
+                  onPointerUp={(e) => {
+                    const start = pointerStart.current;
+                    pointerStart.current = null;
+                    if (
+                      start &&
+                      Math.hypot(e.clientX - start.x, e.clientY - start.y) < 10
+                    )
+                      fill(e);
+                  }}
+                  onKeyDown={keyboard}
+                  tabIndex={0}
+                  role="img"
+                  aria-label={"Раскрасить " + page.name}
+                  aria-describedby="coloring-instructions"
+                />
+                <canvas
+                  ref={outline}
+                  width={SIZE}
+                  height={SIZE}
+                  aria-hidden="true"
+                />
+                {keyboardSeed !== null && (
+                  <span
+                    className="magic-region-cursor"
+                    style={{
+                      left: ((keyboardSeed % SIZE) / SIZE) * 100 + "%",
+                      top: (Math.floor(keyboardSeed / SIZE) / SIZE) * 100 + "%",
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+            </div>
+            {loading && (
+              <div className="magic-loading" role="status">
+                Загружаем рисунок…
+              </div>
+            )}
+            {error && (
+              <div className="magic-loading" role="alert">
+                {error}
+              </div>
+            )}
+          </div>
+          <div className="magic-bottom">
+            <p id="coloring-instructions">
+              Выберите цвет и коснитесь области рисунка.
+              <span className="magic-keyboard-hint">
+                {" "}
+                Клавиатура: ← → выбирают область, Enter закрашивает.
+              </span>
+            </p>
+            <div className="magic-colors" role="group" aria-label="Палитра">
+              {COLORS.map((c, i) => (
+                <button
+                  key={c}
+                  onClick={() => setColor(c)}
+                  aria-label={COLOR_NAMES[i]}
+                  aria-pressed={color === c}
+                  className={color === c ? "chosen" : ""}
+                  style={{ "--swatch": c } as React.CSSProperties}
+                >
+                  <span />
+                </button>
+              ))}
+              <label className="magic-custom">
+                ＋
+                <input
+                  type="color"
+                  aria-label="Свой цвет"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                />
+              </label>
+            </div>
+          </div>
+          <p className="magic-status" role="status">
+            {status || "Рисунок сохраняется автоматически"}
+          </p>
+          <p className="magic-credit">
+            {page.author} ·{" "}
+            <a href={page.source} target="_blank" rel="noopener noreferrer">
+              Источник рисунка
+            </a>{" "}
+            · Коллекция Pavel Kukov ·{" "}
+            <a href={BASE + "LICENSE.txt"}>CC BY-SA 4.0</a>
+            <br />
+            При публикации раскрашенного рисунка сохраните авторство и эту
+            лицензию.
+          </p>
+        </section>
+      )}
+      {!page && status && (
+        <p className="magic-status" role="status">
+          {status}
+        </p>
+      )}
+      {dialog && (
+        <div
+          className="magic-overlay"
+          onClick={() => setDialog(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setDialog(null);
+            if (e.key === "Tab") {
+              const buttons =
+                modal.current?.querySelectorAll<HTMLButtonElement>("button");
+              if (!buttons?.length) return;
+              const first = buttons[0],
+                last = buttons[buttons.length - 1];
+              if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+              } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+              }
+            }
+          }}
+        >
+          <div
+            ref={modal}
+            className="magic-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="magic-dialog-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="magic-close"
+              aria-label="Закрыть подсказку"
+              onClick={() => setDialog(null)}
+            >
+              ×
+            </button>
+            <h2 id="magic-dialog-title">
+              {dialog === "reset" ? "Начать заново?" : "Как раскрашивать"}
+            </h2>
+            <p>
+              {dialog === "reset"
+                ? "Краски будут удалены. Это действие можно отменить кнопкой «Отмена»."
+                : "Выберите цвет и нажмите на белую область. Кнопки + и − увеличивают мелкие детали; увеличенный рисунок можно прокручивать пальцем. Цвета сохраняются на этом устройстве. Кнопка «Скачать PNG» сохранит готовый рисунок с контурами."}
+            </p>
+            <button
+              className="magic-ok"
+              onClick={() => (dialog === "reset" ? reset() : setDialog(null))}
+            >
+              {dialog === "reset" ? "Очистить рисунок" : "Понятно"}
+            </button>
+          </div>
+        </div>
+      )}
+    </main>
+  );
 }
