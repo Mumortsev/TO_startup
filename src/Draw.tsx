@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   coloringPages,
   COLORING_REVISION,
@@ -57,9 +57,9 @@ const COLOR_NAMES = [
 const SIZE = 850;
 const source = (id: string) => BASE + id + ".svg";
 export default function Draw({ onBack }: { onBack: () => void }) {
-  const [category, setCategory] = useState("all"),
-    [query, setQuery] = useState(""),
-    [page, setPage] = useState<ColoringPage | null>(null),
+  const [category, setCategory] = useState(() => window.history.state?.coloringGallery?.category || "all"),
+    [query, setQuery] = useState(() => window.history.state?.coloringGallery?.query || ""),
+    [page, setPage] = useState<ColoringPage | null>(() => coloringPages.find(p => p.id === window.history.state?.drawing) || null),
     [color, setColor] = useState(COLORS[0]);
   const [legacyIds, setLegacyIds] = useState<string[]>([]);
   const importedLegacy = useRef<Promise<string[]> | null>(null);
@@ -81,6 +81,34 @@ export default function Draw({ onBack }: { onBack: () => void }) {
     pageRef = useRef(page),
     pointerStart = useRef<{ x: number; y: number } | null>(null);
   pageRef.current = page;
+  const scroller = useRef<HTMLElement>(null);
+  const galleryScroll = useRef(window.history.state?.coloringGallery?.scroll || 0);
+  useEffect(() => {
+    const update = () => {
+      setDialog(null);
+      setPage(coloringPages.find(p => p.id === window.history.state?.drawing) || null);
+    };
+    window.addEventListener("popstate", update);
+    return () => window.removeEventListener("popstate", update);
+  }, []);
+  useEffect(() => {
+    if (page) return;
+    window.history.replaceState({ ...window.history.state,
+      coloringGallery: { query, category, scroll: galleryScroll.current }
+    }, "");
+  }, [query, category, page]);
+  useLayoutEffect(() => {
+    scroller.current?.scrollTo({ top: page ? 0 : galleryScroll.current, behavior: "instant" });
+  }, [page]);
+  function openPage(next: ColoringPage) {
+    galleryScroll.current = scroller.current?.scrollTop || 0;
+    window.history.replaceState({ ...window.history.state,
+      coloringGallery: { query, category, scroll: galleryScroll.current }
+    }, "");
+    window.history.pushState({ ...window.history.state, drawing: next.id }, "", "#drawing=" + next.id);
+    setPage(next);
+  }
+
   const list = coloringPages.filter(
     (p) =>
       (category === "all" || p.category === category) &&
@@ -441,12 +469,15 @@ export default function Draw({ onBack }: { onBack: () => void }) {
       ? geometry.current.seeds[keyboardRegion]
       : null;
   return (
-    <main className="magic-app">
+    <main className="magic-app" ref={scroller} onScroll={() => {
+      if (page) return;
+      galleryScroll.current = scroller.current?.scrollTop || 0;
+    }}>
       <header className="magic-header">
         <button
           className="magic-back"
           aria-label={page ? "Назад в галерею" : "Назад в мастерскую"}
-          onClick={() => (page ? setPage(null) : onBack())}
+          onClick={() => (page ? window.history.back() : onBack())}
         >
           ← <span>Назад</span>
         </button>
@@ -554,7 +585,7 @@ export default function Draw({ onBack }: { onBack: () => void }) {
               <button
                 key={p.id}
                 className="magic-card"
-                onClick={() => setPage(p)}
+                onClick={() => openPage(p)}
               >
                 <div className="magic-preview">
                   <img

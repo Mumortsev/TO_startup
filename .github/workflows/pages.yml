@@ -3,6 +3,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      run_tests:
+        description: Run unit and browser tests before publishing
+        type: boolean
+        default: true
 permissions:
   contents: read
   pages: write
@@ -13,6 +18,8 @@ concurrency:
 jobs:
   verify:
     uses: ./.github/workflows/quality.yml
+    with:
+      run_tests: ${{ github.event_name == 'workflow_dispatch' && inputs.run_tests || (github.event_name != 'workflow_dispatch' && !contains(github.event.head_commit.message, '[no tests]')) }}
   deploy:
     needs: verify
     runs-on: ubuntu-latest

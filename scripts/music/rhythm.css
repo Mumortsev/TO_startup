@@ -1,0 +1,38 @@
+:root { font-family: Onest, system-ui, sans-serif; color: #212b29; background: #fffaf1; }
+body { margin: 0; background: #fffaf1; color: #212b29; user-select: auto; }
+* { box-sizing: border-box; }
+.rhythm-app { max-width: 1180px; margin: auto; padding: clamp(20px, 4vw, 56px); }
+.rhythm-app h1 { font-size: clamp(30px, 5vw, 58px); font-weight: 500; letter-spacing: -.04em; line-height: 1.12; margin: 12px 0 20px; }
+.rhythm-app h1 em { font-family: Georgia, serif; color: #346361; font-weight: 400; }
+.rhythm-heading p, .rhythm-hint { font-size: 13px; line-height: 1.7; }
+.rhythm-heading > p:first-child { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+.rhythm-app button, .rhythm-app input, .rhythm-app select { font: inherit; color: inherit; }
+.rhythm-app button { min-height: 44px; padding: 10px 18px; background: transparent; border: 1px solid #212b2940; border-radius: 24px; cursor: pointer; }
+.rhythm-app button:hover { background: #e4ede5; }
+.rhythm-app :focus-visible { outline: 3px solid #346b88; outline-offset: 3px; }
+.genre-list, .rhythm-controls, .rhythm-files { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 12px; align-items: center; }
+.genre-list button { background: #cbdedb; border-color: transparent; }
+.rhythm-controls { background: #e9eff2; padding: 18px; border-radius: 10px; gap: 16px; }
+.rhythm-controls label { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 12px; }
+.rhythm-controls input, .rhythm-controls select { background: #fffaf1; border: 1px solid #212b2930; padding: 9px; border-radius: 5px; min-height: 44px; max-width: 240px; }
+.rhythm-controls input { width: 72px; }
+.rhythm-controls .rhythm-play { background: #253b59; color: #fffaf1; min-width: 100px; }
+.rhythm-score { margin: 24px 0; }
+.rhythm-bar { padding: 18px 0; }
+.rhythm-bar > p { font-size: 12px; margin-bottom: 14px; }
+.rhythm-row { display: grid; grid-template-columns: 150px repeat(16, minmax(0, 1fr)); gap: 5px; margin-bottom: 8px; align-items: center; }
+.rhythm-row .drum-name { padding: 4px; border: 0; text-align: left; border-radius: 4px; font-size: 12px; }
+.rhythm-row .rhythm-step { padding: 0; min-height: 36px; height: 42px; border-radius: 5px; border-color: #c6d5d0; background: #e6ece7; }
+.rhythm-row .rhythm-step:nth-child(4n + 2) { border-left: 2px solid #849c92; }
+.rhythm-row .rhythm-step.is-on { background: #d89557; border-color: #ac6d3e; }
+.rhythm-row .rhythm-step.is-current { outline: 3px solid #253b59; outline-offset: 0; }
+.rhythm-numbers { font-size: 10px; text-align: center; color: #53665c; }
+.rhythm-message { font-size: 13px; line-height: 1.6; margin-top: 16px; }
+@media(max-width: 650px) {
+  .rhythm-app { padding: 20px 12px; }
+  .rhythm-row { grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 3px; margin-bottom: 12px; }
+  .rhythm-row .drum-name { grid-column: 1 / -1; min-height: 30px; }
+  .rhythm-numbers > span:first-child { display: none; }
+  .rhythm-row .rhythm-step { min-height: 32px; height: 36px; border-radius: 3px; }
+  .rhythm-controls { padding: 12px; }
+}

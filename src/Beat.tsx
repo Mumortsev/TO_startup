@@ -71,7 +71,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
           ← <span>К студии</span>
         </button>
         <strong>
-          stARTup <span> / NeonDAW</span>
+          stARTup <span> / Ритм</span>
         </strong>
         <div className="engine-links">
           {document.fullscreenEnabled && (
@@ -89,7 +89,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
             rel="noopener noreferrer"
             aria-label="Открыть музыкальное приложение в отдельной вкладке"
           >
-            Открыть отдельно ↗
+            Открыть отдельно
           </a>
         </div>
       </header>
@@ -98,7 +98,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
           <iframe
             key={attempt}
             ref={frame}
-            title="Полная музыкальная студия NeonDAW"
+            title="Ритм-секвенсор stARTup"
             src={source}
             allow="autoplay; microphone"
             allowFullScreen
@@ -109,7 +109,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
         {status === "loading" && (
           <div className="engine-state" role="status">
             <span className="engine-loader" aria-hidden="true" />
-            <h1>Загружаем инструменты</h1>
+            <h1>Загружаем ритм-секвенсор</h1>
             <p>Музыкальная студия скоро откроется.</p>
           </div>
         )}
@@ -121,7 +121,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
               Повторить загрузку
             </button>
             <a href={ENGINE} target="_blank" rel="noopener noreferrer">
-              Открыть отдельно ↗
+              Открыть отдельно
             </a>
           </div>
         )}

@@ -2,6 +2,10 @@ name: Build verification
 on:
   pull_request:
   workflow_call:
+    inputs:
+      run_tests:
+        type: boolean
+        default: true
 permissions:
   contents: read
 jobs:
@@ -15,17 +19,21 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci --no-audit --no-fund
-      - run: npm test
+      - if: github.event_name == 'pull_request' || inputs.run_tests
+        run: npm test
       - run: npm run build
       - name: Build pinned upstream music application
         run: bash scripts/build-upstream-engines.sh
-      - run: npx playwright install --with-deps chromium firefox webkit
+      - if: github.event_name == 'pull_request' || inputs.run_tests
+        run: npx playwright install --with-deps chromium firefox webkit
       - name: Start real audio backend for browser playback tests
+        if: github.event_name == 'pull_request' || inputs.run_tests
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y pulseaudio pulseaudio-utils
           bash scripts/start-ci-audio.sh
-      - run: npm run test:e2e
+      - if: github.event_name == 'pull_request' || inputs.run_tests
+        run: npm run test:e2e
       - name: Verify production assets
         run: |
           test -f dist/index.html
@@ -34,7 +42,7 @@ jobs:
           test -f dist/engines/music/LICENSE.txt
           test -f dist/coloring/LICENSE.txt
       - name: Save browser test evidence
-        if: always()
+        if: always() && (github.event_name == 'pull_request' || inputs.run_tests)
         uses: actions/upload-artifact@v4
         with:
           name: browser-test-results

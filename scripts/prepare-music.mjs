@@ -2,7 +2,7 @@ import {localizeMusic} from './localize-music.mjs';
 /** Small integration/accessibility patch, applied to the pinned MIT source before building.
  * Audio synthesis, playback, project format and export logic are deliberately unchanged.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, copyFileSync } from "node:fs";
 import { join } from "node:path";
 const directory = process.argv[2];
 if (!directory) throw new Error("Pass the checked-out NeonDAW directory");
@@ -56,3 +56,8 @@ console.log(
 );
 
 localizeMusic(directory);
+
+// Replace presentation only after upstream integration patches; audio and stores stay intact.
+for (const file of ["App.tsx", "rhythm.css"]) {
+  copyFileSync(new URL("./music/" + file, import.meta.url), join(directory, "src", file));
+}

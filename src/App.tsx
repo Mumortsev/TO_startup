@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
-  ArrowUpRight,
   ArrowLeft,
   Menu,
   X,
@@ -178,10 +177,10 @@ function Header({ kind }: { kind?: "art" | "music" }) {
         </Link>
         <a
           className="nav-contact"
-          href={kind ? "#contact" : contact.vk}
+          href={kind ? "#contact" : base + "/art#contact"}
           onClick={() => setOpen(false)}
         >
-          Давайте знакомиться <ArrowUpRight size={16} />
+          Давайте знакомиться
         </a>
       </nav>
       <button
@@ -226,114 +225,52 @@ function Footer() {
       </Link>
       <p>Творчество начинается с тебя.</p>
       <span>Лазаревское, Сочи</span>
+      <a href={contact.vk} target="_blank" rel="noreferrer">ВКонтакте</a>
       <a href={base + "/licenses/"}>Лицензии и авторы</a>
     </footer>
   );
 }
 function Home() {
-  const root = useRef<HTMLElement>(null);
-  useEntrance(root);
   return (
-    <div className="site-home">
-      <a className="skip-link" href="#main">
-        К содержимому
-      </a>
-      <Header />
-      <main id="main" ref={root}>
-        <section className="home-intro">
-          <div data-enter className="place-label">
-            <span /> Лазаревское, Сочи
+    <main className="site-home" id="main">
+      <h1 className="visually-hidden">Два мира творчества — Music & Art</h1>
+      <div className="home-signature">music & art · Лазаревское</div>
+      <section className="worlds" aria-label="Выберите творческую студию">
+        <Link to="/art" className="world art-world">
+          <div className="world-top"><span><Palette size={18} /> Художественная мастерская</span></div>
+          <div className="world-artwork"><div className="art-orbit" /><Fish className="home-fish" /></div>
+          <div className="world-copy">
+            <div><h2>Рыбка</h2><p>Рисуем. Придумываем. Удивляемся.</p></div>
+            <span className="world-cta">В мир искусства</span>
           </div>
-          <h1 data-enter>
-            У каждого таланта
-            <br />
-            есть <span className="home-italic">свой мир.</span>
-            <svg viewBox="0 0 80 80" aria-hidden="true">
-              <path d="M40 2v76M2 40h76M13 13l54 54M13 67l54-54" />
-            </svg>
-          </h1>
-          <p data-enter>
-            Две студии. Тысячи идей. <br />
-            Выбери, с чего начнётся твоя история.
-          </p>
-        </section>
-        <section className="worlds" aria-label="Выберите творческую студию">
-          <Link to="/art" className="world art-world">
-            <div className="world-top">
-              <span>
-                <Palette size={18} /> Художественная студия
-              </span>
-              <span className="round-arrow">
-                <ArrowUpRight />
-              </span>
-            </div>
-            <div className="world-artwork">
-              <div className="art-orbit" />
-              <Fish className="home-fish" />
-              <span className="art-spark">✳︎</span>
-              <span className="world-note">
-                Можно всё.
-                <br />
-                Даже рисовать мечты.
-              </span>
-            </div>
-            <div className="world-copy">
-              <div>
-                <h2>Рыбка</h2>
-                <p>Рисуем. Придумываем. Удивляемся.</p>
-              </div>
-              <span className="world-cta">
-                В мир искусства <ArrowUpRight size={17} />
-              </span>
-            </div>
-          </Link>
-          <Link to="/music" className="world music-world">
-            <div className="world-top">
-              <span>
-                <Music2 size={18} /> Музыкальная студия
-              </span>
-              <span className="round-arrow">
-                <ArrowUpRight />
-              </span>
-            </div>
-            <div className="world-artwork music-artwork">
-              <span className="record">
-                <span />
-              </span>
-              <span className="music-sticker">
-                Твой звук.
-                <br />
-                Твои правила.
-              </span>
-              <div className="mini-wave" aria-hidden="true">
-                {Array.from({ length: 15 }, (_, i) => (
-                  <span
-                    key={i}
-                    style={{ height: 20 + Math.sin(i * 0.7) ** 2 * 75 + "%" }}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="world-copy">
-              <div>
-                <h2>
-                  st<span>ART</span>up
-                </h2>
-                <p>Находим ритм. Создаём звучание.</p>
-              </div>
-              <span className="world-cta">
-                В мир музыки <ArrowUpRight size={17} />
-              </span>
-            </div>
-          </Link>
-        </section>
-        <div className="home-bottom">
-          <p>Для тех, кому интересно создавать.</p>
-          <span>Сначала любопытство. Потом — любимое дело.</span>
-        </div>
-      </main>
-      <Footer />
-    </div>
+        </Link>
+        <Link to="/music" className="world music-world">
+          <div className="world-top"><span><Music2 size={18} /> Музыкальная студия</span></div>
+          <div className="world-artwork music-artwork"><span className="record"><span /></span></div>
+          <div className="world-copy">
+            <div><h2>st<span>ART</span>up</h2><p>Находим ритм. Создаём звучание.</p></div>
+            <span className="world-cta">В мир музыки</span>
+          </div>
+        </Link>
+      </section>
+      <a className="home-social" href={contact.vk} target="_blank" rel="noreferrer">ВКонтакте</a>
+    </main>
+  );
+}
+function EnrollmentForm() {
+  const [attempted, setAttempted] = useState(false);
+  return (
+    <form className="enrollment-form" onSubmit={(event) => {
+      event.preventDefault();
+      setAttempted(true);
+    }}>
+      <label>Имя родителя<input name="parentName" autoComplete="name" required maxLength={100} /></label>
+      <label>Телефон<input name="phone" type="tel" autoComplete="tel" inputMode="tel" required minLength={7} maxLength={25} /></label>
+      <label>Возраст ребёнка<input name="childAge" type="number" inputMode="numeric" min="1" max="18" step="1" required /></label>
+      <p id="enrollment-note">Отправка на почту пока не подключена. Данные из формы не отправляются. Чтобы записаться, позвоните нам.</p>
+      <button type="submit" className="button" aria-describedby="enrollment-note">Оставить заявку</button>
+      {attempted && <p role="status">Заявка не отправлена: отправка на почту ещё не подключена. Позвоните по номеру ниже.</p>}
+    </form>
   );
 }
 function Gallery({ kind }: { kind: "art" | "music" }) {
@@ -376,7 +313,6 @@ function Gallery({ kind }: { kind: "art" | "music" }) {
             <Photo src={item.img} alt={item.title} />
             <span>
               {item.title}
-              <ArrowUpRight size={20} />
             </span>
           </button>
         ))}
@@ -488,14 +424,12 @@ function Studio({ kind }: { kind: "art" | "music" }) {
             <div className="hero-actions" data-enter>
               <a href="#directions" className="button">
                 {isArt ? "Найти занятие" : "Выбрать инструмент"}
-                <ArrowUpRight size={18} />
               </a>
               <Link
                 to={isArt ? "/art/draw" : "/music/studio"}
                 className="text-link"
               >
                 {isArt ? "Попробовать раскраску" : "Открыть музыкальную студию"}
-                <ArrowUpRight size={17} />
               </Link>
             </div>
           </div>
@@ -532,7 +466,7 @@ function Studio({ kind }: { kind: "art" | "music" }) {
                 : "Творчество без лишнего шума"}
             </span>
             <span>
-              Лазаревское <span aria-hidden="true">↘</span>
+              Лазаревское
             </span>
           </div>
         </section>
@@ -575,7 +509,7 @@ function Studio({ kind }: { kind: "art" | "music" }) {
                     href="#contact"
                     aria-label={"Узнать о направлении «" + item.title + "»"}
                   >
-                    <ArrowUpRight size={20} />
+                    Подробнее
                   </a>
                 </div>
               </article>
@@ -603,11 +537,10 @@ function Studio({ kind }: { kind: "art" | "music" }) {
             <p>
               {isArt
                 ? "Выбирай настоящую иллюстрацию и раскрашивай одним касанием. Продолжай в удобное время и сохраняй готовый рисунок."
-                : "Открой студию прямо в браузере. Выбирай инструменты, собирай музыку и экспериментируй со звучанием."}
+                : "Выбери рок, поп, хип-хоп, фанк, хаус или регги. Включай шаги секвенсора и создавай собственный ритм."}
             </p>
             <Link to={isArt ? "/art/draw" : "/music/studio"} className="button">
               {isArt ? "Открыть раскраски" : "Создать свой бит"}
-              <ArrowUpRight size={18} />
             </Link>
             <span className="experience-hint">
               Без регистрации. Просто попробуй.
@@ -695,16 +628,8 @@ function Studio({ kind }: { kind: "art" | "music" }) {
               Напишите или позвоните — расскажем о занятиях
               <br className="desktop-break" /> и поможем выбрать направление.
             </p>
+            <EnrollmentForm />
             <div className="contact-actions">
-              <a
-                href={contact.vk}
-                className="button"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Написать ВКонтакте
-                <ArrowUpRight size={18} />
-              </a>
               <a href={"tel:" + contact.tel} className="text-link">
                 <Phone size={17} />
                 {contact.phone}
@@ -733,7 +658,6 @@ function Studio({ kind }: { kind: "art" | "music" }) {
               rel="noreferrer"
             >
               Построить маршрут
-              <ArrowUpRight size={18} />
             </a>
           </div>
         </section>
@@ -742,7 +666,6 @@ function Studio({ kind }: { kind: "art" | "music" }) {
             <span>А ещё у нас есть {isArt ? "музыка" : "искусство"}</span>
             <strong>
               {isArt ? "Поймать свою волну" : "Добавить красок"}
-              <ArrowUpRight />
             </strong>
           </Link>
         </section>
@@ -796,7 +719,7 @@ export default function App() {
       "/art/draw":
         "69 настоящих иллюстраций: раскрашивание касанием, сохранение прогресса и экспорт PNG.",
       "/music/studio":
-        "Создавайте музыку в NeonDAW: инструменты, ритм, сохранение проекта и экспорт аудио.",
+        "Ритм-секвенсор stARTup: шесть жанров, свой ритм и сохранение проектов.",
     };
     const description = descriptions[path] || descriptions["/"];
     document
@@ -836,7 +759,6 @@ export default function App() {
           <h1>Кажется, здесь чистый лист.</h1>
           <Link to="/" className="button">
             Вернуться к творчеству
-            <ArrowUpRight size={18} />
           </Link>
         </main>
       )}
