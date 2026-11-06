@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./Beat.css";
-const ENGINE = "/TO_startup/engines/music/";
+const ENGINE = "/TO_startup/engines/music/?v=" + encodeURIComponent(__SITE_REVISION__);
 
 /** Same-origin wrapper: the upstream audio engine and project format stay unchanged. */
 export default function Beat({ onBack }: { onBack: () => void }) {

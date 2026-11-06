@@ -49,7 +49,7 @@ body { margin: 0; color: #273b38; background: #fffaf1; user-select: auto; }
 @media(prefers-reduced-motion: reduce) { .kids-grid .kids-cell.sounding { transform: none; } }
 
 .kids-melodies { border: 1px solid #314b3e25; background: #f5f1e5; border-radius: 16px; padding: 14px 18px; margin: 20px 0; }
-.kids-melodies summary { cursor: pointer; font-size: 14px; min-height: 28px; line-height: 28px; }
+.kids-melodies h2 { font-size: 19px; font-weight: 650; line-height: 1.4; margin: 0; }
 .kids-melodies p { font-size: 12px; line-height: 1.7; margin: 12px 0; max-width: 52em; }
 .kids-melody-choices { display: flex; flex-wrap: wrap; gap: 10px; }
 .kids-melodies .kids-restore { margin-top: 12px; font-size: 12px; }

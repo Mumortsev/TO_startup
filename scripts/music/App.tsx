@@ -122,12 +122,12 @@ export default function App() {
     <header><p className="kids-label">stARTup / музыка своими руками</p><h1>Придумай свой <em>ритм!</em></h1><p>Выбери жанр и нажимай на квадратики. Ещё раз — и звук исчезнет.</p></header>
     <fieldset disabled={!ready || busy}>
       <div className="kids-genres" role="group" aria-label="Жанр музыки">{GENRES.map((g, i) => <button key={g.name} className={genre === i ? 'chosen' : ''} aria-pressed={genre === i} onClick={() => changeGenre(i)}>{g.name}</button>)}</div>
-      <details className="kids-melodies">
-        <summary>🎶 Готовые мелодии</summary>
+      <section className="kids-melodies" aria-labelledby="melodies-heading">
+        <h2 id="melodies-heading">🎶 Готовые мелодии</h2>
         <p>Примеры в жанре «{GENRES[genre].name}». Загрузи мелодию, а потом добавляй и убирай квадратики — получится твоя версия.</p>
         <div className="kids-melody-choices" role="group" aria-label="Готовые мелодии">{MELODIES[genre].map((name, i) => <button key={name} className={preset === i ? 'chosen' : ''} aria-pressed={preset === i} onClick={() => loadMelody(i)}>{name}</button>)}</div>
         {previous && <button className="kids-restore" onClick={restorePrevious}>Вернуть прежний трек</button>}
-      </details>
+      </section>
       <div className="kids-controls">
         <button className="kids-play" onClick={() => void play()}>{playing ? '■ Стоп' : '▶ Играть'}</button>
         <div className="kids-tempo" role="group" aria-label="Скорость музыки"><button disabled={project.bpm <= 60} aria-label="Медленнее" onClick={() => project.setBpm(project.bpm - 10)}>−</button><span>Темп <strong>{ready ? project.bpm : 112}</strong></span><button disabled={project.bpm >= 180} aria-label="Быстрее" onClick={() => project.setBpm(Math.min(180, project.bpm + 10))}>+</button></div>
