@@ -1995,4 +1995,7 @@ button:active,
 .site-home .world.home-transition-card { position: absolute; margin: 0; background: transparent; border-radius: 0; overflow: visible; contain: layout; will-change: transform; backface-visibility: hidden; transition: none; }
 .home-transition-card *, .home-transition-card *::before, .home-transition-card *::after { transition: none !important; }
 
-.home-transition-card .home-fish, .home-transition-card .record { will-change: transform; backface-visibility: hidden; }
+.home-fish-motion, .home-transition-card .record { will-change: transform; backface-visibility: hidden; }
+
+.home-fish-motion { position: absolute; inset: 0; }
+.home-transition-handoff { position: fixed; z-index: 200; will-change: opacity; }

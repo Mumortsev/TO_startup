@@ -261,6 +261,14 @@ function Home() {
     const artwork = Array.from(card.querySelectorAll<HTMLElement>('.home-fish, .record'));
     const transforms = artwork.map(node => getComputedStyle(node).transform);
     const others = Array.from(root.current.querySelectorAll('.world, .home-signature, .home-social')).filter(node => node !== card);
+    // Warm only the chosen section's hero while the compositor transition plays.
+    const heroImage = new Image();
+    const heroSource = (path === '/art' ? art : music)[0].img;
+    heroImage.decoding = 'async';
+    heroImage.sizes = '(max-width: 700px) 100vw, 50vw';
+    heroImage.srcset = `${heroSource.replace('-1200', '-640')} 640w, ${heroSource} 1200w`;
+    heroImage.src = heroSource;
+    void heroImage.decode().catch(() => {});
 
     const layer = document.createElement('div');
     layer.className = 'home-transition';
@@ -282,7 +290,14 @@ function Home() {
     gsap.set([surface, content], { left: rect.left, top: rect.top, width: rect.width, height: rect.height, force3D: true });
     gsap.set(surface, { backgroundColor: background, borderRadius: radius, transformOrigin: '0 0' });
     gsap.set(content, { transformOrigin: '50% 50%' });
-    const fish = content.querySelector('.home-fish');
+    // Move the fish's HTML wrapper so the SVG itself stays a static drawing.
+    const fishGraphic = content.querySelector('.home-fish');
+    const fish = fishGraphic ? document.createElement('div') : null;
+    if (fish && fishGraphic) {
+      fish.className = 'home-fish-motion';
+      fishGraphic.parentElement?.insertBefore(fish, fishGraphic);
+      fish.append(fishGraphic);
+    }
     const record = content.querySelector('.record');
     gsap.set([fish, record].filter(Boolean), { force3D: true });
     card.style.visibility = 'hidden';
@@ -290,7 +305,19 @@ function Home() {
     // Give the browser a frame to prepare the two temporary compositor layers.
     frame.current = requestAnimationFrame(() => {
       frame.current = requestAnimationFrame(() => {
-        animation.current = gsap.timeline({ defaults: { duration: 0.62, ease: 'power2.inOut' }, onComplete: () => navigate(path) });
+        animation.current = gsap.timeline({ defaults: { duration: 0.7, ease: 'sine.inOut' }, onComplete: () => {
+          // Retain just the solid surface across React's route change, then reveal
+          // the mounted section. Home cleanup must not remove this handoff layer.
+          content.remove();
+          layer.classList.add('home-transition-handoff');
+          document.body.append(layer);
+          overlay.current = null;
+          animation.current = null;
+          navigate(path);
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            gsap.to(layer, { opacity: 0, duration: 0.22, ease: 'power1.out', onComplete: () => layer.remove() });
+          }));
+        } });
         animation.current.to(others, { opacity: 0, duration: 0.22 }, 0);
         // Overscan hides the rounded edges at the end without repainting radii.
         animation.current.to(surface, {
@@ -309,15 +336,16 @@ function Home() {
           x: `+=${width + rect.width}`,
           y: '-=36',
           rotation: '-=8',
-          duration: 0.7,
-          ease: 'power2.in',
+          duration: 0.78,
+          ease: 'power2.inOut',
         }, 0.03);
         if (record) animation.current.to(record, {
           x: `+=${width + rect.width}`,
           rotation: '+=300',
-          duration: 0.7,
-          ease: 'power2.in',
+          duration: 0.78,
+          ease: 'power2.inOut',
         }, 0.03);
+        animation.current.to(content, { opacity: 0, duration: 0.2, ease: 'power1.out' }, 0.61);
       });
     });
   }
@@ -627,7 +655,7 @@ function Studio({ kind }: { kind: "art" | "music" }) {
             <p>
               {isArt
                 ? "Выбирай настоящую иллюстрацию и раскрашивай одним касанием. Продолжай в удобное время и сохраняй готовый рисунок."
-                : "Настрой барабаны, гитару и бас в одной сетке. Создай трек длиной до 128 тактов и скачай его в WAV."}
+                : "Выбери жанр и нажимай на квадратики. Придумай свой ритм с барабанами, гитарой и басом и скачай готовую музыку."}
             </p>
             <Link to={isArt ? "/art/draw" : "/music/studio"} className="button">
               {isArt ? "Открыть раскраски" : "Открыть секвенсор"}
@@ -809,7 +837,7 @@ export default function App() {
       "/art/draw":
         "69 настоящих иллюстраций: раскрашивание касанием, сохранение прогресса и экспорт PNG.",
       "/music/studio":
-        "Ритм-секвенсор до 128 тактов: настоящие барабаны, гитара, бас и скачивание WAV.",
+        "Простой детский секвенсор: жанры, квадратики со звуками барабанов, гитары и баса, скачивание музыки.",
     };
     const description = descriptions[path] || descriptions["/"];
     document
