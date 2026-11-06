@@ -1,25 +1,51 @@
 name: Build verification
 on:
-  push:
-    branches: [main]
   pull_request:
+  workflow_call:
+permissions:
+  contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      - run: npm install
+          node-version: "22"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
       - run: npm test
       - run: npm run build
-      - name: Build full upstream creative applications
+      - name: Build pinned upstream music application
         run: bash scripts/build-upstream-engines.sh
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - name: Start real audio backend for browser playback tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y pulseaudio pulseaudio-utils
+          bash scripts/start-ci-audio.sh
       - run: npm run test:e2e
-      - name: Verify published assets
+      - name: Verify production assets
         run: |
           test -f dist/index.html
           test -f dist/404.html
           test -f dist/favicon.svg
+          test -f dist/engines/music/LICENSE.txt
+          test -f dist/coloring/LICENSE.txt
+      - name: Save browser test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-test-results
+          path: |
+            test-results/
+            playwright-report/
+            artifacts/*.png
+            artifacts/*.json
+          if-no-files-found: ignore
+      - name: Save verified production artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist

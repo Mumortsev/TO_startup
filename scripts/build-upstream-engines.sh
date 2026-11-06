@@ -1,17 +1,27 @@
 #!/usr/bin/env bash
+# Reproducible upstream build. Run after `npm run build` (or set ENGINE_OUTPUT_DIR).
 set -euo pipefail
-mkdir -p dist/engines
-git clone --depth 1 https://github.com/XanthanL/neon-daw.git /tmp/to-neon-daw
-(
- cd /tmp/to-neon-daw
- npm install --no-audit --no-fund
- npm run build -- --base=/TO_startup/engines/music/
- cp -R dist "$GITHUB_WORKSPACE/dist/engines/music"
- cp LICENSE "$GITHUB_WORKSPACE/dist/engines/music/LICENSE.txt"
-)
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REVISION=81eef8ae073bd600adeed531670167b02a7dacb5
+OUTPUT="${ENGINE_OUTPUT_DIR:-$ROOT/dist/engines/music}"
+BUILD_DIR="$(mktemp -d "${TMPDIR:-/tmp}/to-neondaw.XXXXXX")"
+trap 'rm -rf "$BUILD_DIR"' EXIT
 
-# Real coloring pages, CC BY-SA 4.0. Pin source revision for reproducibility.
-git clone --depth 1 https://github.com/pavelkukov/coloring-pages.git /tmp/to-coloring-pages
-mkdir -p "$GITHUB_WORKSPACE/dist/coloring"
-cp /tmp/to-coloring-pages/images/*.svg "$GITHUB_WORKSPACE/dist/coloring/"
-cp /tmp/to-coloring-pages/LICENSE "$GITHUB_WORKSPACE/dist/coloring/LICENSE.txt"
+git -C "$BUILD_DIR" init --quiet
+git -C "$BUILD_DIR" remote add origin https://github.com/XanthanL/neon-daw.git
+git -C "$BUILD_DIR" fetch --quiet --depth 1 origin "$REVISION"
+git -C "$BUILD_DIR" checkout --quiet --detach FETCH_HEAD
+test "$(git -C "$BUILD_DIR" rev-parse HEAD)" = "$REVISION"
+node "$ROOT/scripts/prepare-music.mjs" "$BUILD_DIR"
+(
+  cd "$BUILD_DIR"
+  npm ci --no-audit --no-fund
+  npm run build -- --base=/TO_startup/engines/music/
+)
+mkdir -p "$OUTPUT"
+cp -R "$BUILD_DIR/dist/." "$OUTPUT/"
+cp "$BUILD_DIR/LICENSE" "$OUTPUT/LICENSE.txt"
+printf '%s\n' "$REVISION" > "$OUTPUT/UPSTREAM_REVISION.txt"
+# The curated CC BY-SA illustrations are versioned in public/coloring and copied by Vite.
+test -f "$OUTPUT/index.html"
+echo "NeonDAW $REVISION built in $OUTPUT"

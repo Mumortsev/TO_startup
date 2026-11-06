@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-06T05:23:15.194Z",
+  "source": "local Vite preview, Lighthouse mobile lab",
+  "version": "13.6.0",
+  "scores": {
+    "performance": 100,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100
+  },
+  "metrics": {
+    "first-contentful-paint": "0.8 s",
+    "largest-contentful-paint": "0.8 s",
+    "total-blocking-time": "0 ms",
+    "cumulative-layout-shift": "0.001",
+    "speed-index": "0.8 s"
+  }
+}
