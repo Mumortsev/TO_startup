@@ -14,5 +14,25 @@
     "total-blocking-time": "0 ms",
     "cumulative-layout-shift": "0.001",
     "speed-index": "0.8 s"
+  },
+  "published": {
+    "url": "https://mumortsev.github.io/TO_startup/",
+    "checkedAt": "2026-11-06T05:38:05.937224+00:00",
+    "sourceCommit": "ef1c6db5bb4f2eac704065c978960bf5b12a92a3",
+    "conditions": "Isolated mobile Lighthouse lab run, after browser E2E completed",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": "0.8 s",
+      "largest-contentful-paint": "0.8 s",
+      "total-blocking-time": "70 ms",
+      "cumulative-layout-shift": "0.001",
+      "speed-index": "0.8 s"
+    },
+    "varianceNote": "An earlier run concurrent with Firefox/WebKit E2E scored78 performance (TBT1040ms). It is retained in session artifacts; isolated measurement avoids test worker CPU contention."
   }
 }
