@@ -1,3 +1,4 @@
+import {localizeMusic} from './localize-music.mjs';
 /** Small integration/accessibility patch, applied to the pinned MIT source before building.
  * Audio synthesis, playback, project format and export logic are deliberately unchanged.
  */
@@ -53,3 +54,5 @@ writeFileSync(grid, source);
 console.log(
   "Applied reduced motion and keyboard step controls to pinned NeonDAW",
 );
+
+localizeMusic(directory);

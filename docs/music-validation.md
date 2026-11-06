@@ -64,7 +64,7 @@ coordination failures; reruns should use one production build and one full suite
 or separate `--output` folders. Parent integration QA supplies the final complete
 run and deployed-site status.
 
-Observed upstream limitations: the DAW interface is English/Chinese; its idle
+The original upstream interface was English/Chinese; the release now includes Russian by default and preserves EN/中文 (see music-localization.md). Its idle
 AudioContext initialization can generate browser autoplay warnings before a user
 gesture. User-triggered playback and export succeeded. The engine bundle is about
 839 kB raw / 242 kB gzip, loaded only on the music-app route. The full music asset

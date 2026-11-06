@@ -13,7 +13,7 @@ test("full creative applications load and close", async ({ page }) => {
   await page.getByRole("link", { name: /Создать свой бит/ }).click();
   await expect(page.locator('iframe[title*="NeonDAW"]')).toBeVisible();
   await expect(
-    page.frameLocator('iframe[title*="NeonDAW"]').locator("body"),
+    page.frameLocator('iframe[title*="NeonDAW"]').getByRole("button",{name:"Открыть: Файлы",exact:true}),
   ).toBeVisible();
 });
 test("gallery opens, advances and closes", async ({ page }) => {
