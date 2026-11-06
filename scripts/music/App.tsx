@@ -4,8 +4,8 @@ import { getProjectSnapshot, useProjectStore } from './stores/projectStore';
 import { useUiStore } from './stores/uiStore';
 import { renderProject } from './audio/offlineRender';
 import { downloadBlob, encodeWav } from './audio/wavEncoder';
-import type { Channel } from './types/project';
-import { blankProject, exportPattern, GENRES, notesFor, uid } from './sequencerProject';
+import type { Channel, Project } from './types/project';
+import { blankProject, exportPattern, GENRES, MELODIES, melodyProject, notesFor, uid } from './sequencerProject';
 import './rhythm.css';
 
 /** Preserve previous work privately; children always begin with a blank grid. */
@@ -28,6 +28,8 @@ export default function App() {
   const [genre, setGenre] = useState(0), [bars, setBars] = useState(4);
   const [ready, setReady] = useState(false), [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
+  const [preset, setPreset] = useState<number | null>(null);
+  const [previous, setPrevious] = useState<{ project: Project; genre: number; bars: number } | null>(null);
   const [columns, setColumns] = useState(16), [page, setPage] = useState(0);
   const initialized = useRef(false), lock = useRef(false);
   const active = useMemo(() => {
@@ -67,10 +69,25 @@ export default function App() {
       if (ch.kind === 'drum') pattern.steps[ch.id] = p.steps[ch.id].map(s => ({ ...s }));
       else for (let step = 0; step < 256; step++) if (active.has(ch.id + ':' + step)) pattern.notes.push(...notesFor(index, ch.id, step));
     }
-    project.importProject(next); setGenre(index); setMessage('');
+    project.importProject(next); setGenre(index); setPreset(null); setMessage('');
+  }
+  function loadMelody(variant: number) {
+    try { preservePrevious(); }
+    catch { setMessage('Не удалось сохранить твой трек. Он остаётся в сетке.'); return; }
+    const before = { project: getProjectSnapshot(), genre, bars };
+    engine.stop();
+    project.importProject(melodyProject(genre, variant, bars));
+    setPrevious(before); setPreset(variant); setPage(0);
+    setMessage('Мелодия в сетке! Нажми «Играть» и меняй любые квадратики.');
+  }
+  function restorePrevious() {
+    if (!previous) return;
+    engine.stop(); project.importProject(previous.project); setGenre(previous.genre); setBars(previous.bars); setPage(0); setPreset(null); setPrevious(null);
+    setMessage('Прежний трек возвращён.');
   }
   function toggle(ch: Channel, step: number) {
     const on = active.has(ch.id + ':' + step);
+    setPreset(null);
     if (ch.kind === 'drum') project.toggleStep(ch.id, step);
     else useProjectStore.setState(state => ({ patterns: state.patterns.map(pat => pat.id === state.currentPatternId ? { ...pat, notes: [...pat.notes.filter(n => !(n.channelId === ch.id && n.startStep === step)), ...(on ? [] : notesFor(genre, ch.id, step))] } : pat) }));
     setMessage('');
@@ -88,7 +105,7 @@ export default function App() {
     finally { lock.current = false; setBusy(false); }
   }
   function clear() {
-    engine.stop(); const fresh = blankProject(genre); fresh.bpm = project.bpm; project.importProject(fresh); setPage(0); setMessage('Чистый лист! Придумай новый ритм.');
+    engine.stop(); const fresh = blankProject(genre); fresh.bpm = project.bpm; project.importProject(fresh); setPreset(null); setPage(0); setMessage('Чистый лист! Придумай новый ритм.');
   }
   async function download() {
     if (!p || lock.current) return;
@@ -105,6 +122,12 @@ export default function App() {
     <header><p className="kids-label">stARTup / музыка своими руками</p><h1>Придумай свой <em>ритм!</em></h1><p>Выбери жанр и нажимай на квадратики. Ещё раз — и звук исчезнет.</p></header>
     <fieldset disabled={!ready || busy}>
       <div className="kids-genres" role="group" aria-label="Жанр музыки">{GENRES.map((g, i) => <button key={g.name} className={genre === i ? 'chosen' : ''} aria-pressed={genre === i} onClick={() => changeGenre(i)}>{g.name}</button>)}</div>
+      <details className="kids-melodies">
+        <summary>🎶 Готовые мелодии</summary>
+        <p>Примеры в жанре «{GENRES[genre].name}». Загрузи мелодию, а потом добавляй и убирай квадратики — получится твоя версия.</p>
+        <div className="kids-melody-choices" role="group" aria-label="Готовые мелодии">{MELODIES[genre].map((name, i) => <button key={name} className={preset === i ? 'chosen' : ''} aria-pressed={preset === i} onClick={() => loadMelody(i)}>{name}</button>)}</div>
+        {previous && <button className="kids-restore" onClick={restorePrevious}>Вернуть прежний трек</button>}
+      </details>
       <div className="kids-controls">
         <button className="kids-play" onClick={() => void play()}>{playing ? '■ Стоп' : '▶ Играть'}</button>
         <div className="kids-tempo" role="group" aria-label="Скорость музыки"><button disabled={project.bpm <= 60} aria-label="Медленнее" onClick={() => project.setBpm(project.bpm - 10)}>−</button><span>Темп <strong>{ready ? project.bpm : 112}</strong></span><button disabled={project.bpm >= 180} aria-label="Быстрее" onClick={() => project.setBpm(Math.min(180, project.bpm + 10))}>+</button></div>
