@@ -282,6 +282,9 @@ function Home() {
     gsap.set([surface, content], { left: rect.left, top: rect.top, width: rect.width, height: rect.height, force3D: true });
     gsap.set(surface, { backgroundColor: background, borderRadius: radius, transformOrigin: '0 0' });
     gsap.set(content, { transformOrigin: '50% 50%' });
+    const fish = content.querySelector('.home-fish');
+    const record = content.querySelector('.record');
+    gsap.set([fish, record].filter(Boolean), { force3D: true });
     card.style.visibility = 'hidden';
 
     // Give the browser a frame to prepare the two temporary compositor layers.
@@ -301,6 +304,20 @@ function Home() {
           y: height / 2 - rect.top - rect.height / 2,
           scale: Math.min(width / rect.width, height / rect.height) * 1.02,
         }, 0);
+        // Keep the artwork's own departure independent of the card expansion.
+        if (fish) animation.current.to(fish, {
+          x: `+=${width + rect.width}`,
+          y: '-=36',
+          rotation: '-=8',
+          duration: 0.7,
+          ease: 'power2.in',
+        }, 0.03);
+        if (record) animation.current.to(record, {
+          x: `+=${width + rect.width}`,
+          rotation: '+=300',
+          duration: 0.7,
+          ease: 'power2.in',
+        }, 0.03);
       });
     });
   }

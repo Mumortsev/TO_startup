@@ -1992,5 +1992,7 @@ button:active,
 /* Temporary, isolated layers: only transforms and opacity change during entry. */
 .home-transition { position: absolute; inset: 0; z-index: 50; overflow: hidden; pointer-events: none; contain: strict; }
 .home-transition-surface { position: absolute; will-change: transform; backface-visibility: hidden; }
-.site-home .world.home-transition-card { position: absolute; margin: 0; background: transparent; border-radius: 0; contain: layout paint; will-change: transform; backface-visibility: hidden; transition: none; }
+.site-home .world.home-transition-card { position: absolute; margin: 0; background: transparent; border-radius: 0; overflow: visible; contain: layout; will-change: transform; backface-visibility: hidden; transition: none; }
 .home-transition-card *, .home-transition-card *::before, .home-transition-card *::after { transition: none !important; }
+
+.home-transition-card .home-fish, .home-transition-card .record { will-change: transform; backface-visibility: hidden; }
