@@ -71,7 +71,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
           ← <span>К студии</span>
         </button>
         <strong>
-          stARTup <span> / Ритм</span>
+          stARTup <span> / Рок-студия</span>
         </strong>
         <div className="engine-links">
           {document.fullscreenEnabled && (
@@ -98,7 +98,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
           <iframe
             key={attempt}
             ref={frame}
-            title="Ритм-секвенсор stARTup"
+            title="Рок-студия и ритм-секвенсор stARTup"
             src={source}
             allow="autoplay; microphone"
             allowFullScreen
@@ -109,7 +109,7 @@ export default function Beat({ onBack }: { onBack: () => void }) {
         {status === "loading" && (
           <div className="engine-state" role="status">
             <span className="engine-loader" aria-hidden="true" />
-            <h1>Загружаем ритм-секвенсор</h1>
+            <h1>Загружаем музыкальную студию</h1>
             <p>Музыкальная студия скоро откроется.</p>
           </div>
         )}

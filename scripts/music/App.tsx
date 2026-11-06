@@ -6,6 +6,7 @@ import { useHistoryStore } from './stores/historyStore';
 import { exportProjectToFile, readProjectFile } from './utils/projectIO';
 import type { DrumType } from './types/project';
 import './rhythm.css';
+import RockStudio from './RockStudio';
 
 type Genre = { name: string; bpm: number; hits: Partial<Record<DrumType, number[]>> };
 const genres: Genre[] = [
@@ -19,7 +20,7 @@ const genres: Genre[] = [
 const names: Record<DrumType, string> = { kick: 'Бочка', snare: 'Малый барабан', clap: 'Хлопок', closedHat: 'Закрытый хэт', openHat: 'Открытый хэт', tom: 'Том' };
 
 /** Presentation only: original engine, persistence key and complete project schema are retained. */
-export default function App() {
+function RhythmApp() {
   const project = useProjectStore();
   const playing = useUiStore(s => s.isPlaying);
   const currentStep = useUiStore(s => s.currentStep);
@@ -117,4 +118,10 @@ export default function App() {
       <p role="status" className="rhythm-message">{message}</p>
     </main>
   );
+}
+
+export default function App() {
+  const [mode, setMode] = useState<'rock' | 'rhythm'>('rock');
+  const [busy, setBusy] = useState(false);
+  return <><nav className="music-mode" aria-label="Музыкальные инструменты"><button disabled={busy} aria-pressed={mode === 'rock'} onClick={() => setMode('rock')}>Рок-инструментал</button><button disabled={busy} aria-pressed={mode === 'rhythm'} onClick={() => setMode('rhythm')}>Ритм-секвенсор</button></nav>{mode === 'rock' ? <RockStudio onBusyChange={setBusy} /> : <RhythmApp />}</>;
 }

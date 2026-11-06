@@ -1,3 +1,4 @@
+import {prepareRock} from './prepare-rock.mjs';
 import {localizeMusic} from './localize-music.mjs';
 /** Small integration/accessibility patch, applied to the pinned MIT source before building.
  * Audio synthesis, playback, project format and export logic are deliberately unchanged.
@@ -58,6 +59,7 @@ console.log(
 localizeMusic(directory);
 
 // Replace presentation only after upstream integration patches; audio and stores stay intact.
-for (const file of ["App.tsx", "rhythm.css"]) {
+prepareRock(directory);
+for (const file of ["App.tsx", "rhythm.css", "rockProject.ts", "RockStudio.tsx"]) {
   copyFileSync(new URL("./music/" + file, import.meta.url), join(directory, "src", file));
 }

@@ -1,0 +1,772 @@
+{
+  "license": "CC0-1.0",
+  "roots": {
+    "rock-guitar": [
+      37,
+      40,
+      42,
+      45,
+      48,
+      51,
+      54,
+      57,
+      63,
+      66,
+      69,
+      72,
+      75,
+      78,
+      81,
+      84,
+      86
+    ],
+    "rock-bass": [
+      35,
+      38,
+      41,
+      44,
+      47,
+      50,
+      53,
+      56,
+      59,
+      62,
+      65,
+      68
+    ],
+    "rock-kick": [
+      60
+    ],
+    "rock-snare": [
+      60
+    ],
+    "rock-closedHat": [
+      60
+    ],
+    "rock-openHat": [
+      60
+    ],
+    "rock-tom": [
+      60
+    ],
+    "rock-crash": [
+      60
+    ],
+    "rock-ride": [
+      60
+    ]
+  },
+  "files": [
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/db2_mp_rr1.wav",
+      "blob_sha": "a69f028c2941c7b45b7f96fbfac8475f2731bc63",
+      "instrument": "rock-guitar",
+      "midi": 37,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/db2_mf_rr1.wav",
+      "blob_sha": "00789ed4fc864238a02c2783c21cdad7bd061ace",
+      "instrument": "rock-guitar",
+      "midi": 37,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/e2_mp_rr1.wav",
+      "blob_sha": "b48351020b03fea7d750475753389bab5c63c4da",
+      "instrument": "rock-guitar",
+      "midi": 40,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/e2_mf_rr1.wav",
+      "blob_sha": "ce7be0dba799650bdd0aeb9ad35a17bc5a0c4855",
+      "instrument": "rock-guitar",
+      "midi": 40,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/gb2_mp_rr1.wav",
+      "blob_sha": "1df300d810ffee5f57c90f6eb3bdab52acba673b",
+      "instrument": "rock-guitar",
+      "midi": 42,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/gb2_mf_rr1.wav",
+      "blob_sha": "f49e225dc67ddd9ed8b3c8743e29e9643d52e874",
+      "instrument": "rock-guitar",
+      "midi": 42,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/a2_mp_rr1.wav",
+      "blob_sha": "7090e69ed2972ab45d42fb1ea05e7c6a68eb69c3",
+      "instrument": "rock-guitar",
+      "midi": 45,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/a2_mf_rr1.wav",
+      "blob_sha": "b3995f059706807d93a5e1bfd060a09c2fb51027",
+      "instrument": "rock-guitar",
+      "midi": 45,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/c3_mp_rr1.wav",
+      "blob_sha": "dcb764adbe46ef77e10327fa14d0d8c7bdf0a845",
+      "instrument": "rock-guitar",
+      "midi": 48,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/c3_mf_rr1.wav",
+      "blob_sha": "7f484e2a4f63a4e3365821f0f0477ecfef48d933",
+      "instrument": "rock-guitar",
+      "midi": 48,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/eb3_mp_rr1.wav",
+      "blob_sha": "6d7d022cc8822556b5eb74fbcf535ed542006a56",
+      "instrument": "rock-guitar",
+      "midi": 51,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/eb3_mf_rr1.wav",
+      "blob_sha": "d8a5ecfc62bdff508f7da0cf43e5033bf6e1bdfa",
+      "instrument": "rock-guitar",
+      "midi": 51,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/gb3_mp_rr1.wav",
+      "blob_sha": "f1bf0824465492ea6598e27503740d970409d317",
+      "instrument": "rock-guitar",
+      "midi": 54,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/gb3_mf_rr1.wav",
+      "blob_sha": "161dfb5177ae606698a36c350a3fc6a37abbd476",
+      "instrument": "rock-guitar",
+      "midi": 54,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/a3_mp_rr1.wav",
+      "blob_sha": "16134c411b2f80621a2bb3550c6762b5ea455c58",
+      "instrument": "rock-guitar",
+      "midi": 57,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/a3_mf_rr1.wav",
+      "blob_sha": "e2a2fc5e73af036aec9a482bdefb624da3d1dca7",
+      "instrument": "rock-guitar",
+      "midi": 57,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/eb4_mp_rr1.wav",
+      "blob_sha": "7df3ea741b004379e1f4d3b382f60ab0f199424d",
+      "instrument": "rock-guitar",
+      "midi": 63,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/eb4_mf_rr1.wav",
+      "blob_sha": "d0cbf6c9156addbb410b2411c66ec4a81a19e8a2",
+      "instrument": "rock-guitar",
+      "midi": 63,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/gb4_mp_rr1.wav",
+      "blob_sha": "228b2144a48c45bc018b4204811ab48f3c7a0970",
+      "instrument": "rock-guitar",
+      "midi": 66,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/gb4_mf_rr1.wav",
+      "blob_sha": "3d4acce6749977dffb9b5ef20d25c363e3d95320",
+      "instrument": "rock-guitar",
+      "midi": 66,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/a4_mp_rr1.wav",
+      "blob_sha": "d3feaa249b8b4e835efc6f2b94fbb258be6a4f73",
+      "instrument": "rock-guitar",
+      "midi": 69,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/a4_mf_rr1.wav",
+      "blob_sha": "1e355a61ec40f25f3a5b965075175a27e783a09f",
+      "instrument": "rock-guitar",
+      "midi": 69,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/c5_mp_rr1.wav",
+      "blob_sha": "31b795ff6f3bbb5d8660d7f8df3eaa082ee8b4c1",
+      "instrument": "rock-guitar",
+      "midi": 72,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/c5_mf_rr1.wav",
+      "blob_sha": "59f78298490b9810ce5eeeb5b5e109f88afcea5d",
+      "instrument": "rock-guitar",
+      "midi": 72,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/eb5_mp_rr1.wav",
+      "blob_sha": "b1ba378d6b721e99128d44c4d5cbcff00d3292db",
+      "instrument": "rock-guitar",
+      "midi": 75,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/eb5_mf_rr1.wav",
+      "blob_sha": "c9ea721e0b71d052cb25dd8e5ad0f7541759f6d6",
+      "instrument": "rock-guitar",
+      "midi": 75,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/gb5_mp_rr1.wav",
+      "blob_sha": "0280fda53fba6e8dda2190fa76c8dfb7482add4c",
+      "instrument": "rock-guitar",
+      "midi": 78,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/gb5_mf_rr1.wav",
+      "blob_sha": "33d1f08d3bafa4fc97041496ac258b91d62afcf9",
+      "instrument": "rock-guitar",
+      "midi": 78,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/a5_mp_rr1.wav",
+      "blob_sha": "8c1dfb9bdc51e75a26c27b51877de5a4ad750a23",
+      "instrument": "rock-guitar",
+      "midi": 81,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/a5_mf_rr1.wav",
+      "blob_sha": "768bae4440a906b67efd604c103a246749ccd17b",
+      "instrument": "rock-guitar",
+      "midi": 81,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/c6_mp_rr1.wav",
+      "blob_sha": "24bc1d1d8fbfacb540ad7e7bf51d5a112b8ac47f",
+      "instrument": "rock-guitar",
+      "midi": 84,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/c6_mf_rr1.wav",
+      "blob_sha": "02484b9977187408b87008b58e9119cd6ff26d17",
+      "instrument": "rock-guitar",
+      "midi": 84,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/d6_mp_rr1.wav",
+      "blob_sha": "52256c42c6eac490a6c53bf73f3e0d80542b901f",
+      "instrument": "rock-guitar",
+      "midi": 86,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.emilyguitar",
+      "revision": "b4920dc662fd9cad6dcaccdeecffdd91c8725d8c",
+      "path": "notes/d6_mf_rr1.wav",
+      "blob_sha": "4cc1fcca95ad74f0b3a2b50d4c171ce8f40cbb53",
+      "instrument": "rock-guitar",
+      "midi": 86,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_b1_f_rr1.wav",
+      "blob_sha": "c3207caba4655f6edbb91f9dc03d004be70670b5",
+      "instrument": "rock-bass",
+      "midi": 35,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_b1_ff_rr1.wav",
+      "blob_sha": "7ca90df04a466df756571a049cb0067fd0e7391f",
+      "instrument": "rock-bass",
+      "midi": 35,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_d2_f_rr1.wav",
+      "blob_sha": "01437841fe0ccb2532945eae5b21602aff3fcf66",
+      "instrument": "rock-bass",
+      "midi": 38,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_d2_ff_rr1.wav",
+      "blob_sha": "8785957b9b18780dc130d7dc535cb2a981a12bb0",
+      "instrument": "rock-bass",
+      "midi": 38,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_f2_f_rr1.wav",
+      "blob_sha": "aaf3becf27903b3324e0017d51a35f1b066e5627",
+      "instrument": "rock-bass",
+      "midi": 41,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_f2_ff_rr1.wav",
+      "blob_sha": "567f1c81ca7dd74ac9619a19bfd33904f03d4179",
+      "instrument": "rock-bass",
+      "midi": 41,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_ab2_f_rr1.wav",
+      "blob_sha": "0c72c079d09ca7c87e99d04fa596e597681189e4",
+      "instrument": "rock-bass",
+      "midi": 44,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_ab2_ff_rr1.wav",
+      "blob_sha": "9caea1011c92c09b09514eec480053369b563fe4",
+      "instrument": "rock-bass",
+      "midi": 44,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_b2_f_rr1.wav",
+      "blob_sha": "7689c305ca316aeb13ed43b751c1df6471f86a3b",
+      "instrument": "rock-bass",
+      "midi": 47,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_b2_ff_rr1.wav",
+      "blob_sha": "8e1dd3a5a00642f43fcdd4dfa4b243d1c7e7e377",
+      "instrument": "rock-bass",
+      "midi": 47,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_d3_f_rr1.wav",
+      "blob_sha": "efaf6c1f5c4dce4e87c852f16f51dc9a4f1fd611",
+      "instrument": "rock-bass",
+      "midi": 50,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_d3_ff_rr1.wav",
+      "blob_sha": "94e1a925a605c3c000db4678a65d60bcfaf25134",
+      "instrument": "rock-bass",
+      "midi": 50,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_f3_f_rr1.wav",
+      "blob_sha": "92ac3fa1ef71621d35ff2fa109502d7639d6f7da",
+      "instrument": "rock-bass",
+      "midi": 53,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_f3_ff_rr1.wav",
+      "blob_sha": "47ed13b52129136925495b6968cc5909f67fe799",
+      "instrument": "rock-bass",
+      "midi": 53,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_ab3_f_rr1.wav",
+      "blob_sha": "848c9bc83b293d18fc5c5d622bea4c0a593e81d2",
+      "instrument": "rock-bass",
+      "midi": 56,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_ab3_ff_rr1.wav",
+      "blob_sha": "bcbc4d41757d61866ec1cac5906c5ebbb7170d10",
+      "instrument": "rock-bass",
+      "midi": 56,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_b3_f_rr1.wav",
+      "blob_sha": "50865eaf36134da94994543e3a75ffb1b57684ba",
+      "instrument": "rock-bass",
+      "midi": 59,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_b3_ff_rr1.wav",
+      "blob_sha": "a00dba3b33676d54b142601ebf9dce0aeb9977a9",
+      "instrument": "rock-bass",
+      "midi": 59,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_d4_f_rr1.wav",
+      "blob_sha": "1a96d40db54a0b25e7ad867a4cf57cc2b4a15e29",
+      "instrument": "rock-bass",
+      "midi": 62,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_d4_ff_rr1.wav",
+      "blob_sha": "5574bcbae13691edbc62f85db74693b099144833",
+      "instrument": "rock-bass",
+      "midi": 62,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_f4_f_rr1.wav",
+      "blob_sha": "565764d20f769cb1bf0cda6583a955a5b284fa31",
+      "instrument": "rock-bass",
+      "midi": 65,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_f4_ff_rr1.wav",
+      "blob_sha": "fbf01451c8f90acc5583d761462920824c77494e",
+      "instrument": "rock-bass",
+      "midi": 65,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_ab4_f_rr1.wav",
+      "blob_sha": "da8fccae6495c267bc82d1a9ddfe487420444765",
+      "instrument": "rock-bass",
+      "midi": 68,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.black-and-blue-basses",
+      "revision": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "path": "Samples/babyblue/reg/babyblue_ab4_ff_rr1.wav",
+      "blob_sha": "d02c5daf751bfef6041e883871f1eede82108f54",
+      "instrument": "rock-bass",
+      "midi": 68,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/kick_24/kick/kick/k_vl4_rr1.flac",
+      "blob_sha": "db88506ffd9317f39d37b1eddd042e9f4126fdfc",
+      "instrument": "rock-kick",
+      "midi": 60,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/kick_24/kick/kick/k_vl7_rr1.flac",
+      "blob_sha": "930e91d11a27b2410990f0e5e43f7e32c20db77d",
+      "instrument": "rock-kick",
+      "midi": 60,
+      "layer": "mid"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/kick_24/kick/kick/k_vl10_rr1.flac",
+      "blob_sha": "c5bd52ac099f8c84d1070a0eecc265bfe1750f3d",
+      "instrument": "rock-kick",
+      "midi": 60,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/snare_14/center/top/sn_center_vl4_rr1.flac",
+      "blob_sha": "123320c85d1cc72fd0814fea07e2dca1a20b5f11",
+      "instrument": "rock-snare",
+      "midi": 60,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/snare_14/center/top/sn_center_vl7_rr1.flac",
+      "blob_sha": "121d94fa4550342bf4dcbb19a1eec7f4ca488eba",
+      "instrument": "rock-snare",
+      "midi": 60,
+      "layer": "mid"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/snare_14/center/top/sn_center_vl10_rr1.flac",
+      "blob_sha": "bbd4532e3fedb746c7c6d4230cb17ec054112a58",
+      "instrument": "rock-snare",
+      "midi": 60,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/hihat_14/cl/cl/ht_cl_vl2_rr1.flac",
+      "blob_sha": "a7ddf7f10e18d42b40a8b351f13f1710d0193c65",
+      "instrument": "rock-closedHat",
+      "midi": 60,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/hihat_14/cl/cl/ht_cl_vl4_rr1.flac",
+      "blob_sha": "397a1c670928e4ad7c8e5b4e65211149c788cc63",
+      "instrument": "rock-closedHat",
+      "midi": 60,
+      "layer": "mid"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/hihat_14/cl/cl/ht_cl_vl6_rr1.flac",
+      "blob_sha": "4088e30e279edc7e007c559e2180ff66985e65f2",
+      "instrument": "rock-closedHat",
+      "midi": 60,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/hihat_14/open/cl/ht_open_vl2_rr1.flac",
+      "blob_sha": "6787b57096a3a3a53bd1f165e8edd3b060ed11d0",
+      "instrument": "rock-openHat",
+      "midi": 60,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/hihat_14/open/cl/ht_open_vl4_rr1.flac",
+      "blob_sha": "ec69d0e91e6a0e42e31641c8ff39595c5603e322",
+      "instrument": "rock-openHat",
+      "midi": 60,
+      "layer": "mid"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/hihat_14/open/cl/ht_open_vl6_rr1.flac",
+      "blob_sha": "94d2998ae5f72dd73da8a41c1aff706a8c426593",
+      "instrument": "rock-openHat",
+      "midi": 60,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/tom_14/center/cl/t14_vl2_rr1.flac",
+      "blob_sha": "e1ad1b3660084122d6f8a790d5b3afa10b1c566e",
+      "instrument": "rock-tom",
+      "midi": 60,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/tom_14/center/cl/t14_vl4_rr1.flac",
+      "blob_sha": "a53427000fc2c448a71e6b06cfd4ffdd1d9a60c0",
+      "instrument": "rock-tom",
+      "midi": 60,
+      "layer": "mid"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/tom_14/center/cl/t14_vl6_rr1.flac",
+      "blob_sha": "008ba2771f250b7851bcbfc7010813353df1bfcd",
+      "instrument": "rock-tom",
+      "midi": 60,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/crash_17/cr/cl/cr_vl2_rr1.flac",
+      "blob_sha": "818ddaabe89b27e57122c7ee6f8364156d449e4f",
+      "instrument": "rock-crash",
+      "midi": 60,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/crash_17/cr/cl/cr_vl3_rr1.flac",
+      "blob_sha": "5410a8df0509518ab6e4767050a9ed079ae08707",
+      "instrument": "rock-crash",
+      "midi": 60,
+      "layer": "mid"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/crash_17/cr/cl/cr_vl5_rr1.flac",
+      "blob_sha": "26c7056537b4d1b0db9590afd89a2852f0e5b767",
+      "instrument": "rock-crash",
+      "midi": 60,
+      "layer": "hard"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/ride_22/rd/cl/rd_vl3_rr1.flac",
+      "blob_sha": "75b8e740f4d949422f94e252338919c9afe19181",
+      "instrument": "rock-ride",
+      "midi": 60,
+      "layer": "soft"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/ride_22/rd/cl/rd_vl6_rr1.flac",
+      "blob_sha": "a69f0e93c168af9a040075582a7f152d55be0867",
+      "instrument": "rock-ride",
+      "midi": 60,
+      "layer": "mid"
+    },
+    {
+      "repo": "sfzinstruments/karoryfer.big-rusty-drums",
+      "revision": "f07ce00df34a46b6b08375be56fe116cf15782bc",
+      "path": "Samples/ride_22/rd/cl/rd_vl9_rr1.flac",
+      "blob_sha": "15977f19dba75d29f9026326f1de914cf56e18fb",
+      "instrument": "rock-ride",
+      "midi": 60,
+      "layer": "hard"
+    }
+  ]
+}
