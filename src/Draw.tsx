@@ -11,7 +11,19 @@ import {
   transparentInk,
   type RegionMap,
 } from "./coloringEngine";
-import { listProgress, readProgress, writeProgress } from "./coloringStorage";
+import {
+  listProgress,
+  readProgress,
+  writeProgress,
+  importLegacyArtwork,
+  readLegacyArtwork,
+  restoreColors,
+} from "./coloringStorage";
+import {
+  loadLegacyImage,
+  migrateLegacyColors,
+  ROTATED_LEGACY_PAGES,
+} from "./legacyColoring";
 import "./MagicColoring.css";
 const BASE = "/TO_startup/coloring/";
 const COLORS = [
@@ -49,6 +61,8 @@ export default function Draw({ onBack }: { onBack: () => void }) {
     [query, setQuery] = useState(""),
     [page, setPage] = useState<ColoringPage | null>(null),
     [color, setColor] = useState(COLORS[0]);
+  const [legacyIds, setLegacyIds] = useState<string[]>([]);
+  const importedLegacy = useRef<Promise<string[]> | null>(null);
   const [saved, setSaved] = useState<string[]>([]),
     [history, setHistory] = useState<string[][]>([]),
     [loading, setLoading] = useState(false),
@@ -76,10 +90,27 @@ export default function Draw({ onBack }: { onBack: () => void }) {
   );
   useEffect(() => {
     listProgress()
-      .then((keys) => setSaved(keys.map(String)))
+      .then((keys) =>
+        setSaved((s) => Array.from(new Set([...s, ...keys.map(String)]))),
+      )
       .catch(() =>
         setStatus(
           "Автосохранение недоступно. Скачайте рисунок перед закрытием.",
+        ),
+      );
+  }, []);
+  useEffect(() => {
+    const pending = importLegacyArtwork(() =>
+      setStatus(
+        "Не все прежние рисунки удалось перенести. Исходные данные сохранены в браузере; попробуйте освободить место и перезагрузить страницу.",
+      ),
+    );
+    importedLegacy.current = pending;
+    pending
+      .then(setLegacyIds)
+      .catch(() =>
+        setStatus(
+          "Прежние рисунки остались в браузере, но пока не удалось открыть их. Попробуйте перезагрузить страницу.",
         ),
       );
   }, []);
@@ -130,18 +161,71 @@ export default function Draw({ onBack }: { onBack: () => void }) {
       try {
         progress = await readProgress(page.id);
       } catch {
-        if (!cancelled)
-          setStatus(
-            "Автосохранение недоступно. Скачайте рисунок перед закрытием.",
+        if (!cancelled) {
+          setLoading(false);
+          setError(
+            "Не удалось открыть сохранённый рисунок. Вернитесь в галерею и попробуйте ещё раз. Прежняя работа остаётся в браузере.",
           );
+        }
+        return;
       }
       if (cancelled) return;
       geometry.current = map;
-      colors.current =
-        progress?.revision === COLORING_REVISION &&
-        progress.colors.length === map.sizes.length
-          ? progress.colors
-          : Array(map.sizes.length).fill("#ffffff");
+      const restored = restoreColors(
+        progress,
+        COLORING_REVISION,
+        map.sizes.length,
+      );
+      const current = restored !== null;
+      colors.current = restored || Array(map.sizes.length).fill("#ffffff");
+      if (!current) {
+        try {
+          await (importedLegacy.current || importLegacyArtwork());
+          const legacy = await readLegacyArtwork(page.id);
+          if (legacy) {
+            const previous = await loadLegacyImage(legacy.image);
+            if (cancelled) return;
+            const canvas = document.createElement("canvas");
+            canvas.width = canvas.height = SIZE;
+            const context = canvas.getContext("2d", {
+              willReadFrequently: true,
+            });
+            if (!context) throw new Error("Canvas unavailable");
+            context.drawImage(previous, 0, 0);
+            const recovered = migrateLegacyColors(
+              context.getImageData(0, 0, SIZE, SIZE).data,
+              map,
+              ROTATED_LEGACY_PAGES.has(page.id),
+            );
+            if (cancelled) return;
+            colors.current = recovered;
+            try {
+              await writeProgress({
+                id: page.id,
+                colors: recovered,
+                revision: COLORING_REVISION,
+                updated: Date.now(),
+              });
+              if (cancelled) return;
+              setSaved((ids) => Array.from(new Set([...ids, page.id])));
+              setStatus(
+                "Прежний рисунок восстановлен. Исходная версия доступна в архиве.",
+              );
+            } catch {
+              if (!cancelled)
+                setStatus(
+                  "Рисунок восстановлен, но не удалось сохранить перенос. Скачайте PNG перед закрытием.",
+                );
+            }
+          }
+        } catch {
+          if (!cancelled)
+            setStatus(
+              "Не удалось перенести прежний рисунок. Исходная версия сохранена в архиве.",
+            );
+        }
+      }
+      if (cancelled) return;
       render();
       setLoading(false);
     };
@@ -281,6 +365,77 @@ export default function Draw({ onBack }: { onBack: () => void }) {
       setTimeout(() => URL.revokeObjectURL(url), 1500);
     }, "image/png");
   }
+  async function downloadLegacy(id: string) {
+    try {
+      const entry = await readLegacyArtwork(id);
+      if (!entry) throw new Error("Missing archive");
+      const item = coloringPages.find((p) => p.id === id);
+      let result = entry.image;
+      if (item) {
+        const previous = await loadLegacyImage(entry.image),
+          line = new Image();
+        line.src = source(id);
+        await line.decode();
+        const c = document.createElement("canvas");
+        c.width = SIZE;
+        c.height = SIZE + 54;
+        const context = c.getContext("2d");
+        if (!context) throw new Error("Canvas unavailable");
+        context.fillStyle = "#fff";
+        context.fillRect(0, 0, c.width, c.height);
+        context.drawImage(previous, 0, 0);
+        const ink = document.createElement("canvas");
+        ink.width = ink.height = SIZE;
+        const layer = ink.getContext("2d", { willReadFrequently: true });
+        if (!layer) throw new Error("Canvas unavailable");
+        const scale = Math.min(
+            (SIZE - 42) / line.naturalWidth,
+            (SIZE - 42) / line.naturalHeight,
+          ),
+          w = line.naturalWidth * scale,
+          h = line.naturalHeight * scale;
+        layer.translate(SIZE / 2, SIZE / 2);
+        if (ROTATED_LEGACY_PAGES.has(id)) layer.rotate(Math.PI / 2);
+        layer.drawImage(line, -w / 2, -h / 2, w, h);
+        layer.resetTransform();
+        const raster = layer.getImageData(0, 0, SIZE, SIZE);
+        transparentInk(raster.data);
+        layer.putImageData(raster, 0, 0);
+        context.drawImage(ink, 0, 0);
+        context.fillStyle = "#343f59";
+        context.font = "12px sans-serif";
+        context.fillText(
+          item.name + " · " + item.author,
+          18,
+          SIZE + 21,
+          SIZE - 36,
+        );
+        context.fillText(
+          "Coloring Pages / Pavel Kukov · CC BY-SA 4.0 · github.com/pavelkukov/coloring-pages",
+          18,
+          SIZE + 40,
+          SIZE - 36,
+        );
+        result = await new Promise<Blob>((resolve, reject) =>
+          c.toBlob(
+            (blob) =>
+              blob ? resolve(blob) : reject(new Error("PNG unavailable")),
+            "image/png",
+          ),
+        );
+      }
+      const url = URL.createObjectURL(result),
+        link = document.createElement("a");
+      link.href = url;
+      link.download = "Рыбка-прежний-" + (item?.name || id) + ".png";
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    } catch {
+      setStatus(
+        "Не удалось скачать прежний рисунок. Исходные данные остаются в браузере; попробуйте ещё раз.",
+      );
+    }
+  }
   const keyboardSeed =
     keyboardRegion >= 0 && geometry.current
       ? geometry.current.seeds[keyboardRegion]
@@ -319,6 +474,34 @@ export default function Draw({ onBack }: { onBack: () => void }) {
             Выберите рисунок и раскрашивайте одним касанием. Прогресс
             сохраняется на этом устройстве.
           </p>
+          {legacyIds.length > 0 && (
+            <details className="magic-archive">
+              <summary>Прежние рисунки · {legacyIds.length}</summary>
+              <p>
+                Цвета переносятся при открытии картинки. Здесь можно скачать
+                исходную версию.
+              </p>
+              <ul>
+                {legacyIds.map((id) => (
+                  <li key={id}>
+                    <span>
+                      {coloringPages.find((p) => p.id === id)?.name ||
+                        id.replace(/_/g, " ")}
+                    </span>
+                    <button
+                      onClick={() => void downloadLegacy(id)}
+                      aria-label={
+                        "Скачать прежний рисунок: " +
+                        (coloringPages.find((p) => p.id === id)?.name || id)
+                      }
+                    >
+                      Скачать PNG
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
           <div className="magic-filters" aria-label="Категории">
             {[
               ["all", "Все"],
@@ -385,7 +568,9 @@ export default function Draw({ onBack }: { onBack: () => void }) {
                 </div>
                 <span>{p.name}</span>
                 <small>
-                  {saved.includes(p.id) ? "Продолжить →" : "Раскрасить →"}
+                  {saved.includes(p.id) || legacyIds.includes(p.id)
+                    ? "Продолжить →"
+                    : "Раскрасить →"}
                 </small>
               </button>
             ))}
