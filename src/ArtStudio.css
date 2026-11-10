@@ -51,13 +51,9 @@
 .rybka-anna.no-photo { grid-template-columns: minmax(0, 850px); }
 .rybka-anna h2 { margin-top: 12px; margin-bottom: 25px; }
 .rybka-anna p:not(.section-label) { font-size: 14px; color: #59614f; margin-bottom: 18px; }
-.rybka-photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.rybka-gallery-entry { min-width: 0; }
-.rybka-gallery-entry:last-child:nth-child(3n + 2) { grid-column: span 2; }
-.rybka-gallery-entry > button { display: block; position: relative; border: 0; padding: 0; border-radius: 9px; background: #e3dccb; overflow: hidden; width: 100%; height: auto; text-align: left; }
-.rybka-gallery-entry img { width: 100%; height: 350px; object-fit: contain; }
-.rybka-gallery-entry > button > span { display: block; padding: 14px 18px; background: #eee8dc; color: var(--ink); font-size: 13px; }
-.rybka-lightbox figure img { max-height: 76dvh; width: auto; height: auto; max-width: 100%; object-fit: contain; }
+.rybka .studio-photo-grid { display: block; columns: 3; column-gap: 18px; }
+.rybka .studio-photo-entry { break-inside: avoid; margin-bottom: 18px; }
+.rybka .studio-photo-entry img { width: 100%; height: auto; }
 .rybka-artworks { background: #f5e8d2; border-radius: 12px; padding-inline: clamp(25px, 4vw, 60px); }
 .rybka-artworks .rybka-lead { margin-bottom: 28px; }
 .rybka-work-info { padding-top: 18px; }
@@ -100,10 +96,9 @@
   .rybka-pleinair { grid-template-columns: 1fr; gap: 15px; }
   .rybka-pleinair > svg { width: 38px; height: 38px; margin-top: 0; }
   .rybka-anna-photo { position: static; max-width: 540px; }
-  .rybka-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .rybka-gallery-entry img { height: 280px; }
-  .rybka-gallery-entry:last-child:nth-child(3n + 2) { grid-column: auto; }
-  .rybka-gallery-entry:last-child:nth-child(odd) { grid-column: span 2; }
+  .rybka .studio-photo-grid { columns: 2; column-gap: 12px; }
+  .rybka .studio-photo-entry { margin-bottom: 12px; }
+  .rybka .studio-photo-entry:last-child:nth-child(odd) { column-span: all; }
   .rybka-artworks { padding: 35px 24px; }
   .rybka-coloring > .rybka-container { grid-template-columns: 1fr; gap: 35px; }
   .rybka-coloring-preview { width: min(90%, 360px); justify-self: center; }
@@ -115,7 +110,6 @@
   .rybka-class-grid svg { margin: 0; grid-row: span 2; }
   .rybka-class-grid h3 { margin: 0; }
   .rybka-class-grid p { grid-column: 2; }
-  .rybka-gallery-entry img { height: 220px; }
 }
 
 .rybka .site-header nav { gap: clamp(12px, 1.4vw, 24px); font-size: 12px; }

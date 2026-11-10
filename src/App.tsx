@@ -226,7 +226,7 @@ function Home() {
     const others = Array.from(root.current.querySelectorAll('.world, .home-signature, .home-social')).filter(node => node !== card);
     // Warm only the chosen section's hero while the compositor transition plays.
     const heroImage = new Image();
-    const heroPhoto = path === '/art' ? getArtPhoto('lesson') : musicPhoto('lesson');
+    const heroPhoto = path === '/art' ? getArtPhoto('lesson') : musicPhoto('portrait');
     const heroSource = heroPhoto?.src;
     if (heroSource) {
       heroImage.decoding = 'async';
