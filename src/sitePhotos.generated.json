@@ -1,0 +1,374 @@
+{
+  "rybka/anna-painting": {
+    "src": "images/rybka/anna-painting-1280.webp",
+    "thumbnail": "images/rybka/anna-painting-640.webp",
+    "width": 1280,
+    "height": 854,
+    "variants": [
+      {
+        "src": "images/rybka/anna-painting-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/anna-painting-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/anna-painting-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/anna-painting-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "rybka/lesson": {
+    "src": "images/rybka/lesson-1280.webp",
+    "thumbnail": "images/rybka/lesson-640.webp",
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka/lesson-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/lesson-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/lesson-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/lesson-1280.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "rybka/anna-board": {
+    "src": "images/rybka/anna-board-1280.webp",
+    "thumbnail": "images/rybka/anna-board-640.webp",
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "src": "images/rybka/anna-board-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/anna-board-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/anna-board-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/anna-board-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "rybka/painting-close": {
+    "src": "images/rybka/painting-close-1280.webp",
+    "thumbnail": "images/rybka/painting-close-640.webp",
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "src": "images/rybka/painting-close-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/painting-close-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/painting-close-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/painting-close-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "rybka/palette": {
+    "src": "images/rybka/palette-1280.webp",
+    "thumbnail": "images/rybka/palette-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka/palette-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/palette-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/palette-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/palette-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "rybka/celebration": {
+    "src": "images/rybka/celebration-1280.webp",
+    "thumbnail": "images/rybka/celebration-640.webp",
+    "width": 1067,
+    "height": 1601,
+    "variants": [
+      {
+        "src": "images/rybka/celebration-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/celebration-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/celebration-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/celebration-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "rybka/wood-house": {
+    "src": "images/rybka/wood-house-1280.webp",
+    "thumbnail": "images/rybka/wood-house-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka/wood-house-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/wood-house-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/wood-house-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/wood-house-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "rybka/flowers-tables": {
+    "src": "images/rybka/flowers-tables-1280.webp",
+    "thumbnail": "images/rybka/flowers-tables-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka/flowers-tables-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/flowers-tables-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/flowers-tables-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/flowers-tables-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "rybka/studio-wide": {
+    "src": "images/rybka/studio-wide-1280.webp",
+    "thumbnail": "images/rybka/studio-wide-640.webp",
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "src": "images/rybka/studio-wide-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/studio-wide-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/studio-wide-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/studio-wide-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "music/lesson": {
+    "src": "images/music/lesson-1280.webp",
+    "thumbnail": "images/music/lesson-640.webp",
+    "width": 1280,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/music/lesson-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music/lesson-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music/lesson-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music/lesson-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "music/instruments": {
+    "src": "images/music/instruments-1280.webp",
+    "thumbnail": "images/music/instruments-640.webp",
+    "width": 1080,
+    "height": 1447,
+    "variants": [
+      {
+        "src": "images/music/instruments-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music/instruments-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music/instruments-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music/instruments-1280.webp",
+        "width": 1080
+      }
+    ]
+  },
+  "music/drums": {
+    "src": "images/music/drums-960.webp",
+    "thumbnail": "images/music/drums-640.webp",
+    "width": 806,
+    "height": 1097,
+    "variants": [
+      {
+        "src": "images/music/drums-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music/drums-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music/drums-960.webp",
+        "width": 806
+      }
+    ]
+  },
+  "music/guitar": {
+    "src": "images/music/guitar-1280.webp",
+    "thumbnail": "images/music/guitar-640.webp",
+    "width": 1058,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/music/guitar-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music/guitar-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music/guitar-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music/guitar-1280.webp",
+        "width": 1058
+      }
+    ]
+  },
+  "music/drums-close": {
+    "src": "images/music/drums-close-1280.webp",
+    "thumbnail": "images/music/drums-close-640.webp",
+    "width": 993,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/music/drums-close-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music/drums-close-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music/drums-close-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music/drums-close-1280.webp",
+        "width": 993
+      }
+    ]
+  },
+  "music/portrait": {
+    "src": "images/music/portrait-640.webp",
+    "thumbnail": "images/music/portrait-640.webp",
+    "width": 566,
+    "height": 1107,
+    "variants": [
+      {
+        "src": "images/music/portrait-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music/portrait-640.webp",
+        "width": 566
+      }
+    ]
+  },
+  "music/performance": {
+    "src": "images/music/performance-1280.webp",
+    "thumbnail": "images/music/performance-640.webp",
+    "width": 1280,
+    "height": 854,
+    "variants": [
+      {
+        "src": "images/music/performance-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music/performance-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music/performance-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music/performance-1280.webp",
+        "width": 1280
+      }
+    ]
+  }
+}

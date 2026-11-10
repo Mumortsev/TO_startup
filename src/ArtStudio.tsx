@@ -1,46 +1,16 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowLeft, BookOpen, Flame, Leaf, MapPin, Palette, Phone, Scissors, Shapes, Sparkles, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from './ResponsivePhoto';
+import PhotoGallery from './PhotoGallery';
+import { useState, type ReactNode } from 'react';
+import { ArrowLeft, BookOpen, Flame, Leaf, MapPin, Palette, Phone, Scissors, Shapes, Sparkles } from 'lucide-react';
 import { annaAbout, artworks, masterclasses, rybkaContact, workshopAbout } from './artContent';
-import { getArtPhoto, type ArtPhoto, type ArtPhotoId } from './artPhotos';
+import { getArtPhoto, type ArtPhotoId } from './artPhotos';
 import ArtworkCarousel from './ArtworkCarousel';
 import './ArtStudio.css';
 const base = import.meta.env.BASE_URL;
 const icons = { paint: Palette, shape: Shapes, scissors: Scissors, spark: Sparkles, flame: Flame, leaf: Leaf, book: BookOpen };
-type GalleryPhoto = ArtPhoto & { title: string; details?: ReactNode };
-function Image({ photo, eager = false, className = '' }: { photo: ArtPhoto; eager?: boolean; className?: string }) {
-  return <img className={className} src={photo.src} srcSet={`${photo.thumbnail} 640w, ${photo.src} 1200w`} sizes="(max-width: 760px) 100vw, 50vw" alt={photo.alt} width={photo.width} height={photo.height} loading={eager ? 'eager' : 'lazy'} fetchPriority={eager ? 'high' : 'auto'} decoding="async" />;
-}
 function OptionalPhoto({ id, className = '' }: { id: ArtPhotoId; className?: string }) {
   const photo = getArtPhoto(id);
   return photo ? <Image photo={photo} className={className} /> : null;
-}
-function PhotoGallery({ photos, label }: { photos: GalleryPhoto[]; label: string }) {
-  const [index, setIndex] = useState<number | null>(null);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const opener = useRef<HTMLButtonElement | null>(null);
-  const touch = useRef<number | null>(null);
-  const isOpen = index !== null;
-  useEffect(() => {
-    if (!isOpen) return;
-    const previousOverflow = document.body.style.overflow;
-    dialog.current?.showModal();
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = previousOverflow; };
-  }, [isOpen]);
-  function close() { dialog.current?.close(); setIndex(null); opener.current?.focus({ preventScroll: true }); }
-  function move(delta: number) { setIndex(value => value === null ? null : (value + delta + photos.length) % photos.length); }
-  if (!photos.length) return null;
-  return <>
-    <div className="rybka-photo-grid">{photos.map((photo, i) => <article className="rybka-gallery-entry" key={photo.src}><button onClick={event => { opener.current = event.currentTarget; setIndex(i); }} aria-label={'Открыть фото: ' + photo.title}><Image photo={photo} /><span>{photo.title}</span></button>{photo.details}</article>)}</div>
-    <dialog className="lightbox rybka-lightbox" ref={dialog} aria-label={label} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }} onKeyDown={event => { if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); } if (event.key === 'ArrowRight') { event.preventDefault(); move(1); } }}>
-      <button className="lightbox-close" onClick={close} aria-label="Закрыть фото"><X /></button>
-      {index !== null && <div className="lightbox-content" onTouchStart={event => { touch.current = event.touches[0].clientX; }} onTouchEnd={event => { if (touch.current === null) return; const distance = event.changedTouches[0].clientX - touch.current; if (Math.abs(distance) > 50) move(distance > 0 ? -1 : 1); touch.current = null; }}>
-        <button aria-label="Предыдущее фото" onClick={() => move(-1)}><ChevronLeft /></button>
-        <figure><Image photo={photos[index]} eager /><figcaption>{photos[index].title}<span>{index + 1} / {photos.length}</span></figcaption></figure>
-        <button aria-label="Следующее фото" onClick={() => move(1)}><ChevronRight /></button>
-      </div>}
-    </dialog>
-  </>;
 }
 const galleryIds: [ArtPhotoId, string][] = [['anna-board', 'Время творить'], ['painting-close', 'За работой'], ['wood-house', 'Детали мастерской'], ['flowers-tables', 'Место для новых идей'], ['studio-wide', 'Пространство мастерской']];
 const gallery = galleryIds.flatMap(([id, title]) => { const photo = getArtPhoto(id); return photo ? [{ ...photo, title }] : []; });

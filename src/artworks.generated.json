@@ -1,82 +1,442 @@
 {
   "work-20": {
     "width": 2000,
-    "height": 1334
+    "height": 1334,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-20-marked-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/artworks/work-20-marked-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/artworks/work-20-marked-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/artworks/work-20-marked-2000.webp",
+        "width": 2000
+      }
+    ]
   },
   "work-01": {
     "width": 1546,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-01-marked-320.webp",
+        "width": 247
+      },
+      {
+        "src": "images/rybka/artworks/work-01-marked-640.webp",
+        "width": 495
+      },
+      {
+        "src": "images/rybka/artworks/work-01-marked-960.webp",
+        "width": 742
+      },
+      {
+        "src": "images/rybka/artworks/work-01-marked-2000.webp",
+        "width": 1546
+      }
+    ]
   },
   "work-02": {
     "width": 1417,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-02-marked-320.webp",
+        "width": 227
+      },
+      {
+        "src": "images/rybka/artworks/work-02-marked-640.webp",
+        "width": 453
+      },
+      {
+        "src": "images/rybka/artworks/work-02-marked-960.webp",
+        "width": 680
+      },
+      {
+        "src": "images/rybka/artworks/work-02-marked-2000.webp",
+        "width": 1417
+      }
+    ]
   },
   "work-03": {
     "width": 1486,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-03-marked-320.webp",
+        "width": 238
+      },
+      {
+        "src": "images/rybka/artworks/work-03-marked-640.webp",
+        "width": 476
+      },
+      {
+        "src": "images/rybka/artworks/work-03-marked-960.webp",
+        "width": 713
+      },
+      {
+        "src": "images/rybka/artworks/work-03-marked-2000.webp",
+        "width": 1486
+      }
+    ]
   },
   "work-04": {
     "width": 1498,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-04-marked-320.webp",
+        "width": 240
+      },
+      {
+        "src": "images/rybka/artworks/work-04-marked-640.webp",
+        "width": 479
+      },
+      {
+        "src": "images/rybka/artworks/work-04-marked-960.webp",
+        "width": 719
+      },
+      {
+        "src": "images/rybka/artworks/work-04-marked-2000.webp",
+        "width": 1498
+      }
+    ]
   },
   "work-05": {
     "width": 1485,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-05-marked-320.webp",
+        "width": 238
+      },
+      {
+        "src": "images/rybka/artworks/work-05-marked-640.webp",
+        "width": 475
+      },
+      {
+        "src": "images/rybka/artworks/work-05-marked-960.webp",
+        "width": 713
+      },
+      {
+        "src": "images/rybka/artworks/work-05-marked-2000.webp",
+        "width": 1485
+      }
+    ]
   },
   "work-06": {
     "width": 1487,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-06-marked-320.webp",
+        "width": 238
+      },
+      {
+        "src": "images/rybka/artworks/work-06-marked-640.webp",
+        "width": 476
+      },
+      {
+        "src": "images/rybka/artworks/work-06-marked-960.webp",
+        "width": 714
+      },
+      {
+        "src": "images/rybka/artworks/work-06-marked-2000.webp",
+        "width": 1487
+      }
+    ]
   },
   "work-07": {
     "width": 2000,
-    "height": 1594
+    "height": 1594,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-07-marked-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/artworks/work-07-marked-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/artworks/work-07-marked-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/artworks/work-07-marked-2000.webp",
+        "width": 2000
+      }
+    ]
   },
   "work-08": {
     "width": 1483,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-08-marked-320.webp",
+        "width": 237
+      },
+      {
+        "src": "images/rybka/artworks/work-08-marked-640.webp",
+        "width": 475
+      },
+      {
+        "src": "images/rybka/artworks/work-08-marked-960.webp",
+        "width": 712
+      },
+      {
+        "src": "images/rybka/artworks/work-08-marked-2000.webp",
+        "width": 1483
+      }
+    ]
   },
   "work-09": {
     "width": 1501,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-09-marked-320.webp",
+        "width": 240
+      },
+      {
+        "src": "images/rybka/artworks/work-09-marked-640.webp",
+        "width": 480
+      },
+      {
+        "src": "images/rybka/artworks/work-09-marked-960.webp",
+        "width": 720
+      },
+      {
+        "src": "images/rybka/artworks/work-09-marked-2000.webp",
+        "width": 1501
+      }
+    ]
   },
   "work-10": {
     "width": 1581,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-10-marked-320.webp",
+        "width": 253
+      },
+      {
+        "src": "images/rybka/artworks/work-10-marked-640.webp",
+        "width": 506
+      },
+      {
+        "src": "images/rybka/artworks/work-10-marked-960.webp",
+        "width": 759
+      },
+      {
+        "src": "images/rybka/artworks/work-10-marked-2000.webp",
+        "width": 1581
+      }
+    ]
   },
   "work-11": {
     "width": 2000,
-    "height": 1594
+    "height": 1594,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-11-marked-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/artworks/work-11-marked-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/artworks/work-11-marked-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/artworks/work-11-marked-2000.webp",
+        "width": 2000
+      }
+    ]
   },
   "work-12": {
     "width": 2000,
-    "height": 1592
+    "height": 1592,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-12-marked-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/artworks/work-12-marked-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/artworks/work-12-marked-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/artworks/work-12-marked-2000.webp",
+        "width": 2000
+      }
+    ]
   },
   "work-13": {
     "width": 2000,
-    "height": 1545
+    "height": 1545,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-13-marked-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/artworks/work-13-marked-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/artworks/work-13-marked-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/artworks/work-13-marked-2000.webp",
+        "width": 2000
+      }
+    ]
   },
   "work-14": {
     "width": 2000,
-    "height": 1617
+    "height": 1617,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-14-marked-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/artworks/work-14-marked-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/artworks/work-14-marked-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/artworks/work-14-marked-2000.webp",
+        "width": 2000
+      }
+    ]
   },
   "work-15": {
     "width": 1250,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-15-marked-320.webp",
+        "width": 200
+      },
+      {
+        "src": "images/rybka/artworks/work-15-marked-640.webp",
+        "width": 400
+      },
+      {
+        "src": "images/rybka/artworks/work-15-marked-960.webp",
+        "width": 600
+      },
+      {
+        "src": "images/rybka/artworks/work-15-marked-2000.webp",
+        "width": 1250
+      }
+    ]
   },
   "work-16": {
     "width": 2000,
-    "height": 1353
+    "height": 1353,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-16-marked-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka/artworks/work-16-marked-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka/artworks/work-16-marked-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka/artworks/work-16-marked-2000.webp",
+        "width": 2000
+      }
+    ]
   },
   "work-17": {
     "width": 1209,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-17-marked-320.webp",
+        "width": 193
+      },
+      {
+        "src": "images/rybka/artworks/work-17-marked-640.webp",
+        "width": 387
+      },
+      {
+        "src": "images/rybka/artworks/work-17-marked-960.webp",
+        "width": 580
+      },
+      {
+        "src": "images/rybka/artworks/work-17-marked-2000.webp",
+        "width": 1209
+      }
+    ]
   },
   "work-18": {
     "width": 1213,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-18-marked-320.webp",
+        "width": 194
+      },
+      {
+        "src": "images/rybka/artworks/work-18-marked-640.webp",
+        "width": 388
+      },
+      {
+        "src": "images/rybka/artworks/work-18-marked-960.webp",
+        "width": 582
+      },
+      {
+        "src": "images/rybka/artworks/work-18-marked-2000.webp",
+        "width": 1213
+      }
+    ]
   },
   "work-19": {
     "width": 1496,
-    "height": 2000
+    "height": 2000,
+    "variants": [
+      {
+        "src": "images/rybka/artworks/work-19-marked-320.webp",
+        "width": 239
+      },
+      {
+        "src": "images/rybka/artworks/work-19-marked-640.webp",
+        "width": 479
+      },
+      {
+        "src": "images/rybka/artworks/work-19-marked-960.webp",
+        "width": 718
+      },
+      {
+        "src": "images/rybka/artworks/work-19-marked-2000.webp",
+        "width": 1496
+      }
+    ]
   }
 }

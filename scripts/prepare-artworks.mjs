@@ -42,15 +42,18 @@ try {
     // Rectify directly to the largest public size, retaining the original ICC profile.
     const rectified = join(temporary, entry.id + '.png');
     run([input, '-auto-orient', '-virtual-pixel', 'edge', '-define', `distort:viewport=${width}x${height}+0+0`, '-distort', 'Perspective', mapping, '+repage', rectified]);
-    for (const size of [960, 2000]) {
+    const variants = [];
+    for (const size of [320, 640, 960, 2000]) {
       const scale = Math.min(1, size / Math.max(width, height));
       const outWidth = Math.round(width * scale);
       const outHeight = Math.round(height * scale);
-      const args = [rectified, '-resize', `${size}x${size}>`, '+profile', 'exif', '+profile', 'xmp', '+profile', 'iptc', '-set', 'comment', '', '-font', 'DejaVu-Sans', '-pointsize', String(Math.max(18, Math.round(outWidth / 28))), '-gravity', 'center', '-fill', 'rgba(255,255,255,0.30)', '-stroke', 'rgba(25,30,25,0.20)', '-strokewidth', '0.6'];
+      const args = [rectified, '-resize', `${size}x${size}>`, '+profile', 'exif', '+profile', 'xmp', '+profile', 'iptc', '-set', 'comment', '', '-font', 'DejaVu-Sans', '-pointsize', String(Math.max(10, Math.round(outWidth / 28))), '-gravity', 'center', '-fill', 'rgba(255,255,255,0.30)', '-stroke', 'rgba(25,30,25,0.20)', '-strokewidth', '0.6'];
       for (const fraction of [-.22, .22]) args.push('-annotate', `+0${fraction < 0 ? '' : '+'}${Math.round(outHeight * fraction)}`, 'Мастерская «Рыбка»');
-      run([...args, '-quality', '90', join(output, `${entry.id}-marked-${size}.webp`)]);
+      run([...args, '-quality', size === 2000 ? '90' : '85', join(output, `${entry.id}-marked-${size}.webp`)]);
+      variants.push({ src: `images/rybka/artworks/${entry.id}-marked-${size}.webp`, width: outWidth });
       if (size === 2000) metadata[entry.id] = { width: outWidth, height: outHeight };
     }
+    metadata[entry.id].variants = variants;
     console.log(`Prepared ${entry.id}: canvas rectified, public copies watermarked.`);
   }
   writeFileSync(metadataPath, JSON.stringify(metadata, null, 2) + '\n');

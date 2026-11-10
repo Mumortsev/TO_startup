@@ -1,22 +1,20 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
-  ArrowLeft,
   Menu,
   X,
-  MapPin,
-  Phone,
   Play,
-  ChevronLeft,
-  ChevronRight,
   Music2,
   Palette,
 } from "lucide-react";
 import gsap from "gsap";
-import { art, music, contact } from "./data";
+import { contact } from "./data";
+import { musicPhoto } from "./musicContent";
+import { photoSrcSet } from "./ResponsivePhoto";
 import { rybkaContact } from "./artContent";
 import { getArtPhoto } from "./artPhotos";
 import "./style.css";
 const Draw = lazy(() => import("./Draw"));
+const MusicStudio = lazy(() => import("./MusicStudio"));
 const ArtStudio = lazy(() => import("./ArtStudio"));
 const Beat = lazy(() => import("./Beat"));
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -53,36 +51,6 @@ function Link({
     >
       {children}
     </a>
-  );
-}
-function Photo({
-  src,
-  alt,
-  eager = false,
-  className = "",
-}: {
-  src: string;
-  alt: string;
-  eager?: boolean;
-  className?: string;
-}) {
-  return (
-    <img
-      className={className}
-      src={src}
-      srcSet={
-        src.includes("-1200.webp")
-          ? `${src.replace("-1200", "-640")} 640w, ${src} 1200w`
-          : undefined
-      }
-      sizes="(max-width: 700px) 100vw, 50vw"
-      alt={alt}
-      loading={eager ? "eager" : "lazy"}
-      fetchPriority={eager ? "high" : "auto"}
-      decoding="async"
-      width="1200"
-      height="900"
-    />
   );
 }
 function Fish({ className = "" }: { className?: string }) {
@@ -179,6 +147,11 @@ function Header({ kind }: { kind?: "art" | "music" }) {
           <a href="#works">Работы</a>
           <a href="#contact">Контакты</a>
           <a className="nav-contact" href={rybkaContact.max} target="_blank" rel="noreferrer">Расписание в MAX</a>
+        </> : kind === 'music' ? <>
+          <a href="#directions">Инструменты</a>
+          <a href="#formats">Форматы занятий</a>
+          <a href="#gallery">Фотографии</a>
+          <a className="nav-contact" href="#contact">Записаться</a>
         </> : <>
         <Link to="/art">
           Мастерская «Рыбка»
@@ -206,29 +179,6 @@ function Header({ kind }: { kind?: "art" | "music" }) {
       </button>
     </header>
   );
-}
-function useEntrance(root: React.RefObject<HTMLElement>, dependency?: string) {
-  useEffect(() => {
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const scope = gsap.context(() => {
-        gsap.fromTo(
-          "[data-enter]",
-          { y: 22, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.7,
-            stagger: 0.09,
-            ease: "power3.out",
-            clearProps: "all",
-          },
-        );
-      }, root);
-      return () => scope.revert();
-    });
-    return () => mm.revert();
-  }, [dependency]);
 }
 function Footer({ kind }: { kind?: "art" | "music" }) {
   return (
@@ -276,11 +226,12 @@ function Home() {
     const others = Array.from(root.current.querySelectorAll('.world, .home-signature, .home-social')).filter(node => node !== card);
     // Warm only the chosen section's hero while the compositor transition plays.
     const heroImage = new Image();
-    const heroSource = path === '/art' ? getArtPhoto('lesson')?.src : music[0].img;
+    const heroPhoto = path === '/art' ? getArtPhoto('lesson') : musicPhoto('lesson');
+    const heroSource = heroPhoto?.src;
     if (heroSource) {
       heroImage.decoding = 'async';
-      heroImage.sizes = '(max-width: 700px) 100vw, 50vw';
-      heroImage.srcset = `${heroSource.replace('-1200', '-640')} 640w, ${heroSource} 1200w`;
+      heroImage.sizes = path === '/art' ? '(max-width: 760px) 88vw, 45vw' : '(max-width: 760px) 90vw, 45vw';
+      heroImage.srcset = heroPhoto ? photoSrcSet(heroPhoto) || "" : "";
       heroImage.src = heroSource;
       void heroImage.decode().catch(() => {});
     }
@@ -390,423 +341,6 @@ function Home() {
     </main>
   );
 }
-function EnrollmentForm() {
-  const [attempted, setAttempted] = useState(false);
-  return (
-    <form className="enrollment-form" onSubmit={(event) => {
-      event.preventDefault();
-      setAttempted(true);
-    }}>
-      <label>Имя родителя<input name="parentName" autoComplete="name" required maxLength={100} /></label>
-      <label>Телефон<input name="phone" type="tel" autoComplete="tel" inputMode="tel" required minLength={7} maxLength={25} /></label>
-      <label>Возраст ребёнка<input name="childAge" type="number" inputMode="numeric" min="1" max="18" step="1" required /></label>
-      <p id="enrollment-note">Отправка на почту пока не подключена. Данные из формы не отправляются. Чтобы записаться, позвоните нам.</p>
-      <button type="submit" className="button" aria-describedby="enrollment-note">Оставить заявку</button>
-      {attempted && <p role="status">Заявка не отправлена: отправка на почту ещё не подключена. Позвоните по номеру ниже.</p>}
-    </form>
-  );
-}
-function Gallery({ kind }: { kind: "art" | "music" }) {
-  const items = kind === "art" ? art : music;
-  const [index, setIndex] = useState(-1);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const opener = useRef<HTMLButtonElement | null>(null);
-  const touch = useRef(0);
-  useEffect(() => {
-    if (index >= 0 && !dialog.current?.open) {
-      dialog.current?.showModal();
-      document.body.style.overflow = "hidden";
-    }
-    return () => {};
-  }, [index]);
-  useEffect(
-    () => () => {
-      document.body.style.overflow = "";
-    },
-    [],
-  );
-  const close = () => {
-    dialog.current?.close();
-    setIndex(-1);
-    document.body.style.overflow = "";
-    opener.current?.focus();
-  };
-  return (
-    <>
-      <div className="gallery">
-        {items.map((item, i) => (
-          <button
-            key={item.title}
-            onClick={(e) => {
-              opener.current = e.currentTarget;
-              setIndex(i);
-            }}
-            aria-label={"Открыть фото: " + item.title}
-          >
-            <Photo src={item.img} alt={item.title} />
-            <span>
-              {item.title}
-            </span>
-          </button>
-        ))}
-      </div>
-      <dialog
-        className="lightbox"
-        ref={dialog}
-        aria-label="Просмотр фотографий"
-        onCancel={(e) => {
-          e.preventDefault();
-          close();
-        }}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) close();
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowRight") setIndex((index + 1) % items.length);
-          if (e.key === "ArrowLeft")
-            setIndex((index + items.length - 1) % items.length);
-        }}
-      >
-        <button className="lightbox-close" aria-label="Закрыть" onClick={close}>
-          <X />
-        </button>
-        {index >= 0 && (
-          <div
-            className="lightbox-content"
-            onTouchStart={(e) => (touch.current = e.touches[0].clientX)}
-            onTouchEnd={(e) => {
-              const d = e.changedTouches[0].clientX - touch.current;
-              if (Math.abs(d) > 45)
-                setIndex(
-                  (index + (d < 0 ? 1 : items.length - 1)) % items.length,
-                );
-            }}
-          >
-            <button
-              aria-label="Предыдущее фото"
-              onClick={() =>
-                setIndex((index + items.length - 1) % items.length)
-              }
-            >
-              <ChevronLeft />
-            </button>
-            <figure>
-              <Photo src={items[index].img} alt={items[index].title} />
-              <figcaption>
-                {items[index].title}
-                <span>
-                  {index + 1} / {items.length}
-                </span>
-              </figcaption>
-            </figure>
-            <button
-              aria-label="Следующее фото"
-              onClick={() => setIndex((index + 1) % items.length)}
-            >
-              <ChevronRight />
-            </button>
-          </div>
-        )}
-      </dialog>
-    </>
-  );
-}
-function Studio({ kind }: { kind: "art" | "music" }) {
-  const isArt = kind === "art",
-    items = isArt ? art : music;
-  const root = useRef<HTMLElement>(null);
-  useEntrance(root, kind);
-  return (
-    <div className={"studio " + kind}>
-      <a className="skip-link" href="#main">
-        К содержимому
-      </a>
-      <Header kind={kind} />
-      <main id="main" ref={root}>
-        <section className="studio-hero">
-          <div className="hero-copy">
-            <Link to="/" className="back-link">
-              <ArrowLeft size={16} /> Два мира творчества
-            </Link>
-            <div className="place-label" data-enter>
-              <span />{" "}
-              {isArt
-                ? "Мастерская, где оживают идеи"
-                : "Музыкальная студия в Лазаревском"}
-            </div>
-            <h1 data-enter>
-              {isArt ? (
-                <>
-                  Больше красок.
-                  <br />
-                  <em>Больше тебя.</em>
-                </>
-              ) : (
-                <>
-                  Твой характер.
-                  <br />
-                  <em>Твоё звучание.</em>
-                </>
-              )}
-            </h1>
-            <p data-enter>
-              {isArt
-                ? "Рисование, поделки и маленькие открытия. Пространство для детей и родителей, где фантазию не ограничивают рамками."
-                : "Гитара, бас и барабаны. Знакомься с инструментами, чувствуй музыку и находи свой собственный ритм."}
-            </p>
-            <div className="hero-actions" data-enter>
-              <a href="#directions" className="button">
-                {isArt ? "Найти занятие" : "Выбрать инструмент"}
-              </a>
-              <Link
-                to={isArt ? "/art/draw" : "/music/studio"}
-                className="text-link"
-              >
-                {isArt ? "Попробовать раскраску" : "Открыть музыкальную студию"}
-              </Link>
-            </div>
-          </div>
-          <div className="hero-visual" data-enter>
-            <Photo
-              src={items[0].img}
-              alt={
-                isArt
-                  ? "Девочка увлечённо рисует цветными карандашами"
-                  : "Игра на акустической гитаре"
-              }
-              eager
-            />
-            <span className="photo-tag">
-              {isArt
-                ? "Любопытство — лучший учитель"
-                : "Всё начинается с первого звука"}
-            </span>
-            {isArt ? (
-              <Fish className="hero-fish" />
-            ) : (
-              <div className="hero-record">
-                <span>
-                  st<span>ART</span>up
-                </span>
-                <Music2 size={40} />
-              </div>
-            )}
-          </div>
-          <div className="hero-baseline">
-            <span>
-              {isArt
-                ? "Фантазия без правильных ответов"
-                : "Творчество без лишнего шума"}
-            </span>
-            <span>
-              Лазаревское
-            </span>
-          </div>
-        </section>
-        <section className="section directions" id="directions">
-          <div className="section-heading">
-            <p className="section-label">
-              {isArt ? "Столько способов творить" : "Найди своё звучание"}
-            </p>
-            <h2>
-              {isArt ? (
-                <>
-                  Руками. Красками.
-                  <br />
-                  <em>Воображением.</em>
-                </>
-              ) : (
-                <>
-                  От первого аккорда
-                  <br />
-                  <em>до своего ритма.</em>
-                </>
-              )}
-            </h2>
-            <p>
-              {isArt
-                ? "Любимое занятие находится в процессе. Пробуем материалы, учимся замечать красоту и создаём своё."
-                : "За каждым инструментом — свой характер. Осталось узнать, какой созвучен тебе."}
-            </p>
-          </div>
-          <div className="directions-grid">
-            {items.map((item) => (
-              <article className="direction-card" key={item.title}>
-                <div className="direction-photo">
-                  <Photo src={item.img} alt={item.title} />
-                </div>
-                <div className="direction-copy">
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                  <a
-                    href="#contact"
-                    aria-label={"Узнать о направлении «" + item.title + "»"}
-                  >
-                    Подробнее
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-        <section className="experience section">
-          <div className="experience-copy">
-            <p className="section-label">Творчество уже здесь</p>
-            <h2>
-              {isArt ? (
-                <>
-                  Немного цвета.
-                  <br />
-                  <em>Много радости.</em>
-                </>
-              ) : (
-                <>
-                  Твой первый трек?
-                  <br />
-                  <em>Почему бы и да.</em>
-                </>
-              )}
-            </h2>
-            <p>
-              {isArt
-                ? "Выбирай настоящую иллюстрацию и раскрашивай одним касанием. Продолжай в удобное время и сохраняй готовый рисунок."
-                : "Выбери жанр и нажимай на квадратики. Придумай свой ритм с барабанами, гитарой и басом и скачай готовую музыку."}
-            </p>
-            <Link to={isArt ? "/art/draw" : "/music/studio"} className="button">
-              {isArt ? "Открыть раскраски" : "Открыть секвенсор"}
-            </Link>
-            <span className="experience-hint">
-              Без регистрации. Просто попробуй.
-            </span>
-          </div>
-          {isArt ? (
-            <Link
-              to="/art/draw"
-              className="coloring-demo"
-              aria-label="Перейти к раскраскам"
-            >
-              <div className="demo-paper">
-                <img
-                  src={base + "/coloring/cute_butterfly.svg"}
-                  alt="Бабочка из галереи раскрасок"
-                  loading="lazy"
-                  width="400"
-                  height="400"
-                />
-                <span className="demo-brush">
-                  Добавь свой цвет <Palette size={18} />
-                </span>
-              </div>
-              <div className="demo-swatches" aria-hidden="true">
-                {["#d54b35", "#e9a33f", "#8eac72", "#669fba", "#ae6590"].map(
-                  (c) => (
-                    <span key={c} style={{ background: c }} />
-                  ),
-                )}
-              </div>
-            </Link>
-          ) : (
-            <div className="rhythm-demo">
-              <span className="rhythm-brand">stARTup / playground</span>
-              <Wave interactive />
-              <span className="rhythm-caption">
-                Сначала ритм. Потом всё остальное.
-              </span>
-            </div>
-          )}
-        </section>
-        <section className="section atmosphere">
-          <div className="section-heading">
-            <p className="section-label">То самое чувство</p>
-            <h2>
-              {isArt ? (
-                <>
-                  Здесь хочется
-                  <br />
-                  <em>создавать.</em>
-                </>
-              ) : (
-                <>
-                  Музыка, которую
-                  <br />
-                  <em>чувствуешь.</em>
-                </>
-              )}
-            </h2>
-          </div>
-          <Gallery key={kind} kind={kind} />
-          <p className="image-credit">
-            Иллюстративные фотографии направлений: Pexels.
-          </p>
-        </section>
-        <section className="contact-section section" id="contact">
-          <div>
-            <p className="section-label">Давайте знакомиться</p>
-            <h2>
-              {isArt ? (
-                <>
-                  Большие открытия
-                  <br />
-                  начинаются с <em>«привет».</em>
-                </>
-              ) : (
-                <>
-                  Увидимся
-                  <br />
-                  <em>на твоей волне.</em>
-                </>
-              )}
-            </h2>
-            <p>
-              Напишите или позвоните — расскажем о занятиях
-              <br className="desktop-break" /> и поможем выбрать направление.
-            </p>
-            <EnrollmentForm />
-            <div className="contact-actions">
-              <a href={"tel:" + contact.tel} className="text-link">
-                <Phone size={17} />
-                {contact.phone}
-              </a>
-            </div>
-          </div>
-          <div className="visit-card">
-            <span className="visit-icon">
-              <MapPin size={30} />
-            </span>
-            <h3>{isArt ? "Рыбка" : "stARTup"}</h3>
-            <p>
-              Лазаревское, Сочи
-              <br />
-              {isArt ? "переулок Павлова, 2" : "улица Социалистическая, 1"}
-            </p>
-            <a
-              href={
-                "https://yandex.ru/maps/?text=" +
-                encodeURIComponent(
-                  "Лазаревское " +
-                    (isArt ? "переулок Павлова 2" : "Социалистическая 1"),
-                )
-              }
-              target="_blank"
-              rel="noreferrer"
-            >
-              Построить маршрут
-            </a>
-          </div>
-        </section>
-        <section className="other-world">
-          <Link to={isArt ? "/music" : "/art"}>
-            <span>А ещё у нас есть {isArt ? "музыка" : "искусство"}</span>
-            <strong>
-              {isArt ? "Поймать свою волну" : "Добавить красок"}
-            </strong>
-          </Link>
-        </section>
-      </main>
-      <Footer />
-    </div>
-  );
-}
 export default function App() {
   const currentPath = () =>
     location.pathname.startsWith(base)
@@ -848,7 +382,7 @@ export default function App() {
       "/art":
         "Мастерская «Рыбка»: рисование и творческие мастер-классы для детей и взрослых в Лазаревском. Расписание в MAX, занятия в мастерской и на выезд.",
       "/music":
-        "Гитара, бас-гитара и барабаны в Лазаревском. Попробуйте музыкальную студию в браузере.",
+        "Уроки гитары, бас-гитары и барабанной установки в Лазаревском. Индивидуально и в группе для взрослых и детей с 7 лет. Социалистическая, 1.",
       "/art/draw":
         "69 настоящих иллюстраций: раскрашивание касанием, сохранение прогресса и экспорт PNG.",
       "/music/studio":
@@ -881,7 +415,7 @@ export default function App() {
       ) : path === "/art" ? (
         <ArtStudio header={<Header kind="art" />} footer={<Footer kind="art" />} emblem={<Fish className="rybka-emblem" />} onHome={() => navigate("/")} onDraw={() => navigate("/art/draw")} onMusic={() => navigate("/music")} />
       ) : path === "/music" ? (
-        <Studio key="music" kind="music" />
+        <MusicStudio header={<Header kind="music" />} footer={<Footer kind="music" />} rhythm={<Wave interactive />} onHome={() => navigate("/")} onPlay={() => navigate("/music/studio")} onArt={() => navigate("/art")} />
       ) : path === "/art/draw" ? (
         <Draw onBack={() => navigate("/art")} />
       ) : path === "/music/studio" ? (

@@ -39,11 +39,12 @@ export type Artwork = {
   thumbnail: string;
   width: number;
   height: number;
+  variants?: { src: string; width: number }[];
 };
 // Unreceived images stay out of the public carousel; metadata can be supplied later.
 export const artworks: Artwork[] = catalog.flatMap(work => {
-  const image = (media as Record<string, { width: number; height: number }>)[work.id];
+  const image = (media as Record<string, { width: number; height: number; variants?: { src: string; width: number }[] }>)[work.id];
   if (!image) return [];
   const base = `${import.meta.env.BASE_URL}images/rybka/artworks/${work.id}`;
-  return [{ ...work, ...image, image: `${base}-marked-2000.webp`, thumbnail: `${base}-marked-960.webp` }];
+  return [{ ...work, ...image, variants: image.variants?.map(item => ({ ...item, src: import.meta.env.BASE_URL + item.src })), image: `${base}-marked-2000.webp`, thumbnail: `${base}-marked-960.webp` }];
 });

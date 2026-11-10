@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import type { Artwork } from './artContent';
+import Image from './ResponsivePhoto';
 import './ArtworkCarousel.css';
 
 export function artworkLabel(work: Artwork) {
@@ -45,7 +46,7 @@ export default function ArtworkCarousel({ works, onInquiry }: { works: Artwork[]
     setOpened(index => index === null ? null : (index + delta + works.length) % works.length);
   }
   function picture(work: Artwork, large = false) {
-    return <div className="artwork-frame"><img src={large ? work.image : work.thumbnail} alt={work.alt} width={work.width} height={work.height} loading={large ? 'eager' : 'lazy'} decoding="async" /></div>;
+    return <div className="artwork-frame"><Image photo={{ ...work, src: large ? work.image : work.thumbnail, variants: large ? undefined : work.variants?.filter(item => item.width <= Math.round(work.width * Math.min(1, 960 / Math.max(work.width, work.height)))) }} eager={large} sizes="(min-width: 900px) 50vw, 75vw" /></div>;
   }
   if (!works.length) return null;
   return <div className="artwork-carousel" role="region" aria-roledescription="карусель" aria-label="Картины и этюды Анны">

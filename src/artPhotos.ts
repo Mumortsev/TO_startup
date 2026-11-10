@@ -1,6 +1,7 @@
-import manifest from './artPhotos.generated.json';
+import { sitePhoto } from './sitePhotos';
+import type { PhotoAsset } from './ResponsivePhoto';
 export type ArtPhotoId = 'anna-painting' | 'lesson' | 'anna-board' | 'painting-close' | 'palette' | 'celebration' | 'wood-house' | 'flowers-tables' | 'studio-wide';
-export type ArtPhoto = { src: string; thumbnail: string; width: number; height: number; alt: string };
+export type ArtPhoto = PhotoAsset & { thumbnail: string };
 export const artPhotoDescriptions: Record<ArtPhotoId, string> = {
   'anna-painting': 'Анна рисует зайца на сиреневом фоне',
   lesson: 'Анна помогает детям рисовать за столом в мастерской',
@@ -13,7 +14,5 @@ export const artPhotoDescriptions: Record<ArtPhotoId, string> = {
   'studio-wide': 'Пространство мастерской со столами и стеной рисунков',
 };
 export function getArtPhoto(id: ArtPhotoId): ArtPhoto | undefined {
-  const item = (manifest as Partial<Record<ArtPhotoId, { width: number; height: number }>>)[id];
-  if (!item) return;
-  return { src: `${import.meta.env.BASE_URL}images/rybka/${id}-1200.webp`, thumbnail: `${import.meta.env.BASE_URL}images/rybka/${id}-640.webp`, ...item, alt: artPhotoDescriptions[id] };
+  return sitePhoto('rybka', id, artPhotoDescriptions[id]);
 }
