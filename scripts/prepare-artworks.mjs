@@ -32,17 +32,21 @@ try {
     const [sourceWidth, sourceHeight] = run([input, '-auto-orient', '-format', '%w %h', 'info:']).split(' ').map(Number);
     const corners = entry.corners.map(([x, y]) => [x * (sourceWidth - 1), y * (sourceHeight - 1)]);
     const distance = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
-    const width = Math.round((distance(corners[0], corners[1]) + distance(corners[3], corners[2])) / 2);
-    const height = Math.round((distance(corners[0], corners[3]) + distance(corners[1], corners[2])) / 2);
+    const canvasWidth = (distance(corners[0], corners[1]) + distance(corners[3], corners[2])) / 2;
+    const canvasHeight = (distance(corners[0], corners[3]) + distance(corners[1], corners[2])) / 2;
+    const geometricScale = Math.min(1, 2000 / Math.max(canvasWidth, canvasHeight));
+    const width = Math.round(canvasWidth * geometricScale);
+    const height = Math.round(canvasHeight * geometricScale);
     const targets = [[0, 0], [width - 1, 0], [width - 1, height - 1], [0, height - 1]];
     const mapping = corners.map((point, index) => `${point.join(',')} ${targets[index].join(',')}`).join(' ');
+    // Rectify directly to the largest public size, retaining the original ICC profile.
     const rectified = join(temporary, entry.id + '.png');
     run([input, '-auto-orient', '-virtual-pixel', 'edge', '-define', `distort:viewport=${width}x${height}+0+0`, '-distort', 'Perspective', mapping, '+repage', rectified]);
     for (const size of [960, 2000]) {
       const scale = Math.min(1, size / Math.max(width, height));
       const outWidth = Math.round(width * scale);
       const outHeight = Math.round(height * scale);
-      const args = [rectified, '-resize', `${size}x${size}>`, '-strip', '-font', 'DejaVu-Sans', '-pointsize', String(Math.max(18, Math.round(outWidth / 28))), '-gravity', 'center', '-fill', 'rgba(255,255,255,0.30)', '-stroke', 'rgba(25,30,25,0.20)', '-strokewidth', '0.6'];
+      const args = [rectified, '-resize', `${size}x${size}>`, '+profile', 'exif', '+profile', 'xmp', '+profile', 'iptc', '-set', 'comment', '', '-font', 'DejaVu-Sans', '-pointsize', String(Math.max(18, Math.round(outWidth / 28))), '-gravity', 'center', '-fill', 'rgba(255,255,255,0.30)', '-stroke', 'rgba(25,30,25,0.20)', '-strokewidth', '0.6'];
       for (const fraction of [-.22, .22]) args.push('-annotate', `+0${fraction < 0 ? '' : '+'}${Math.round(outHeight * fraction)}`, 'Мастерская «Рыбка»');
       run([...args, '-quality', '90', join(output, `${entry.id}-marked-${size}.webp`)]);
       if (size === 2000) metadata[entry.id] = { width: outWidth, height: outHeight };

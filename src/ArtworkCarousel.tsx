@@ -10,6 +10,7 @@ export default function ArtworkCarousel({ works, onInquiry }: { works: Artwork[]
   const viewport = useRef<HTMLDivElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
+  const touch = useRef<{ x: number; y: number } | null>(null);
   const [active, setActive] = useState(0);
   const [opened, setOpened] = useState<number | null>(null);
   const isOpen = opened !== null;
@@ -60,7 +61,17 @@ export default function ArtworkCarousel({ works, onInquiry }: { works: Artwork[]
     </div>
     <p className="artwork-note">Рамка — пример оформления. Нажмите на картину, чтобы рассмотреть ближе.</p>
     <dialog className="artwork-dialog" ref={dialog} aria-label="Просмотр картины" onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }} onKeyDown={event => { if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); moveOpened(event.key === 'ArrowLeft' ? -1 : 1); } }}>
-      {opened !== null && <><button className="artwork-close" type="button" aria-label="Закрыть картину" onClick={close}><X /></button><div className="artwork-enlarged"><button type="button" aria-label="Предыдущая картина" onClick={() => moveOpened(-1)} disabled={works.length < 2}><ChevronLeft /></button><figure>{picture(works[opened], true)}<figcaption>{artworkLabel(works[opened])}{works[opened].size && ` · ${works[opened].size}`}<span>{opened + 1} / {works.length}</span></figcaption></figure><button type="button" aria-label="Следующая картина" onClick={() => moveOpened(1)} disabled={works.length < 2}><ChevronRight /></button></div></>}
+      {opened !== null && <><button className="artwork-close" type="button" aria-label="Закрыть картину" onClick={close}><X /></button><div className="artwork-enlarged" onTouchStart={event => {
+        const point = event.touches[0];
+        touch.current = event.touches.length === 1 ? { x: point.clientX, y: point.clientY } : null;
+      }} onTouchCancel={() => { touch.current = null; }} onTouchEnd={event => {
+        const start = touch.current;
+        touch.current = null;
+        if (!start) return;
+        const point = event.changedTouches[0];
+        const x = point.clientX - start.x, y = point.clientY - start.y;
+        if (Math.abs(x) > 60 && Math.abs(x) > Math.abs(y) * 1.5) moveOpened(x < 0 ? 1 : -1);
+      }}><button type="button" aria-label="Предыдущая картина" onClick={() => moveOpened(-1)} disabled={works.length < 2}><ChevronLeft /></button><figure>{picture(works[opened], true)}<figcaption>{artworkLabel(works[opened])}{works[opened].size && ` · ${works[opened].size}`}<span>{opened + 1} / {works.length}</span></figcaption></figure><button type="button" aria-label="Следующая картина" onClick={() => moveOpened(1)} disabled={works.length < 2}><ChevronRight /></button></div></>}
     </dialog>
   </div>;
 }
