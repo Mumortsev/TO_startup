@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import { contact } from "./data";
-import { musicPhoto } from "./musicContent";
+import { musicPhoto, musicHeroPhoto } from "./musicContent";
 import { photoSrcSet } from "./ResponsivePhoto";
 import { rybkaContact } from "./artContent";
 import { getArtPhoto } from "./artPhotos";
@@ -226,7 +226,7 @@ function Home() {
     const others = Array.from(root.current.querySelectorAll('.world, .home-signature, .home-social')).filter(node => node !== card);
     // Warm only the chosen section's hero while the compositor transition plays.
     const heroImage = new Image();
-    const heroPhoto = path === '/art' ? getArtPhoto('lesson') : musicPhoto('portrait');
+    const heroPhoto = path === '/art' ? getArtPhoto('lesson') : musicPhoto(musicHeroPhoto);
     const heroSource = heroPhoto?.src;
     if (heroSource) {
       heroImage.decoding = 'async';
