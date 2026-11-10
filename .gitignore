@@ -7,3 +7,6 @@ test-results/
 playwright-report/
 *.tsbuildinfo
 public/engines/
+
+# Original customer photographs/artworks remain private; publish derivatives only.
+private-media/

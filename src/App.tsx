@@ -13,8 +13,11 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import { art, music, contact } from "./data";
+import { rybkaContact } from "./artContent";
+import { getArtPhoto } from "./artPhotos";
 import "./style.css";
 const Draw = lazy(() => import("./Draw"));
+const ArtStudio = lazy(() => import("./ArtStudio"));
 const Beat = lazy(() => import("./Beat"));
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const recovered = new URLSearchParams(location.search).get("route");
@@ -169,7 +172,15 @@ function Header({ kind }: { kind?: "art" | "music" }) {
         className={open ? "is-open" : ""}
         aria-label="Основная навигация"
       >
-        <Link to="/art" className={kind === "art" ? "current" : ""}>
+        {kind === 'art' ? <>
+          <a href="#about">О мастерской</a>
+          <a href="#directions">Мастер-классы</a>
+          <a href="#anna">Об Анне</a>
+          <a href="#works">Работы</a>
+          <a href="#contact">Контакты</a>
+          <a className="nav-contact" href={rybkaContact.max} target="_blank" rel="noreferrer">Расписание в MAX</a>
+        </> : <>
+        <Link to="/art">
           Мастерская «Рыбка»
         </Link>
         <Link to="/music" className={kind === "music" ? "current" : ""}>
@@ -182,6 +193,8 @@ function Header({ kind }: { kind?: "art" | "music" }) {
         >
           Давайте знакомиться
         </a>
+        </>}
+
       </nav>
       <button
         className="menu-toggle"
@@ -217,7 +230,7 @@ function useEntrance(root: React.RefObject<HTMLElement>, dependency?: string) {
     return () => mm.revert();
   }, [dependency]);
 }
-function Footer() {
+function Footer({ kind }: { kind?: "art" | "music" }) {
   return (
     <footer className="site-footer">
       <Link to="/" className="brand">
@@ -225,7 +238,7 @@ function Footer() {
       </Link>
       <p>Творчество начинается с тебя.</p>
       <span>Лазаревское, Сочи</span>
-      <a href={contact.vk} target="_blank" rel="noreferrer">ВКонтакте</a>
+      <a href={kind === "art" ? rybkaContact.max : contact.vk} target="_blank" rel="noreferrer">{kind === "art" ? "MAX" : "ВКонтакте"}</a>
       <a href={base + "/licenses/"}>Лицензии и авторы</a>
     </footer>
   );
@@ -263,12 +276,14 @@ function Home() {
     const others = Array.from(root.current.querySelectorAll('.world, .home-signature, .home-social')).filter(node => node !== card);
     // Warm only the chosen section's hero while the compositor transition plays.
     const heroImage = new Image();
-    const heroSource = (path === '/art' ? art : music)[0].img;
-    heroImage.decoding = 'async';
-    heroImage.sizes = '(max-width: 700px) 100vw, 50vw';
-    heroImage.srcset = `${heroSource.replace('-1200', '-640')} 640w, ${heroSource} 1200w`;
-    heroImage.src = heroSource;
-    void heroImage.decode().catch(() => {});
+    const heroSource = path === '/art' ? getArtPhoto('lesson')?.src : music[0].img;
+    if (heroSource) {
+      heroImage.decoding = 'async';
+      heroImage.sizes = '(max-width: 700px) 100vw, 50vw';
+      heroImage.srcset = `${heroSource.replace('-1200', '-640')} 640w, ${heroSource} 1200w`;
+      heroImage.src = heroSource;
+      void heroImage.decode().catch(() => {});
+    }
 
     const layer = document.createElement('div');
     layer.className = 'home-transition';
@@ -831,7 +846,7 @@ export default function App() {
     const descriptions: Record<string, string> = {
       "/": "Художественная мастерская «Рыбка» и музыкальная студия stARTup в Лазаревском. Два мира творчества для детей и родителей.",
       "/art":
-        "Рисование, творческие поделки и мастер-классы для детей и родителей в Лазаревском.",
+        "Мастерская «Рыбка»: рисование и творческие мастер-классы для детей и взрослых в Лазаревском. Расписание в MAX, занятия в мастерской и на выезд.",
       "/music":
         "Гитара, бас-гитара и барабаны в Лазаревском. Попробуйте музыкальную студию в браузере.",
       "/art/draw":
@@ -864,7 +879,7 @@ export default function App() {
       {path === "/" ? (
         <Home />
       ) : path === "/art" ? (
-        <Studio key="art" kind="art" />
+        <ArtStudio header={<Header kind="art" />} footer={<Footer kind="art" />} emblem={<Fish className="rybka-emblem" />} onHome={() => navigate("/")} onDraw={() => navigate("/art/draw")} onMusic={() => navigate("/music")} />
       ) : path === "/music" ? (
         <Studio key="music" kind="music" />
       ) : path === "/art/draw" ? (
