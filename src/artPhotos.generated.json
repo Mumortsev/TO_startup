@@ -1,1 +1,38 @@
-{}
+{
+  "anna-painting": {
+    "width": 1200,
+    "height": 800
+  },
+  "lesson": {
+    "width": 1200,
+    "height": 1801
+  },
+  "anna-board": {
+    "width": 1200,
+    "height": 800
+  },
+  "painting-close": {
+    "width": 1200,
+    "height": 800
+  },
+  "palette": {
+    "width": 1200,
+    "height": 1800
+  },
+  "celebration": {
+    "width": 1200,
+    "height": 1800
+  },
+  "wood-house": {
+    "width": 1200,
+    "height": 1800
+  },
+  "flowers-tables": {
+    "width": 1200,
+    "height": 1800
+  },
+  "studio-wide": {
+    "width": 1200,
+    "height": 800
+  }
+}
