@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowLeft, BookOpen, Flame, Leaf, MapPin, Palette, Phone, Scissors, Shapes, Sparkles, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { annaAbout, artworks, masterclasses, rybkaContact, workshopAbout } from './artContent';
 import { getArtPhoto, type ArtPhoto, type ArtPhotoId } from './artPhotos';
+import ArtworkCarousel from './ArtworkCarousel';
 import './ArtStudio.css';
 const base = import.meta.env.BASE_URL;
 const icons = { paint: Palette, shape: Shapes, scissors: Scissors, spark: Sparkles, flame: Flame, leaf: Leaf, book: BookOpen };
@@ -82,7 +83,7 @@ export default function ArtStudio({ header, footer, emblem, onHome, onDraw, onMu
       </section>
       {gallery.length > 0 && <section className="rybka-block rybka-container" id="gallery"><p className="section-label">В мастерской</p><h2>Здесь хочется<br /><em>создавать.</em></h2><PhotoGallery photos={gallery} label="Фотографии мастерской «Рыбка»" /></section>}
       <section className="rybka-block rybka-container rybka-artworks" id="works"><p className="section-label">Работы Анны</p><h2>Цвет, который<br /><em>можно забрать с собой.</em></h2><p className="rybka-lead">Я пишу яркие «дофаминовые» этюды с натуры — их можно приобрести.</p>
-        {artworks.length > 0 ? <PhotoGallery photos={artworks.map(work => ({ src: work.image, thumbnail: work.thumbnail, width: work.width, height: work.height, alt: work.title, title: work.title, details: <div className="rybka-work-info"><h3>{work.title}</h3>{work.material && <p>{work.material}</p>}{work.size && <p>{work.size}</p>}{work.price && <p>{work.price}</p>}{work.availability && <p>{work.availability}</p>}<a href="#contact" className="text-link" onClick={() => setInquiry(work.title)}>Узнать о работе</a></div> }))} label="Картины и этюды Анны" /> : <a className="button" href="#contact">Узнать о доступных работах</a>}
+        {artworks.length > 0 ? <ArtworkCarousel works={artworks} onInquiry={setInquiry} /> : <a className="button" href="#contact">Узнать о доступных работах</a>}
 
       </section>
       <section className="rybka-block rybka-coloring"><div className="rybka-container"><div><p className="section-label">Попробуйте прямо сейчас</p><h2>Немного цвета.<br /><em>Много радости.</em></h2><p>Выберите иллюстрацию и раскрашивайте одним касанием. Рисунок можно продолжить позже и сохранить на устройстве.</p><button className="button" onClick={onDraw}>Открыть раскраски</button></div><button className="rybka-coloring-preview" onClick={onDraw} aria-label="Открыть раскраску бабочки"><img src={base + 'coloring/cute_butterfly.svg'} alt="Бабочка из галереи раскрасок" width="400" height="400" loading="lazy" decoding="async" /><span>Добавь свой цвет</span></button></div></section>

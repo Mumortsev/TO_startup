@@ -1,3 +1,5 @@
+import catalog from '../media/rybka-artworks.json';
+import media from './artworks.generated.json';
 export const rybkaContact = {
   max: 'https://max.ru/join/cmGA056Xe44AqEDmcj2lDNp9s5fhrCwRTI35cwEYvgM',
   phone: '+7 (988) 145-94-19',
@@ -28,15 +30,20 @@ export const annaAbout = [
 ];
 export type Artwork = {
   id: string;
-  title: string;
-  image: `${string}-marked-1200.webp`;
-  thumbnail: `${string}-marked-640.webp`;
+  number: number;
+  title?: string;
+  size?: string;
+  description?: string;
+  alt: string;
+  image: string;
+  thumbnail: string;
   width: number;
   height: number;
-  material?: string;
-  size?: string;
-  price?: string;
-  availability?: string;
 };
-/** Add only confirmed works for sale and already watermarked public derivatives. */
-export const artworks: Artwork[] = [];
+// Unreceived images stay out of the public carousel; metadata can be supplied later.
+export const artworks: Artwork[] = catalog.flatMap(work => {
+  const image = (media as Record<string, { width: number; height: number }>)[work.id];
+  if (!image) return [];
+  const base = `${import.meta.env.BASE_URL}images/rybka/artworks/${work.id}`;
+  return [{ ...work, ...image, image: `${base}-marked-2000.webp`, thumbnail: `${base}-marked-960.webp` }];
+});

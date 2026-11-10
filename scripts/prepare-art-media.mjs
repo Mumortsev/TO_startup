@@ -44,9 +44,6 @@ if (mode === 'photos' && input) {
   for (const id of ids) metadata[id] = prepare(resolve(dirname(manifestPath), sources[id]), join(publicDir, 'images/rybka', id), false);
   writeFileSync(join(root, 'src/artPhotos.generated.json'), JSON.stringify(metadata, null, 2) + '\n');
   console.log('Prepared 9 workshop photographs in 640px and 1200px WebP.');
-} else if (mode === 'artwork' && input && /^[a-z0-9][a-z0-9-]*$/.test(slug || '')) {
-  const metadata = prepare(resolve(input), join(publicDir, 'images/rybka/artworks', slug), true);
-  console.log(JSON.stringify({ id: slug, image: `/TO_startup/images/rybka/artworks/${slug}-marked-1200.webp`, thumbnail: `/TO_startup/images/rybka/artworks/${slug}-marked-640.webp`, ...metadata }, null, 2));
 } else {
-  throw new Error('Usage: node scripts/prepare-art-media.mjs photos /private/photo-mapping.json | artwork /private/painting.jpg painting-slug');
+  throw new Error('Usage: node scripts/prepare-art-media.mjs photos /private/photo-mapping.json. For paintings use scripts/prepare-artworks.mjs with a canvas-corner manifest.');
 }
