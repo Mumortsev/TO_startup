@@ -14,8 +14,8 @@
 .rybka-hero .place-label { font-size: 11px; margin-bottom: 24px; }
 .rybka-hero h1 { font-size: clamp(40px, 5.2vw, 76px); letter-spacing: -.05em; line-height: 1.13; margin-bottom: 28px; }
 .rybka-hero h1 em { color: var(--red); }
-.rybka-hero-image { border-radius: 43% 43% 10px 10px; overflow: hidden; align-self: stretch; min-height: 420px; }
-.rybka-hero-image img { width: 100%; height: 100%; max-height: 710px; object-fit: cover; object-position: 50% 33%; }
+.rybka-hero-image { border-radius: 12px; overflow: hidden; align-self: center; min-width: 0; }
+.rybka-hero-image img { width: 100%; height: auto; max-height: 710px; object-fit: contain; }
 .rybka-emblem-panel { background: #f8d98e; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 35px; }
 .rybka-emblem { width: 85%; max-width: 330px; }
 .rybka-emblem-panel span { font-size: 13px; }
@@ -23,7 +23,7 @@
 .rybka-about-grid article:first-child { grid-column: 1 / -1; max-width: 850px; border-bottom: 1px solid #3a433925; padding-bottom: 32px; }
 .rybka-about-grid article h3 { margin-bottom: 16px; }
 .rybka-about-grid p { font-size: 15px; color: #59614f; }
-.rybka-process-photo { margin-top: 35px; width: 100%; height: 280px; object-fit: cover; object-position: 50% 43%; border-radius: 9px; }
+.rybka-process-photo { display: block; margin: 35px auto 0; width: auto; max-width: 100%; height: auto; max-height: 540px; object-fit: contain; border-radius: 9px; }
 .rybka-class-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
 .rybka-class-grid article { border: 1px solid #4c5e3c25; background: #f4f0df; border-radius: 10px; padding: 27px; }
 .rybka-class-grid svg { color: #a76c49; margin-bottom: 25px; }
@@ -40,7 +40,7 @@
 .rybka-format-grid h3 { font-size: 28px; margin-bottom: 18px; }
 .rybka-format-grid p:not(.rybka-small-label) { font-size: 14px; margin-bottom: 14px; }
 .rybka .text-link { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; font-size: 13px; text-decoration: underline; text-underline-offset: 5px; }
-.rybka-celebration-photo { width: 100%; height: 330px; object-fit: cover; object-position: 50% 60%; margin-top: 25px; border-radius: 10px; }
+.rybka-celebration-photo { display: block; width: auto; max-width: 100%; height: auto; max-height: 640px; object-fit: contain; margin: 25px auto 0; border-radius: 10px; }
 .rybka-pleinair { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 30px; align-items: start; }
 .rybka-pleinair > svg { margin-top: 20px; color: #739066; width: 70px; height: 70px; }
 .rybka-pleinair p:not(.section-label) { max-width: 650px; font-size: 15px; margin-bottom: 18px; }
@@ -54,9 +54,9 @@
 .rybka-photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .rybka-gallery-entry { min-width: 0; }
 .rybka-gallery-entry:last-child:nth-child(3n + 2) { grid-column: span 2; }
-.rybka-gallery-entry > button { display: block; position: relative; border: 0; padding: 0; border-radius: 9px; background: #e3dccb; overflow: hidden; width: 100%; height: 350px; text-align: left; }
-.rybka-gallery-entry img { width: 100%; height: 100%; object-fit: cover; }
-.rybka-gallery-entry > button > span { position: absolute; inset: auto 0 0; padding: 35px 18px 18px; background: linear-gradient(transparent, #263527c9); color: #fffaf1; font-size: 13px; }
+.rybka-gallery-entry > button { display: block; position: relative; border: 0; padding: 0; border-radius: 9px; background: #e3dccb; overflow: hidden; width: 100%; height: auto; text-align: left; }
+.rybka-gallery-entry img { width: 100%; height: 350px; object-fit: contain; }
+.rybka-gallery-entry > button > span { display: block; padding: 14px 18px; background: #eee8dc; color: var(--ink); font-size: 13px; }
 .rybka-lightbox figure img { max-height: 76dvh; width: auto; height: auto; max-width: 100%; object-fit: contain; }
 .rybka-artworks { background: #f5e8d2; border-radius: 12px; padding-inline: clamp(25px, 4vw, 60px); }
 .rybka-artworks .rybka-lead { margin-bottom: 28px; }
@@ -101,7 +101,7 @@
   .rybka-pleinair > svg { width: 38px; height: 38px; margin-top: 0; }
   .rybka-anna-photo { position: static; max-width: 540px; }
   .rybka-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .rybka-gallery-entry > button { height: 280px; }
+  .rybka-gallery-entry img { height: 280px; }
   .rybka-gallery-entry:last-child:nth-child(3n + 2) { grid-column: auto; }
   .rybka-gallery-entry:last-child:nth-child(odd) { grid-column: span 2; }
   .rybka-artworks { padding: 35px 24px; }
@@ -115,8 +115,29 @@
   .rybka-class-grid svg { margin: 0; grid-row: span 2; }
   .rybka-class-grid h3 { margin: 0; }
   .rybka-class-grid p { grid-column: 2; }
-  .rybka-gallery-entry > button { height: 220px; }
+  .rybka-gallery-entry img { height: 220px; }
 }
 
 .rybka .site-header nav { gap: clamp(12px, 1.4vw, 24px); font-size: 12px; }
 @media(max-width: 1050px) and (min-width: 761px) { .rybka .site-header { padding-inline: 3%; gap: 15px; } .rybka .site-header .brand { font-size: 25px; } .rybka .site-header nav { font-size: 11px; gap: 12px; } .rybka .site-header .nav-contact { padding-inline: 12px; } }
+
+/* External MAX actions remain recognisable as buttons in every section. */
+.rybka a[href^="https://max.ru/"]:not(.button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 20px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.rybka a[href^="https://max.ru/"]:not(.button):hover {
+  background: #e6eadc;
+  color: var(--ink);
+}
