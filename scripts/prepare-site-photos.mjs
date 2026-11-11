@@ -10,7 +10,7 @@ function run(args) {
 }
 const metadataPath = join(root, 'src/sitePhotos.generated.json');
 const output = existsSync(metadataPath) ? JSON.parse(readFileSync(metadataPath, 'utf8')) : {};
-const availableGroups = ['rybka', 'music', 'rybka-albums'];
+const availableGroups = ['rybka', 'music', 'rybka-albums', 'music-album'];
 const groups = process.argv.slice(2);
 if (groups.some(group => !availableGroups.includes(group))) throw new Error('Unknown photo group');
 for (const group of groups.length ? groups : availableGroups) {

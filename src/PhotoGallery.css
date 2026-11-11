@@ -1,10 +1,10 @@
+.studio-photo-lightbox { padding-top: 72px; }
 .studio-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
 .studio-photo-entry { min-width: 0; }
 .studio-photo-entry:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .studio-photo-entry > button { display: block; width: 100%; border: 0; padding: 0; border-radius: 12px; background: #e3dccb; overflow: hidden; text-align: left; cursor: zoom-in; }
 .studio-photo-entry img { display: block; width: 100%; height: auto; }
 .studio-photo-entry > button > span { display: block; min-height: 60px; padding: 16px 18px; background: #eee8dc; color: #3a4339; font-size: 14px; line-height: 1.5; }
-.studio-photo-lightbox figure img { max-height: 76dvh; width: auto; height: auto; max-width: 100%; object-fit: contain; }
 @media(max-width: 600px) {
   .studio-photo-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .studio-photo-entry:last-child { grid-column: auto; }

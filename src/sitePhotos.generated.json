@@ -846,5 +846,173 @@
         "width": 900
       }
     ]
+  },
+  "music-album/student-111544": {
+    "src": "images/music-album/student-111544-1280.webp",
+    "thumbnail": "images/music-album/student-111544-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/music-album/student-111544-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music-album/student-111544-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music-album/student-111544-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music-album/student-111544-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "music-album/student-111552": {
+    "src": "images/music-album/student-111552-1280.webp",
+    "thumbnail": "images/music-album/student-111552-640.webp",
+    "width": 1280,
+    "height": 854,
+    "variants": [
+      {
+        "src": "images/music-album/student-111552-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music-album/student-111552-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music-album/student-111552-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music-album/student-111552-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "music-album/student-111559": {
+    "src": "images/music-album/student-111559-1280.webp",
+    "thumbnail": "images/music-album/student-111559-640.webp",
+    "width": 1280,
+    "height": 853,
+    "variants": [
+      {
+        "src": "images/music-album/student-111559-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music-album/student-111559-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music-album/student-111559-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music-album/student-111559-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "music-album/student-132609": {
+    "src": "images/music-album/student-132609-1280.webp",
+    "thumbnail": "images/music-album/student-132609-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/music-album/student-132609-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music-album/student-132609-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music-album/student-132609-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music-album/student-132609-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "music-album/student-132616": {
+    "src": "images/music-album/student-132616-1280.webp",
+    "thumbnail": "images/music-album/student-132616-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/music-album/student-132616-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music-album/student-132616-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music-album/student-132616-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music-album/student-132616-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "music-album/student-132620": {
+    "src": "images/music-album/student-132620-1280.webp",
+    "thumbnail": "images/music-album/student-132620-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/music-album/student-132620-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music-album/student-132620-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music-album/student-132620-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music-album/student-132620-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "music-album/student-132634": {
+    "src": "images/music-album/student-132634-1280.webp",
+    "thumbnail": "images/music-album/student-132634-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/music-album/student-132634-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/music-album/student-132634-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/music-album/student-132634-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/music-album/student-132634-1280.webp",
+        "width": 1067
+      }
+    ]
   }
 }

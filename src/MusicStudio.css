@@ -39,3 +39,13 @@
   .music-client .music-contact-actions { flex-direction: column; align-items: stretch; }
   .music-client .music-contact-actions .button { width: 100%; }
 }
+
+.music-student-album { max-width: 1040px; margin-inline: auto; }
+.music-student-album .studio-album-cover { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: center; background: #e2e9f2; color: #283d56; }
+.music-student-album .studio-album-caption { padding: 28px; }
+.music-student-album .studio-album-count { color: #53657c; }
+.music-student-album .studio-album-cover:hover .studio-album-action { background: #d2dfed; }
+@media(max-width: 600px) {
+  .music-student-album .studio-album-cover { display: block; }
+  .music-student-album .studio-album-caption { padding: 22px; }
+}

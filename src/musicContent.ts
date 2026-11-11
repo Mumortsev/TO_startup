@@ -12,6 +12,13 @@ const descriptions: Record<string, string> = {
   lesson: 'Дети играют на барабанной установке', instruments: 'Гитары и бас-гитара в студии', drums: 'Барабанная установка в студии', guitar: 'Акустическая гитара у микрофона', 'drums-close': 'Барабанная установка крупным планом', portrait: 'В музыкальной студии', performance: 'Игра на барабанной установке',
 };
 export function musicPhoto(id: string) { return sitePhoto('music', id, descriptions[id]); }
-const placedPhotos = new Set([musicHeroPhoto, musicStagePhoto, ...musicDirections.map(item => item.photo)]);
-// Only photographs not already used elsewhere on the page belong in the gallery.
-export const musicGallery = Object.entries(descriptions).filter(([id]) => !placedPhotos.has(id)).map(([id, title]) => ({ ...musicPhoto(id), title }));
+const studentPhotos = [
+  ['student-111552', 'Девушка играет на бас-гитаре'],
+  ['student-111544', 'Девочка в наушниках играет на барабанах'],
+  ['student-111559', 'Мальчик в красной кофте за барабанной установкой'],
+  ['student-132609', 'Ученик играет на гитаре у микрофона'],
+  ['student-132616', 'Девочка за барабанной установкой'],
+  ['student-132620', 'Мальчик играет на барабанах'],
+  ['student-132634', 'Совместная игра на гитаре и барабанах'],
+];
+export const musicGallery = studentPhotos.map(([id, alt]) => ({ ...sitePhoto('music-album', id, alt), title: 'Ученики студии' }));
