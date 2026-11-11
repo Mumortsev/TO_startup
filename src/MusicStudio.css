@@ -24,3 +24,16 @@
 .music-client .studio-photo-entry > button > span { background: #e2e9f2; color: #283d56; }
 .music-client .other-world > button { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 30px 35px; background: #f8d98e; border: 0; border-radius: 6px; text-align: left; color: #5a2e23; }
 @media(max-width: 760px) { .music-format-grid, .music-stage { grid-template-columns: 1fr; gap: 28px; } .music-format-grid article { padding: 24px; } .music-client .hero-visual { max-width: 500px; margin-inline: auto; } .music-client .direction-photo img { height: 330px; } .music-client .other-world > button { flex-direction: column; align-items: start; gap: 16px; } }
+
+.music-client .music-contact-actions { gap: 14px; }
+.music-client .music-contact-actions .button { min-height: 64px; gap: 12px; text-align: center; }
+.music-max-qr { display: grid; grid-template-columns: minmax(0, 168px) minmax(0, 1fr); gap: 18px; align-items: center; width: 100%; max-width: 420px; margin-top: 24px; padding: 18px; border: 1px solid #c2cfde; border-radius: 12px; background: #f6f8fc; }
+.music-max-qr > a { display: block; padding: 4px; background: #fff; border-radius: 6px; }
+.music-max-qr img { width: 100%; height: auto; object-fit: contain; }
+.music-max-qr figcaption { font-size: 14px; line-height: 1.5; color: #283d56; }
+.music-max-qr figcaption span { display: block; margin-top: 8px; font-size: 12px; color: #53657c; }
+@media(max-width: 760px) {
+  .music-max-qr { display: none; }
+  .music-client .music-contact-actions { flex-direction: column; align-items: stretch; }
+  .music-client .music-contact-actions .button { width: 100%; }
+}

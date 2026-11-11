@@ -1,5 +1,5 @@
 import { sitePhoto } from './sitePhotos';
-export const musicContact = { phone: '+7 (961) 506-27-73', tel: '+79615062773', address: 'г. Сочи, пос. Лазаревское, ул. Социалистическая, 1' };
+export const musicContact = { max: 'https://max.ru/u/f9LHodD0cOKMWiIDn7WkM0ihUgrXi58aHjTMokEwsn5VtmEnTNKaeZoM0jI', phone: '+7 (961) 506-27-73', tel: '+79615062773', address: 'г. Сочи, пос. Лазаревское, ул. Социалистическая, 1' };
 export const musicHeroPhoto = 'portrait';
 export const musicStagePhoto = 'performance';
 export const musicIntro = 'Занятия, после которых действительно есть результат: разбираем песни, которые нравятся, ставим руку и слух, учимся играть в группе и не бояться сцены. Результативно, продуктивно и нескучно — без зубрёжки ради галочки.';

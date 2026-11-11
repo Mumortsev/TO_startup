@@ -1,21 +1,10 @@
-import { useState, type ReactNode } from 'react';
-import { ArrowLeft, Music2, Users, Mic2, MapPin, Phone } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { ArrowLeft, Music2, Users, Mic2, MapPin, Phone, MessageCircle } from 'lucide-react';
 import Image from './ResponsivePhoto';
 import PhotoGallery from './PhotoGallery';
 import { musicContact, musicDirections, musicGallery, musicHeroPhoto, musicStagePhoto, musicIntro, musicPhoto } from './musicContent';
 import './MusicStudio.css';
 
-function EnrollmentForm() {
-  const [attempted, setAttempted] = useState(false);
-  return <form className="enrollment-form" onSubmit={event => { event.preventDefault(); setAttempted(true); }}>
-    <label>Ваше имя или имя родителя<input name="name" autoComplete="name" required maxLength={100} /></label>
-    <label>Телефон<input name="phone" type="tel" autoComplete="tel" inputMode="tel" required minLength={7} maxLength={25} /></label>
-    <label>Возраст ученика (необязательно)<input name="age" type="number" inputMode="numeric" min={7} max={120} /></label>
-    <p id="enrollment-note">Отправка на почту пока не подключена. Данные из формы не отправляются. Для записи позвоните нам.</p>
-    <button type="submit" className="button" aria-describedby="enrollment-note">Оставить заявку</button>
-    {attempted && <p role="status">Заявка не отправлена: отправка на почту ещё не подключена. Записаться можно по телефону {musicContact.phone}.</p>}
-  </form>;
-}
 export default function MusicStudio({ header, footer, onHome, onPlay, onArt, rhythm }: { header: ReactNode; footer: ReactNode; onHome: () => void; onPlay: () => void; onArt: () => void; rhythm: ReactNode }) {
   return <div className="studio music music-client">
     <a className="skip-link" href="#main">К содержимому</a>{header}
@@ -29,7 +18,7 @@ export default function MusicStudio({ header, footer, onHome, onPlay, onArt, rhy
       <section className="section music-stage"><div><p className="section-label">Что ещё вас ждёт</p><h2>Своя группа.<br /><em>Настоящая сцена.</em></h2><article><Users size={24} aria-hidden="true" /><div><h3>Создайте музыкальную группу</h3><p>Из учеников студии или с друзьями.</p></div></article><article><Mic2 size={24} aria-hidden="true" /><div><h3>Концерты и выступления</h3><p>Отчётные концерты и выступления — реальная сцена, а не только занятия в классе.</p></div></article></div><Image photo={musicPhoto(musicStagePhoto)} /></section>
       <section className="experience section"><div className="experience-copy"><p className="section-label">Попробуйте прямо сейчас</p><h2>Твой первый трек?<br /><em>Почему бы и да.</em></h2><p>Выбери жанр и нажимай на квадратики. Придумай свой ритм с барабанами, гитарой и басом и скачай готовую музыку.</p><button onClick={onPlay} className="button">Открыть секвенсор</button><span className="experience-hint">Без регистрации. Просто попробуй.</span></div><div className="rhythm-demo"><span className="rhythm-brand">stARTup / playground</span>{rhythm}<span className="rhythm-caption">Сначала ритм. Потом всё остальное.</span></div></section>
       <section className="section atmosphere" id="gallery"><div className="section-heading"><p className="section-label">В студии и за инструментами</p><h2>Место,<br /><em>где звучит музыка.</em></h2></div><PhotoGallery photos={musicGallery} label="Фотографии музыкальной студии" /></section>
-      <section className="contact-section section" id="contact"><div><p className="section-label">Запись и контакты</p><h2>Начнём<br /><em>с первого звука.</em></h2><p>Позвоните — расскажем о занятиях и поможем выбрать инструмент и формат.</p><div className="contact-actions"><a href={'tel:' + musicContact.tel} className="button"><Phone size={17} />{musicContact.phone}</a></div><EnrollmentForm /></div><aside className="visit-card"><span className="visit-icon"><MapPin size={30} /></span><h3>stARTup</h3><p>{musicContact.address}</p><a href={'https://yandex.ru/maps/?text=' + encodeURIComponent(musicContact.address)} target="_blank" rel="noreferrer">Построить маршрут</a></aside></section>
+      <section className="contact-section section" id="contact"><div><p className="section-label">Запись и контакты</p><h2>Начнём<br /><em>с первого звука.</em></h2><p>Напишите в MAX или позвоните — расскажем о занятиях и поможем выбрать инструмент и формат.</p><div className="contact-actions music-contact-actions"><a href={musicContact.max} className="button" target="_blank" rel="noreferrer"><MessageCircle size={19} aria-hidden="true" />Написать в MAX</a><a href={'tel:' + musicContact.tel} className="button music-outline"><Phone size={18} aria-hidden="true" /><span>Позвонить<br />{musicContact.phone}</span></a></div><figure className="music-max-qr"><a href={musicContact.max} target="_blank" rel="noreferrer" aria-label="Открыть личный чат в MAX"><img src={import.meta.env.BASE_URL + 'images/music/contact-max-qr.svg'} alt="QR-код для перехода в личный чат в MAX" width="168" height="168" loading="lazy" decoding="async" /></a><figcaption>Откройте чат с телефона<span>Наведите камеру на QR-код, чтобы написать в MAX.</span></figcaption></figure></div><aside className="visit-card"><span className="visit-icon"><MapPin size={30} /></span><h3>stARTup</h3><p>{musicContact.address}</p><a href={'https://yandex.ru/maps/?text=' + encodeURIComponent(musicContact.address)} target="_blank" rel="noreferrer">Построить маршрут</a></aside></section>
       <section className="other-world"><button onClick={onArt}><span>А ещё у нас есть искусство</span><strong>Мастерская «Рыбка»</strong></button></section>
     </main>{footer}
   </div>;

@@ -1973,11 +1973,6 @@ button:active,
   .site-home .world-copy { padding: 8px 0 20px; gap: 8px; }
   .site-home .world-copy h2 { font-size: clamp(28px, 6vw, 48px); }
 }
-.enrollment-form { display: grid; gap: 16px; margin-top: 28px; max-width: 520px; }
-.enrollment-form label { display: grid; gap: 7px; font-size: 13px; }
-.enrollment-form input { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 6px; background: #fffaf1; color: var(--ink); }
-.enrollment-form p { font-size: 12px; line-height: 1.6; }
-.enrollment-form .button { justify-self: start; }
 .direction-copy > a { position: static; display: inline-flex; width: auto; font-size: 12px; text-decoration: underline; margin-top: 12px; }
 
 /* Rounded equal entrance cards leave a frame within the fixed viewport. */
