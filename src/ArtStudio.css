@@ -106,11 +106,11 @@
   .rybka-class-grid p { grid-column: 2; }
 }
 
-.rybka .site-header nav { gap: clamp(12px, 1.4vw, 24px); font-size: 12px; }
+@media(min-width: 761px) { .rybka .site-header nav { gap: clamp(12px, 1.4vw, 24px); font-size: 12px; } }
 @media(max-width: 1050px) and (min-width: 761px) { .rybka .site-header { padding-inline: 3%; gap: 15px; } .rybka .site-header .brand { font-size: 25px; } .rybka .site-header nav { font-size: 11px; gap: 12px; } .rybka .site-header .nav-contact { padding-inline: 12px; } }
 
 /* External MAX actions remain recognisable as buttons in every section. */
-.rybka a[href^="https://max.ru/"]:not(.button) {
+.rybka a[href^="https://max.ru/"]:not(.button):not(.nav-contact) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -125,7 +125,7 @@
   font-size: 13px;
   line-height: 1.4;
 }
-.rybka a[href^="https://max.ru/"]:not(.button):hover {
+.rybka a[href^="https://max.ru/"]:not(.button):not(.nav-contact):hover {
   background: #e6eadc;
   color: var(--ink);
 }

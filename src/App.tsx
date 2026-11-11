@@ -136,6 +136,7 @@ function Header({ kind }: { kind?: "art" | "music" }) {
         <span className="brand-dot" />
       </Link>
       <nav
+        id="site-navigation"
         onClick={() => setOpen(false)}
         className={open ? "is-open" : ""}
         aria-label="Основная навигация"
@@ -171,6 +172,7 @@ function Header({ kind }: { kind?: "art" | "music" }) {
       </nav>
       <button
         className="menu-toggle"
+        aria-controls="site-navigation"
         aria-expanded={open}
         aria-label={open ? "Закрыть меню" : "Открыть меню"}
         onClick={() => setOpen(!open)}
