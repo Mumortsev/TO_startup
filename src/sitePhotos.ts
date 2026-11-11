@@ -1,6 +1,6 @@
 import manifest from './sitePhotos.generated.json';
 import type { PhotoAsset } from './ResponsivePhoto';
-export function sitePhoto(group: 'music' | 'rybka', id: string, alt: string): PhotoAsset & { thumbnail: string } {
+export function sitePhoto(group: 'music' | 'rybka' | 'rybka-albums', id: string, alt: string): PhotoAsset & { thumbnail: string } {
   const item = (manifest as Record<string, Omit<PhotoAsset, 'alt'> & { thumbnail: string }>)[`${group}/${id}`];
   if (!item) throw new Error(`Missing prepared photograph: ${group}/${id}`);
   const url = (path: string) => import.meta.env.BASE_URL + path;

@@ -5,6 +5,7 @@ import { ArrowLeft, BookOpen, Flame, Leaf, MapPin, Palette, Phone, Scissors, Sha
 import { annaAbout, artworks, masterclasses, rybkaContact, workshopAbout } from './artContent';
 import { getArtPhoto, type ArtPhotoId } from './artPhotos';
 import ArtworkCarousel from './ArtworkCarousel';
+import { workshopAlbums } from './workshopAlbums';
 import './ArtStudio.css';
 const base = import.meta.env.BASE_URL;
 const icons = { paint: Palette, shape: Shapes, scissors: Scissors, spark: Sparkles, flame: Flame, leaf: Leaf, book: BookOpen };
@@ -41,6 +42,7 @@ export default function ArtStudio({ header, footer, emblem, onHome, onDraw, onMu
         <div className="rybka-class-grid">{masterclasses.map(item => { const Icon = icons[item.icon as keyof typeof icons]; return <article key={item.title}><Icon size={25} aria-hidden="true" /><h3>{item.title}</h3><p>{item.text}</p></article>; })}</div>
         <div className="rybka-schedule-note"><div><h3>И многое другое</h3><p>Актуальные темы и расписание на каждую неделю публикуются в группе MAX.</p></div><a className="button" href={rybkaContact.max} target="_blank" rel="noreferrer">Посмотреть расписание</a></div>
       </section>
+      <section className="rybka-block rybka-container rybka-albums" id="masterclass-albums" aria-labelledby="masterclass-albums-heading"><p className="section-label">Встречи и творчество</p><h2 id="masterclass-albums-heading">Как проходят<br /><em>мастер-классы.</em></h2><div className="rybka-album-grid">{workshopAlbums.map(album => <article key={album.id}><PhotoGallery photos={album.photos} label={album.title} album /></article>)}</div></section>
       <section className="rybka-block rybka-formats" id="formats"><div className="rybka-container">
         <p className="section-label">Для вашей компании</p><h2>Встретимся<br /><em>за творчеством.</em></h2>
         <div className="rybka-format-grid"><article><p className="rybka-small-label">В мастерской</p><h3>Встреча для своих</h3><p>Проведём мастер-класс по вашему запросу: для своей компании, для девичника или в честь дня рождения. Тема, формат и материалы — под ваш запрос.</p><a href="#contact" className="text-link">Обсудить мастер-класс</a></article><article><p className="rybka-small-label">На выезд</p><h3>Там, где удобно вам</h3><p>Помогу организовать и провести мастер-класс для вашего мероприятия — с вашими или с моими материалами.</p><p>У вас дома, в кафе, на природе и в другом месте по вашему запросу.</p><a href="#contact" className="text-link">Обсудить выезд</a></article></div>

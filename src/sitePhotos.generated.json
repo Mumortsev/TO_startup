@@ -370,5 +370,481 @@
         "width": 1280
       }
     ]
+  },
+  "rybka-albums/outdoors-55270": {
+    "src": "images/rybka-albums/outdoors-55270-1280.webp",
+    "thumbnail": "images/rybka-albums/outdoors-55270-640.webp",
+    "width": 1200,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-55270-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55270-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55270-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55270-1280.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "rybka-albums/outdoors-55272": {
+    "src": "images/rybka-albums/outdoors-55272-960.webp",
+    "thumbnail": "images/rybka-albums/outdoors-55272-640.webp",
+    "width": 960,
+    "height": 1280,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-55272-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55272-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55272-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "rybka-albums/outdoors-55273": {
+    "src": "images/rybka-albums/outdoors-55273-960.webp",
+    "thumbnail": "images/rybka-albums/outdoors-55273-640.webp",
+    "width": 960,
+    "height": 1280,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-55273-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55273-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55273-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "rybka-albums/outdoors-55277": {
+    "src": "images/rybka-albums/outdoors-55277-960.webp",
+    "thumbnail": "images/rybka-albums/outdoors-55277-640.webp",
+    "width": 960,
+    "height": 1280,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-55277-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55277-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55277-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "rybka-albums/outdoors-55279": {
+    "src": "images/rybka-albums/outdoors-55279-960.webp",
+    "thumbnail": "images/rybka-albums/outdoors-55279-640.webp",
+    "width": 960,
+    "height": 1280,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-55279-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55279-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55279-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "rybka-albums/outdoors-55282": {
+    "src": "images/rybka-albums/outdoors-55282-960.webp",
+    "thumbnail": "images/rybka-albums/outdoors-55282-640.webp",
+    "width": 960,
+    "height": 1280,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-55282-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55282-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55282-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "rybka-albums/outdoors-55284": {
+    "src": "images/rybka-albums/outdoors-55284-960.webp",
+    "thumbnail": "images/rybka-albums/outdoors-55284-640.webp",
+    "width": 960,
+    "height": 1280,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-55284-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55284-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-55284-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "rybka-albums/outdoors-img_7730": {
+    "src": "images/rybka-albums/outdoors-img_7730-960.webp",
+    "thumbnail": "images/rybka-albums/outdoors-img_7730-640.webp",
+    "width": 900,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-img_7730-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_7730-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_7730-960.webp",
+        "width": 900
+      }
+    ]
+  },
+  "rybka-albums/outdoors-img_8413": {
+    "src": "images/rybka-albums/outdoors-img_8413-1280.webp",
+    "thumbnail": "images/rybka-albums/outdoors-img_8413-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-img_8413-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8413-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8413-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8413-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "rybka-albums/outdoors-img_8414": {
+    "src": "images/rybka-albums/outdoors-img_8414-1280.webp",
+    "thumbnail": "images/rybka-albums/outdoors-img_8414-640.webp",
+    "width": 1280,
+    "height": 854,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-img_8414-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8414-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8414-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8414-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "rybka-albums/outdoors-img_8415": {
+    "src": "images/rybka-albums/outdoors-img_8415-1280.webp",
+    "thumbnail": "images/rybka-albums/outdoors-img_8415-640.webp",
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-img_8415-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8415-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8415-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8415-1280.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "rybka-albums/outdoors-img_8417": {
+    "src": "images/rybka-albums/outdoors-img_8417-1280.webp",
+    "thumbnail": "images/rybka-albums/outdoors-img_8417-640.webp",
+    "width": 1280,
+    "height": 854,
+    "variants": [
+      {
+        "src": "images/rybka-albums/outdoors-img_8417-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8417-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8417-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/outdoors-img_8417-1280.webp",
+        "width": 1280
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_2044": {
+    "src": "images/rybka-albums/workshop-img_2044-960.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_2044-640.webp",
+    "width": 900,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_2044-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_2044-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_2044-960.webp",
+        "width": 900
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_2045": {
+    "src": "images/rybka-albums/workshop-img_2045-960.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_2045-640.webp",
+    "width": 900,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_2045-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_2045-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_2045-960.webp",
+        "width": 900
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_3950": {
+    "src": "images/rybka-albums/workshop-img_3950-1280.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_3950-640.webp",
+    "width": 1200,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_3950-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_3950-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_3950-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_3950-1280.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_3967": {
+    "src": "images/rybka-albums/workshop-img_3967-1280.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_3967-640.webp",
+    "width": 1200,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_3967-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_3967-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_3967-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_3967-1280.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_3971": {
+    "src": "images/rybka-albums/workshop-img_3971-960.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_3971-640.webp",
+    "width": 900,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_3971-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_3971-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_3971-960.webp",
+        "width": 900
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_6288": {
+    "src": "images/rybka-albums/workshop-img_6288-960.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_6288-640.webp",
+    "width": 900,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_6288-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_6288-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_6288-960.webp",
+        "width": 900
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_7627": {
+    "src": "images/rybka-albums/workshop-img_7627-1280.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_7627-640.webp",
+    "width": 1200,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_7627-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_7627-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_7627-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_7627-1280.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_7630": {
+    "src": "images/rybka-albums/workshop-img_7630-960.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_7630-640.webp",
+    "width": 900,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_7630-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_7630-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_7630-960.webp",
+        "width": 900
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_7708": {
+    "src": "images/rybka-albums/workshop-img_7708-1280.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_7708-640.webp",
+    "width": 1200,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_7708-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_7708-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_7708-960.webp",
+        "width": 960
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_7708-1280.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "rybka-albums/workshop-img_8302": {
+    "src": "images/rybka-albums/workshop-img_8302-960.webp",
+    "thumbnail": "images/rybka-albums/workshop-img_8302-640.webp",
+    "width": 900,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "images/rybka-albums/workshop-img_8302-320.webp",
+        "width": 320
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_8302-640.webp",
+        "width": 640
+      },
+      {
+        "src": "images/rybka-albums/workshop-img_8302-960.webp",
+        "width": 900
+      }
+    ]
   }
 }

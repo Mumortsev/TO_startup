@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -8,8 +8,13 @@ function run(args) {
   if (result.error || result.status !== 0) throw result.error || new Error(result.stderr);
   return result.stdout.trim();
 }
-const output = {};
-for (const group of ['rybka', 'music']) {
+const metadataPath = join(root, 'src/sitePhotos.generated.json');
+const output = existsSync(metadataPath) ? JSON.parse(readFileSync(metadataPath, 'utf8')) : {};
+const availableGroups = ['rybka', 'music', 'rybka-albums'];
+const groups = process.argv.slice(2);
+if (groups.some(group => !availableGroups.includes(group))) throw new Error('Unknown photo group');
+for (const group of groups.length ? groups : availableGroups) {
+  for (const key of Object.keys(output)) if (key.startsWith(group + '/')) delete output[key];
   const manifest = join(root, 'media', `${group}-photos.json`);
   const mapping = JSON.parse(readFileSync(manifest, 'utf8'));
   for (const [id, file] of Object.entries(mapping)) {
@@ -35,4 +40,4 @@ for (const group of ['rybka', 'music']) {
     console.log(`${group}/${id}: ${variants.length} responsive WebP sizes`);
   }
 }
-writeFileSync(join(root, 'src/sitePhotos.generated.json'), JSON.stringify(output, null, 2) + '\n');
+writeFileSync(metadataPath, JSON.stringify(output, null, 2) + '\n');

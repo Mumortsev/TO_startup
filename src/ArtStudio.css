@@ -130,3 +130,8 @@
   color: var(--ink);
 }
 
+
+.rybka-albums { padding-top: 24px; }
+.rybka-album-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 1040px; margin-inline: auto; align-items: start; }
+.rybka-album-grid > article { min-width: 0; }
+@media(max-width: 600px) { .rybka-album-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
