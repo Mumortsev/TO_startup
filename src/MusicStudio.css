@@ -1,12 +1,14 @@
 .music-back { border: 0; background: transparent; padding: 0; font: inherit; font-size: 11px; cursor: pointer; }
 .music-client .studio-hero { align-items: center; }
 .music-client .hero-visual { align-self: center; margin: 20px 0; }
-.music-client .hero-visual > img { height: auto; min-height: 0; max-height: 700px; object-fit: contain; border-radius: 12px; }
+.music-client .hero-visual > img { display: block; width: auto; max-width: 100%; margin-inline: auto; height: auto; min-height: 0; max-height: 700px; object-fit: contain; border-radius: 12px; }
 .music-client .hero-visual figcaption { text-align: center; font-size: 12px; margin-top: 16px; color: #53657c; }
 .music-client .hero-copy .music-subtitle { font-size: clamp(18px, 2vw, 25px); line-height: 1.5; color: var(--ink); margin-bottom: 20px; }
 .music-client .music-outline { background: transparent; color: var(--ink); border-color: currentColor; }
-.music-client .direction-photo { aspect-ratio: auto; background: #dce4ed; }
-.music-client .direction-photo img { height: 360px; object-fit: contain; }
+.music-client .directions-grid { grid-template-columns: var(--direction-columns); }
+.music-client .direction-card { min-width: 0; }
+.music-client .direction-photo { aspect-ratio: auto; background: transparent; border-radius: 12px; }
+.music-client .direction-photo img { display: block; width: 100%; height: auto; }
 .music-client .direction-card:hover img { transform: none; }
 .music-client .direction-copy { padding: 22px 0 0; }
 .music-client .direction-copy > a { position: static; width: max-content; height: auto; min-height: 44px; margin-top: 10px; text-decoration: underline; text-underline-offset: 4px; font-size: 12px; }
@@ -19,11 +21,11 @@
 .music-stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8%; align-items: center; }
 .music-stage article { display: flex; align-items: start; gap: 18px; margin-top: 26px; }
 .music-stage article > svg { margin-top: 18px; color: var(--accent); }
-.music-stage > img { width: 100%; height: auto; max-height: 600px; object-fit: contain; border-radius: 12px; }
+.music-stage > img { width: auto; max-width: 100%; justify-self: center; height: auto; max-height: 600px; object-fit: contain; border-radius: 12px; }
 .music-client .studio-photo-entry > button { background: #dce4ed; }
 .music-client .studio-photo-entry > button > span { background: #e2e9f2; color: #283d56; }
 .music-client .other-world > button { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 30px 35px; background: #f8d98e; border: 0; border-radius: 6px; text-align: left; color: #5a2e23; }
-@media(max-width: 760px) { .music-format-grid, .music-stage { grid-template-columns: 1fr; gap: 28px; } .music-format-grid article { padding: 24px; } .music-client .hero-visual { max-width: 500px; margin-inline: auto; } .music-client .direction-photo img { height: 330px; } .music-client .other-world > button { flex-direction: column; align-items: start; gap: 16px; } }
+@media(max-width: 760px) { .music-format-grid, .music-stage { grid-template-columns: 1fr; gap: 28px; } .music-format-grid article { padding: 24px; } .music-client .hero-visual { max-width: 500px; margin-inline: auto; } .music-client .directions-grid { grid-template-columns: minmax(0, 1fr); } .music-client .other-world > button { flex-direction: column; align-items: start; gap: 16px; } }
 
 .music-client .music-contact-actions { gap: 14px; }
 .music-client .music-contact-actions .button { min-height: 64px; gap: 12px; text-align: center; }

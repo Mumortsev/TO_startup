@@ -14,8 +14,8 @@
 .rybka-hero .place-label { font-size: 11px; margin-bottom: 24px; }
 .rybka-hero h1 { font-size: clamp(40px, 5.2vw, 76px); letter-spacing: -.05em; line-height: 1.13; margin-bottom: 28px; }
 .rybka-hero h1 em { color: var(--red); }
-.rybka-hero-image { border-radius: 12px; overflow: hidden; align-self: center; min-width: 0; }
-.rybka-hero-image img { width: 100%; height: auto; max-height: 710px; object-fit: contain; }
+.rybka-hero-image { align-self: center; min-width: 0; }
+.rybka-hero-image img { display: block; width: auto; max-width: 100%; margin-inline: auto; border-radius: 12px; height: auto; max-height: 710px; object-fit: contain; }
 .rybka-emblem-panel { background: #f8d98e; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 35px; }
 .rybka-emblem { width: 85%; max-width: 330px; }
 .rybka-emblem-panel span { font-size: 13px; }
@@ -80,8 +80,8 @@
   .rybka-container { width: 88%; }
   .rybka-hero { grid-template-columns: 1fr; gap: 30px; padding-top: 5px; padding-bottom: 30px; }
   .rybka-hero h1 { font-size: clamp(37px, 8vw, 58px); }
-  .rybka-hero-image { width: 90%; margin: auto; min-height: 0; max-height: 560px; }
-  .rybka-hero-image img { height: auto; max-height: 560px; width: 100%; object-fit: contain; }
+  .rybka-hero-image { width: 90%; margin: auto; min-height: 0; }
+  .rybka-hero-image img { height: auto; max-height: 560px; width: auto; max-width: 100%; }
   .rybka-emblem-panel { min-height: 280px; }
   .rybka-block { padding-block: 58px; }
   .rybka-about-grid, .rybka-format-grid, .rybka-anna, .rybka-contact { grid-template-columns: 1fr; gap: 30px; }

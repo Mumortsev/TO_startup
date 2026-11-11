@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import type { Artwork } from './artContent';
 import Image from './ResponsivePhoto';
@@ -82,7 +82,7 @@ export default function ArtworkCarousel({ works, onInquiry }: { works: Artwork[]
     setOpened(index => index === null ? null : (index + delta + works.length) % works.length);
   }
   function picture(work: Artwork, large = false) {
-    return <div className="artwork-frame"><Image photo={{ ...work, src: large ? work.image : work.thumbnail, variants: large ? undefined : work.variants?.filter(item => item.width <= Math.round(work.width * Math.min(1, 960 / Math.max(work.width, work.height)))) }} eager={large} sizes="(min-width: 900px) 50vw, 75vw" /></div>;
+    return <div className="artwork-frame" style={{ '--artwork-ratio': work.width / work.height } as CSSProperties}><Image photo={{ ...work, src: large ? work.image : work.thumbnail, variants: large ? undefined : work.variants?.filter(item => item.width <= Math.round(work.width * Math.min(1, 960 / Math.max(work.width, work.height)))) }} eager={large} sizes="(min-width: 900px) 50vw, 75vw" /></div>;
   }
   if (!works.length) return null;
   return <div className="artwork-carousel" role="region" aria-roledescription="карусель" aria-label="Картины и этюды Анны">
