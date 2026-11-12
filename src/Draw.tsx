@@ -25,7 +25,7 @@ import {
   ROTATED_LEGACY_PAGES,
 } from "./legacyColoring";
 import "./MagicColoring.css";
-const BASE = "/TO_startup/coloring/";
+const BASE = import.meta.env.BASE_URL + "coloring/";
 const COLORS = [
   "#ffb86b",
   "#ff806f",

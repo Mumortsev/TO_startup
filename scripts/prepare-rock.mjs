@@ -18,6 +18,8 @@ export function prepareRock(directory) {
   s = s.replace('    if (jobs.length === 0) return;', '    if (jobs.length === 0) { await Promise.all(this.pendingLoads); return; }');
   s = s.replace('    await Promise.all(\n      Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker),\n    );', '    const pending = Promise.all(Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker)).then(() => {});\n    this.pendingLoads.push(pending);\n    await pending;\n    this.pendingLoads = this.pendingLoads.filter(p => p !== pending);\n    await Promise.all(this.pendingLoads);');
   s = s.replace('  private pickLayer(midi: number, velocity: number): number {', '  private pickLayer(midi: number, velocity: number): number {\n    midi = sampleRoot(this.instrument, midi);');
+  const siteBase = '/' + (process.env.SITE_BASE_PATH || '/TO_startup/').replace(/^\/+|\/+$/g, '');
+  s = s.replace("'/TO_startup/rock-audio/'", JSON.stringify(siteBase.replace(/\/$/, '') + '/rock-audio/'));
   writeFileSync(sampleFile, s);
   edit('audio/engine.ts', '    if (c.kind === \'drum\' && c.drumType) {\n      const drum =', `    if (c.kind === 'drum' && c.sampleInstrument?.startsWith('rock-')) {
       const sample = new SampleVoice(c.sampleInstrument);

@@ -378,7 +378,7 @@ export default function App() {
       document.head.append(canonical);
     }
     canonical.href =
-      "https://mumortsev.github.io" + base + (path === "/" ? "/" : path + "/");
+      (import.meta.env.VITE_SITE_URL?.replace(/\/+$/, "") || location.origin + base) + (path === "/" ? "/" : path + "/");
     const descriptions: Record<string, string> = {
       "/": "Художественная мастерская «Рыбка» и музыкальная студия stARTup в Лазаревском. Два мира творчества для детей и родителей.",
       "/art":

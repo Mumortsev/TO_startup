@@ -2,6 +2,9 @@
 # Reproducible upstream build. Run after `npm run build` (or set ENGINE_OUTPUT_DIR).
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SITE_BASE="${SITE_BASE_PATH:-/TO_startup/}"
+SITE_BASE="/${SITE_BASE#/}"
+SITE_BASE="${SITE_BASE%/}/"
 REVISION=81eef8ae073bd600adeed531670167b02a7dacb5
 OUTPUT="${ENGINE_OUTPUT_DIR:-$ROOT/dist/engines/music}"
 BUILD_DIR="$(mktemp -d "${TMPDIR:-/tmp}/to-neondaw.XXXXXX")"
@@ -16,7 +19,7 @@ node "$ROOT/scripts/prepare-music.mjs" "$BUILD_DIR"
 (
   cd "$BUILD_DIR"
   npm ci --no-audit --no-fund
-  npm run build -- --base=/TO_startup/engines/music/
+  npm run build -- --base="${SITE_BASE}engines/music/"
 )
 mkdir -p "$OUTPUT"
 cp -R "$BUILD_DIR/dist/." "$OUTPUT/"
