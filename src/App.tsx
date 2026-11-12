@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import { contact } from "./data";
+import seoPages from "./seoPages.json";
 import { musicPhoto, musicHeroPhoto } from "./musicContent";
 import { photoSrcSet } from "./ResponsivePhoto";
 import { rybkaContact } from "./artContent";
@@ -18,7 +19,7 @@ const MusicStudio = lazy(() => import("./MusicStudio"));
 const ArtStudio = lazy(() => import("./ArtStudio"));
 const Beat = lazy(() => import("./Beat"));
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const recovered = new URLSearchParams(location.search).get("route");
+const recovered = new URLSearchParams(typeof location === "undefined" ? "" : location.search).get("route");
 if (recovered && recovered.startsWith("/") && !recovered.startsWith("//"))
   history.replaceState({}, "", base + recovered);
 const navigate = (path: string) => {
@@ -53,7 +54,7 @@ function Link({
     </a>
   );
 }
-function Fish({ className = "" }: { className?: string }) {
+export function Fish({ className = "" }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -88,7 +89,7 @@ function Fish({ className = "" }: { className?: string }) {
     </svg>
   );
 }
-function Wave({ interactive = false }: { interactive?: boolean }) {
+export function Wave({ interactive = false }: { interactive?: boolean }) {
   const [playing, setPlaying] = useState(false);
   return (
     <button
@@ -119,7 +120,7 @@ function Wave({ interactive = false }: { interactive?: boolean }) {
     </button>
   );
 }
-function Header({ kind }: { kind?: "art" | "music" }) {
+export function Header({ kind }: { kind?: "art" | "music" }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (!open) return;
@@ -182,7 +183,7 @@ function Header({ kind }: { kind?: "art" | "music" }) {
     </header>
   );
 }
-function Footer({ kind }: { kind?: "art" | "music" }) {
+export function Footer({ kind }: { kind?: "art" | "music" }) {
   return (
     <footer className="site-footer">
       <Link to="/" className="brand">
@@ -195,7 +196,7 @@ function Footer({ kind }: { kind?: "art" | "music" }) {
     </footer>
   );
 }
-function Home() {
+export function Home() {
   const root = useRef<HTMLElement>(null);
   const entering = useRef(false);
   const animation = useRef<gsap.core.Timeline | null>(null);
@@ -319,7 +320,7 @@ function Home() {
   }
   return (
     <main className="site-home" id="main" ref={root} onClickCapture={choose}>
-      <h1 className="visually-hidden">Два мира творчества — Music & Art</h1>
+      <h1 className="visually-hidden">Рисование и уроки музыки в Лазаревском — Music & Art</h1>
       <div className="home-signature">music & art · Лазаревское</div>
       <section className="worlds" aria-label="Выберите творческую студию">
         <Link to="/art" className="world art-world">
@@ -355,14 +356,8 @@ export default function App() {
     return () => removeEventListener("popstate", update);
   }, []);
   useEffect(() => {
-    const titles: Record<string, string> = {
-      "/": "Два мира творчества",
-      "/art": "Рыбка — художественная мастерская",
-      "/music": "stARTup — музыкальная студия",
-      "/art/draw": "Волшебная Рыбка — раскраски",
-      "/music/studio": "Музыкальная студия онлайн",
-    };
-    document.title = (titles[path] || "Страница не найдена") + " | Music & Art";
+    const page = seoPages[path as keyof typeof seoPages];
+    document.title = page?.title || "Страница не найдена | Music & Art";
     document
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute(
@@ -378,19 +373,13 @@ export default function App() {
       document.head.append(canonical);
     }
     canonical.href =
-      (import.meta.env.VITE_SITE_URL?.replace(/\/+$/, "") || location.origin + base) + (path === "/" ? "/" : path + "/");
-    const descriptions: Record<string, string> = {
-      "/": "Художественная мастерская «Рыбка» и музыкальная студия stARTup в Лазаревском. Два мира творчества для детей и родителей.",
-      "/art":
-        "Мастерская «Рыбка»: рисование и творческие мастер-классы для детей и взрослых в Лазаревском. Расписание в MAX, занятия в мастерской и на выезд.",
-      "/music":
-        "Уроки гитары, бас-гитары и барабанной установки в Лазаревском. Индивидуально и в группе для взрослых и детей с 7 лет. Социалистическая, 1.",
-      "/art/draw":
-        "69 настоящих иллюстраций: раскрашивание касанием, сохранение прогресса и экспорт PNG.",
-      "/music/studio":
-        "Простой детский секвенсор: жанры, квадратики со звуками барабанов, гитары и баса, скачивание музыки.",
-    };
-    const description = descriptions[path] || descriptions["/"];
+      (import.meta.env.VITE_SITE_URL?.replace(/\/+$/, "") || "https://artmusiclazarevskoe.ru") + (path === "/" ? "/" : path + "/");
+    const description = page?.description || seoPages["/"].description;
+    document.querySelector('meta[name="robots"]')?.setAttribute("content", page ? "index, follow, max-image-preview:large" : "noindex, follow");
+    // Structured data in the generated HTML describes its original route.
+    // Remove it on SPA navigation rather than leave stale page metadata.
+    const structured = document.getElementById("seo-structured-data");
+    if (structured && structured.getAttribute("data-path") !== path) structured.remove();
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute("content", description);
@@ -403,6 +392,8 @@ export default function App() {
     document
       .querySelector('meta[property="og:url"]')
       ?.setAttribute("content", canonical.href);
+    const sharingPhoto = path.startsWith('/music') ? musicPhoto(musicHeroPhoto) : getArtPhoto('lesson');
+    if (sharingPhoto) document.querySelector('meta[property="og:image"]')?.setAttribute('content', new URL(sharingPhoto.src, location.origin).href);
   }, [path]);
   return (
     <Suspense
