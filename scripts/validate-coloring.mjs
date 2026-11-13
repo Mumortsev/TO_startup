@@ -11,7 +11,7 @@ const pageCode = ts.transpileModule(source, {
 const { coloringPages: pages } = await import(
   "data:text/javascript;base64," + Buffer.from(pageCode).toString("base64")
 );
-const base = process.env.COLORING_URL || "http://127.0.0.1:4181/TO_startup/";
+const base = process.env.COLORING_URL || "http://127.0.0.1:4181/creative_music_art_startup/";
 const code = ts.transpileModule(
   fs.readFileSync("src/coloringEngine.ts", "utf8"),
   {

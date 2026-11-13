@@ -15,7 +15,7 @@ describe("Studio content integrity", () => {
     for (const item of [...art, ...music]) {
       expect(item.title.trim().length).toBeGreaterThan(2);
       expect(item.desc.trim().length).toBeGreaterThan(10);
-      expect(item.img).toMatch(/^\/TO_startup\/images\//);
+      expect(item.img).toMatch(/^\/creative_music_art_startup\/images\//);
     }
   });
 });

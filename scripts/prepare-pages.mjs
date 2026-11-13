@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 import { build } from 'vite';
 
 const pages = JSON.parse(fs.readFileSync('src/seoPages.json', 'utf8'));
-const basePath = '/' + (process.env.SITE_BASE_PATH || '/TO_startup/').replace(/^\/+|\/+$/g, '') + '/';
+const basePath = '/' + (process.env.SITE_BASE_PATH || '/creative_music_art_startup/').replace(/^\/+|\/+$/g, '') + '/';
 const normalizedBase = basePath.replace(/\/+/g, '/');
 // The old GitHub copy also points search engines to the primary domain.
 const site = (process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://artmusiclazarevskoe.ru').replace(/\/+$/, '') + '/';
@@ -53,7 +53,7 @@ try {
   fs.rmSync(temporary, { recursive: true, force: true });
 }
 const licensesPath = 'dist/licenses/index.html';
-if (fs.existsSync(licensesPath)) fs.writeFileSync(licensesPath, fs.readFileSync(licensesPath, 'utf8').replaceAll('/TO_startup/', normalizedBase));
+if (fs.existsSync(licensesPath)) fs.writeFileSync(licensesPath, fs.readFileSync(licensesPath, 'utf8').replaceAll('/creative_music_art_startup/', normalizedBase));
 const recovery = `<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><title>Music & Art</title><script>var base=${JSON.stringify(normalizedBase)},route=location.pathname;route=route.startsWith(base)?route.slice(base.length):route;location.replace(base+'?route='+encodeURIComponent('/'+route.replace(/^\\/+/,''))+location.hash)</script></head><body>Переход…</body></html>`;
 fs.writeFileSync('dist/404.html', recovery);
 fs.writeFileSync('dist/not-found.html', '<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><title>Страница не найдена | Music &amp; Art</title></head><body><h1>Страница не найдена</h1><p><a href="' + normalizedBase + '">На главную Music &amp; Art</a></p></body></html>');

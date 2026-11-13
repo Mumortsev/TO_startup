@@ -11,15 +11,15 @@ export function prepareRock(directory) {
   const sampleFile = join(directory, 'src/audio/samples.ts');
   let s = readFileSync(sampleFile, 'utf8');
   s = s.replace("  piano: ['soft', 'mid', 'hard'],", "  piano: ['soft', 'mid', 'hard'],\n" + Object.keys(manifest.roots).map(k => `  '${k}': ${JSON.stringify(k === 'rock-guitar' || k === 'rock-bass' ? ['soft', 'hard'] : ['soft', 'mid', 'hard'])},`).join('\n'));
-  s = s.replace('`${SAMPLE_BASE}${instrument}${layer ? `/${layer}` : \'\'}/${Math.round(midi)}.mp3`;', "`${instrument.startsWith('rock-') ? '/TO_startup/rock-audio/' : SAMPLE_BASE}${instrument}${layer ? `/${layer}` : ''}/${Math.round(midi)}.mp3`;\n\nconst ROCK_ROOTS: Record<string, number[]> = " + JSON.stringify(manifest.roots) + ";\nconst sampleRoot = (instrument: string, midi: number): number => {\n  const roots = ROCK_ROOTS[instrument];\n  return roots ? roots.reduce((best, root) => Math.abs(root - midi) < Math.abs(best - midi) ? root : best, roots[0]) : midi;\n};");
+  s = s.replace('`${SAMPLE_BASE}${instrument}${layer ? `/${layer}` : \'\'}/${Math.round(midi)}.mp3`;', "`${instrument.startsWith('rock-') ? '/creative_music_art_startup/rock-audio/' : SAMPLE_BASE}${instrument}${layer ? `/${layer}` : ''}/${Math.round(midi)}.mp3`;\n\nconst ROCK_ROOTS: Record<string, number[]> = " + JSON.stringify(manifest.roots) + ";\nconst sampleRoot = (instrument: string, midi: number): number => {\n  const roots = ROCK_ROOTS[instrument];\n  return roots ? roots.reduce((best, root) => Math.abs(root - midi) < Math.abs(best - midi) ? root : best, roots[0]) : midi;\n};");
   s = s.replace('  private readonly inflight = new Set<string>();', '  private readonly inflight = new Set<string>();\n  private pendingLoads: Promise<void>[] = [];');
   s = s.replace('set.has(midi)', 'set.has(sampleRoot(this.instrument, midi))');
   s = s.replace('    const jobs: { midi: number; li: number }[] = [];', '    midis = midis.map(midi => sampleRoot(this.instrument, midi));\n    const jobs: { midi: number; li: number }[] = [];');
   s = s.replace('    if (jobs.length === 0) return;', '    if (jobs.length === 0) { await Promise.all(this.pendingLoads); return; }');
   s = s.replace('    await Promise.all(\n      Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker),\n    );', '    const pending = Promise.all(Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker)).then(() => {});\n    this.pendingLoads.push(pending);\n    await pending;\n    this.pendingLoads = this.pendingLoads.filter(p => p !== pending);\n    await Promise.all(this.pendingLoads);');
   s = s.replace('  private pickLayer(midi: number, velocity: number): number {', '  private pickLayer(midi: number, velocity: number): number {\n    midi = sampleRoot(this.instrument, midi);');
-  const siteBase = '/' + (process.env.SITE_BASE_PATH || '/TO_startup/').replace(/^\/+|\/+$/g, '');
-  s = s.replace("'/TO_startup/rock-audio/'", JSON.stringify(siteBase.replace(/\/$/, '') + '/rock-audio/'));
+  const siteBase = '/' + (process.env.SITE_BASE_PATH || '/creative_music_art_startup/').replace(/^\/+|\/+$/g, '');
+  s = s.replace("'/creative_music_art_startup/rock-audio/'", JSON.stringify(siteBase.replace(/\/$/, '') + '/rock-audio/'));
   writeFileSync(sampleFile, s);
   edit('audio/engine.ts', '    if (c.kind === \'drum\' && c.drumType) {\n      const drum =', `    if (c.kind === 'drum' && c.sampleInstrument?.startsWith('rock-')) {
       const sample = new SampleVoice(c.sampleInstrument);

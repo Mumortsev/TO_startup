@@ -2,7 +2,7 @@
 # Reproducible upstream build. Run after `npm run build` (or set ENGINE_OUTPUT_DIR).
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SITE_BASE="${SITE_BASE_PATH:-/TO_startup/}"
+SITE_BASE="${SITE_BASE_PATH:-/creative_music_art_startup/}"
 SITE_BASE="/${SITE_BASE#/}"
 SITE_BASE="${SITE_BASE%/}/"
 REVISION=81eef8ae073bd600adeed531670167b02a7dacb5

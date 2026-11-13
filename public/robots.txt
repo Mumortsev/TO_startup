@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://mumortsev.github.io/TO_startup/sitemap.xml
+Sitemap: https://mumortsev.github.io/creative_music_art_startup/sitemap.xml

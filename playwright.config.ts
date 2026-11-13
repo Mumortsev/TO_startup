@@ -5,7 +5,7 @@ export default defineConfig({
   timeout: 45000,
   workers: process.env.CI ? 2 : 2,
   use: {
-    baseURL: remote || "http://127.0.0.1:4173/TO_startup/",
+    baseURL: remote || "http://127.0.0.1:4173/creative_music_art_startup/",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     launchOptions: { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH },
@@ -31,7 +31,7 @@ export default defineConfig({
     ? undefined
     : {
         command: "npm run preview -- --host 127.0.0.1 --port 4173",
-        url: "http://127.0.0.1:4173/TO_startup/",
+        url: "http://127.0.0.1:4173/creative_music_art_startup/",
         reuseExistingServer: !process.env.CI,
         timeout: 30000,
       },
